@@ -1,8 +1,10 @@
 class CreateChecklist < ActiveRecord::Migration[6.0]
   def change
     create_table :checklists do |t|
+      t.references :user
+      t.references :shop
       t.string :reference
-      t.boolean :deleted
+      t.boolean :deleted, default: false
 
       t.timestamps
     end
