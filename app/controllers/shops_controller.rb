@@ -3,6 +3,12 @@ class ShopsController < ApplicationController
     render json: Shop.all.where(deleted: false)
   end
 
+  def show
+    find_record do |shop|
+      render json: shop
+    end
+  end
+
   def create
     shop = Shop.create permitted_params
     render json: shop

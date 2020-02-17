@@ -3,6 +3,12 @@ class ChecklistsController < ApplicationController
     render json: Checklist.all.where(deleted: false)
   end
 
+  def show
+    find_record do |checklist|
+      render json: checklist
+    end
+  end
+
   def create
     checklist = Checklist.create permitted_params
     render json: checklist
