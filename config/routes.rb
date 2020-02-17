@@ -11,4 +11,7 @@ Rails.application.routes.draw do
 
   resources :checklists do
   end
+
+  resources :shops do
+  end
 end
