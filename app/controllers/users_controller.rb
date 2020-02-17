@@ -9,14 +9,14 @@ class UsersController < ApplicationController
   end
 
   def update
-    find_user do |user|
+    find_record do |user|
       user.update_attributes = permitted_params
       render json: user
     end
   end
 
   def destroy
-    find_user do |user|
+    find_record do |user|
       user.deleted!
       render json: user
     end
@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     return params
   end
 
-  def find_user
+  def find_record
     user = User.find_by_id params[:id]
     if user.present?
       yield user

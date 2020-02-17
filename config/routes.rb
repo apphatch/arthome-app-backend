@@ -4,4 +4,7 @@ Rails.application.routes.draw do
 
   resource :user do
   end
+
+  resources :checklists do
+  end
 end
