@@ -3,6 +3,12 @@ class UsersController < ApplicationController
     render json: User.all.where(deleted: false)
   end
 
+  def show
+    find_record do |user|
+      render json: user
+    end
+  end
+
   def create
     user = User.create permitted_params
     render json: user
