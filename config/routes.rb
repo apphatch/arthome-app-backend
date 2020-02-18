@@ -3,9 +3,6 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create', as: :login
   post 'logout', to: 'sessions#destroy', as: :logout
 
-  resource :login do
-  end
-
   resources :users
   resources :sessions, only: [:new, :create, :destroy]
 
@@ -13,5 +10,8 @@ Rails.application.routes.draw do
   end
 
   resources :shops do
+  end
+
+  resources :stocks do
   end
 end

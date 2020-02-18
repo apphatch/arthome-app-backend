@@ -37,7 +37,7 @@ class ShopsController < ApplicationController
     if shop.present?
       yield shop
     else
-      render json: {'error': 'not found'}
+      render json: {error: 'not found'}
     end
   end
 end

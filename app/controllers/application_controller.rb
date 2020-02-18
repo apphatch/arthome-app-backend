@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
 
   def check_user_is_logged_in
     unless current_user.present?
-      render json: {'error': 'please login'} and return
+      render json: {error: 'please login'} and return
     end
   end
 end
