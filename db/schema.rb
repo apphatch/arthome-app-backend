@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_17_084531) do
+ActiveRecord::Schema.define(version: 2020_02_18_071609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,9 +26,31 @@ ActiveRecord::Schema.define(version: 2020_02_17_084531) do
     t.index ["user_id"], name: "index_checklists_on_user_id"
   end
 
+  create_table "checklists_stocks", id: false, force: :cascade do |t|
+    t.bigint "checklist_id"
+    t.bigint "stock_id"
+    t.index ["checklist_id"], name: "index_checklists_stocks_on_checklist_id"
+    t.index ["stock_id"], name: "index_checklists_stocks_on_stock_id"
+  end
+
   create_table "shops", force: :cascade do |t|
     t.string "name"
     t.boolean "deleted", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "shops_stocks", id: false, force: :cascade do |t|
+    t.bigint "shop_id"
+    t.bigint "stock_id"
+    t.index ["shop_id"], name: "index_shops_stocks_on_shop_id"
+    t.index ["stock_id"], name: "index_shops_stocks_on_stock_id"
+  end
+
+  create_table "stocks", force: :cascade do |t|
+    t.string "name"
+    t.string "sku"
+    t.boolean "deleted"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
