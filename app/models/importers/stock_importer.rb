@@ -5,11 +5,10 @@ module Importers
       super params
     end
 
-    def perform
+    def import
       index :sku, ['SKU_Barcode'], {is_uuid: true}
       index :name, ['SKU_Name']
-      import
+      super
     end
   end
-
 end

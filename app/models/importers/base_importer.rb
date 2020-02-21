@@ -29,7 +29,7 @@ module Importers
         next if idx.nil?
 
         if params[:is_uuid]
-          @uuid = {key: symbol, value: idx}
+          @uuid = {key: symbol.to_s, idx: idx}
         end
 
         unless @header_mappings.values.include?(idx) && !params[:allow_dup]
@@ -57,12 +57,12 @@ module Importers
         attributes = header_mappings.each do |k, v|
           header_mappings[k] = row[v]
         end
-        obj = @klass.send "find_by_#{@uuid[:key]}".to_sym, @uuid[:value]
+        obj = @klass.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
 
         if obj.nil?
           @klass.create attributes
         else
-          obj.update_attributes attributes
+          obj.update attributes
         end
       end
     end
@@ -73,13 +73,13 @@ module Importers
 
       @spreadsheet.each do |row|
 
-        obj = @klass.send "find_by_#{@uuid[:key]}", @uuid[:value]
+        obj = @klass.send "find_by_#{@uuid[:key]}", row[@uuid[:idx]]
         if obj.present?
           header_mappings = @header_mappings.dup
           attributes = header_mappings.each{ |k, v|
             header_mappings[k] = row[v]
           }
-          obj.update_attributes attributes
+          obj.update attributes
         end
 
       end
