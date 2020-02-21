@@ -58,8 +58,10 @@ module Importers
         attributes = header_mappings.each{ |k, v|
           header_mappings[k] = row[v]
         }.reject{ |k, v|
-          !@klass.new.attributes.keys.include?(k)
+          !@klass.new.attributes.keys.include?(k.to_s)
         }
+
+        attributes = yield(attributes, row) if block_given?
 
         obj = @klass.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
 
@@ -84,8 +86,11 @@ module Importers
           attributes = header_mappings.each{ |k, v|
             header_mappings[k] = row[v]
           }.reject{ |k, v|
-            !obj.attributes.keys.include?(k)
+            !obj.attributes.keys.include?(k.to_s)
           }
+
+          attributes = yield(attributes, row) if block_given?
+
           obj.update(attributes)
         end
 
