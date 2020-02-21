@@ -1,5 +1,5 @@
 module Importers
-  class StockImporter < BaseImporter
+  class StocksImporter < BaseImporter
     def initialize params={}
       @klass = Stock
       super params
