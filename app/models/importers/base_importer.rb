@@ -12,8 +12,8 @@ module Importers
         raise Exception.new 'file not found'
       end
 
-      if @klass.nil?
-        raise Exception.new 'must define @klass'
+      if @model_class.nil?
+        raise Exception.new 'must define @model_class'
       end
     end
 
@@ -59,16 +59,16 @@ module Importers
         attributes = header_mappings.each{ |k, v|
           header_mappings[k] = row[v]
         }.reject{ |k, v|
-          !@klass.new.attributes.keys.include?(k.to_s)
+          !@model_class.new.attributes.keys.include?(k.to_s)
         }
 
         attributes = yield(attributes, row) if block_given?
         puts attributes
 
-        obj = @klass.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
+        obj = @model_class.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
 
         if obj.nil?
-          @klass.create attributes
+          @model_class.create attributes
         else
           obj.update attributes
         end
@@ -83,7 +83,7 @@ module Importers
       @spreadsheet.each do |row|
         next if row == headers
 
-        obj = @klass.send "find_by_#{@uuid[:key]}", row[@uuid[:idx]]
+        obj = @model_class.send "find_by_#{@uuid[:key]}", row[@uuid[:idx]]
         if obj.present?
           header_mappings = @header_mappings.dup
           attributes = header_mappings.each{ |k, v|

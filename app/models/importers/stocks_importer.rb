@@ -1,7 +1,7 @@
 module Importers
   class StocksImporter < BaseImporter
     def initialize params={}
-      @klass = Stock
+      @model_class = Stock
       super params
     end
 
@@ -14,6 +14,7 @@ module Importers
       index :group, ['SKU_Group']
       index :role_shop, ['SKU_RoleShop']
       index :packaging, ['SKU_Package']
+
       super
     end
   end

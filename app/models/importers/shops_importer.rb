@@ -1,7 +1,7 @@
 module Importers
   class ShopsImporter < BaseImporter
     def initialize params={}
-      @klass = Shop
+      @model_class = Shop
       super params
     end
 
