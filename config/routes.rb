@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   resources :checklists do
   end
 
+  resources :checklist_items do
+  end
+
   resources :shops do
   end
 
