@@ -6,7 +6,7 @@ class CreateChecklistItem < ActiveRecord::Migration[6.0]
       t.string      :name
       t.string      :status
       t.text        :note
-      t.boolean     :deleted
+      t.boolean     :deleted, default: false
 
       t.timestamps
     end
