@@ -6,7 +6,14 @@ module Importers
     end
 
     def import
-      raise Exception.new 'pending shop file to implement'
+      index :importing_id, ['No.'], {is_uuid: true}
+      index :name, ['Store Name']
+      index :shop_type, ['Store Type (MT/DT/CVS)']
+      index :full_address, ['Store Address']
+      index :city, ['City']
+      index :district, ['Quận']
+
+      super
     end
   end
 end

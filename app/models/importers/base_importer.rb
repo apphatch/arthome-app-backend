@@ -51,6 +51,7 @@ module Importers
       # default import behaviour
       # find and update or create
 
+      raise Exception.new 'uuid not found' if @uuid.nil?
       @spreadsheet.each do |row|
         next if row == headers
 
@@ -62,6 +63,7 @@ module Importers
         }
 
         attributes = yield(attributes, row) if block_given?
+        puts attributes
 
         obj = @klass.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
 
@@ -77,6 +79,7 @@ module Importers
       # default update behaviour
       # only update, no create
 
+      raise Exception.new 'uuid not found' if @uuid.nil?
       @spreadsheet.each do |row|
         next if row == headers
 
