@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_090550) do
+ActiveRecord::Schema.define(version: 2020_02_21_093324) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -38,6 +38,11 @@ ActiveRecord::Schema.define(version: 2020_02_21_090550) do
     t.boolean "deleted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "importing_id"
+    t.string "shop_type"
+    t.string "full_address"
+    t.string "city"
+    t.string "district"
   end
 
   create_table "shops_stocks", id: false, force: :cascade do |t|
