@@ -16,7 +16,7 @@ class ShopsController < ApplicationController
 
   def update
     find_record do |shop|
-      shop.update_attributes = permitted_params
+      shop.update = permitted_params
       render json: shop
     end
   end
