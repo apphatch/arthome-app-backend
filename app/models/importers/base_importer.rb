@@ -52,6 +52,7 @@ module Importers
       # find and update or create
 
       @spreadsheet.each do |row|
+        next if row == header
 
         header_mappings = @header_mappings.dup
         attributes = header_mappings.each do |k, v|
@@ -72,6 +73,7 @@ module Importers
       # only update, no create
 
       @spreadsheet.each do |row|
+        next if row == header
 
         obj = @klass.send "find_by_#{@uuid[:key]}", row[@uuid[:idx]]
         if obj.present?
