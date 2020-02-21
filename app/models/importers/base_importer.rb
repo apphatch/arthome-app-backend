@@ -52,12 +52,15 @@ module Importers
       # find and update or create
 
       @spreadsheet.each do |row|
-        next if row == header
+        next if row == headers
 
         header_mappings = @header_mappings.dup
-        attributes = header_mappings.each do |k, v|
+        attributes = header_mappings.each{ |k, v|
           header_mappings[k] = row[v]
-        end
+        }.reject{ |k, v|
+          !@klass.new.attributes.keys.include?(k)
+        }
+
         obj = @klass.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
 
         if obj.nil?
@@ -73,15 +76,17 @@ module Importers
       # only update, no create
 
       @spreadsheet.each do |row|
-        next if row == header
+        next if row == headers
 
         obj = @klass.send "find_by_#{@uuid[:key]}", row[@uuid[:idx]]
         if obj.present?
           header_mappings = @header_mappings.dup
           attributes = header_mappings.each{ |k, v|
             header_mappings[k] = row[v]
+          }.reject{ |k, v|
+            !obj.attributes.keys.include?(k)
           }
-          obj.update attributes
+          obj.update(attributes)
         end
 
       end
