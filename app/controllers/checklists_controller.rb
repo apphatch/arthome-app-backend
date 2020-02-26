@@ -29,6 +29,11 @@ class ChecklistsController < ApplicationController
   end
 
   def permitted_params
+    if ![
+        params[:user_id], params[:shop_id]
+    ].all?
+      render json: {error: 'missing user_id or shop_id'} and return
+    end
     return params
   end
 
