@@ -1,24 +1,21 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+1. Install Ruby 2.7.0. We suggest using RVM.
+```
+brew install rvm
+rvm install 2.7.0
+```
 
-Things you may want to cover:
+2. This repo requires PostgreSQL 9.5.20.
 
-* Ruby version
+3. Setup config/database.yml for your DB.
 
-* System dependencies
+4. Migrate the DB.
+```
+rake db:setup
+```
 
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+5. Run the server
+```
+rails server
+```
