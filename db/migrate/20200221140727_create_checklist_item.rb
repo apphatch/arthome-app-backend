@@ -2,6 +2,7 @@ class CreateChecklistItem < ActiveRecord::Migration[6.0]
   def change
     create_table :checklist_items do |t|
       t.references  :checklist
+      t.references  :stock
       t.string      :code
       t.string      :name
       t.string      :status

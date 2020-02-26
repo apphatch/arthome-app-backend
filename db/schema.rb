@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 2020_02_21_140727) do
 
   create_table "checklist_items", force: :cascade do |t|
     t.bigint "checklist_id"
+    t.bigint "stock_id"
     t.string "code"
     t.string "name"
     t.string "status"
@@ -25,6 +26,7 @@ ActiveRecord::Schema.define(version: 2020_02_21_140727) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["checklist_id"], name: "index_checklist_items_on_checklist_id"
+    t.index ["stock_id"], name: "index_checklist_items_on_stock_id"
   end
 
   create_table "checklists", force: :cascade do |t|
