@@ -1,6 +1,6 @@
 # README
 
-1. Install Ruby 2.7.0. We suggest using RVM.
+1. Install Ruby 2.7.0. We suggest using RVM. On Mac:
 ```
 brew install rvm
 rvm install 2.7.0
