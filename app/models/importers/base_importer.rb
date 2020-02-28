@@ -63,7 +63,6 @@ module Importers
         }
 
         attributes = yield(attributes, row) if block_given?
-        puts attributes
 
         obj = @model_class.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
 
