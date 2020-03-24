@@ -3,6 +3,15 @@ class StocksController < ApplicationController
     render json: Stock.all.where(deleted: false)
   end
 
+  def index_by_shop
+    shop = Shop.find_by_id params[:shop_id]
+    if shop.present?
+      render json: shop.stocks
+    else
+      head 404
+    end
+  end
+
   def show
     find_record do |stock|
       render json: stock
@@ -37,7 +46,7 @@ class StocksController < ApplicationController
     if stock.present?
       yield stock
     else
-      render json: {error: 'not found'}
+      head 404
     end
   end
 end

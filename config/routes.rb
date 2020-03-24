@@ -16,5 +16,8 @@ Rails.application.routes.draw do
   end
 
   resources :stocks do
+    collection do
+      get :index_by_shop
+    end
   end
 end
