@@ -37,7 +37,7 @@ class UsersController < ApplicationController
     if user.present?
       yield user
     else
-      render json: {error: 'not found'}
+      head 404
     end
   end
 end

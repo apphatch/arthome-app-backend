@@ -42,7 +42,7 @@ class ChecklistItemsController < ApplicationController
     if checklist_item.present?
       yield checklist_item
     else
-      render json: {error: 'not found'}
+      head 404
     end
   end
 end
