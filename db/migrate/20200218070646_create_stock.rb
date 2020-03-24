@@ -3,7 +3,7 @@ class CreateStock < ActiveRecord::Migration[6.0]
     create_table :stocks do |t|
       t.string :name
       t.string :sku
-      t.boolean :deleted
+      t.boolean :deleted, default: false
 
       t.timestamps
     end
