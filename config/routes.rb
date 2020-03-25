@@ -12,6 +12,12 @@ Rails.application.routes.draw do
   resources :checklist_items do
   end
 
+  resources :checkin_checkouts do
+    collection do
+      get :report
+    end
+  end
+
   resources :shops do
     member do
       post :checkin

@@ -1,0 +1,37 @@
+<center>
+  <h2>Checkin - Checkouts</h2>
+</center>
+
+<table border=1 width=100%>
+  <thead>
+    <tr>
+      <th> User </th>
+      <th> Shop </th>
+      <th> Check In/Out </th>
+      <th> Photo </th>
+      <th> Timestamp </th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @records.each do |record| %>
+      <tr>
+        <th> <%= record.user.name %> </th>
+        <th> <%= record.shop.name %> </th>
+
+        <% if record.is_checkin %>
+          <th> IN </th>
+        <% else %>
+          <th> OUT </th>
+        <% end %>
+
+        <% if record.photos.try(:first).try(:image) %>
+          <th> <%= image_tag "#{url_for(record.photos.first.image)}.png" %> </th>
+        <% else %>
+          <th> N/A </th>
+        <% end %>
+
+        <th> <%= record.time %> </th>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

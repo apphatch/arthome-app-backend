@@ -1,6 +1,6 @@
-class CheckinCheckoutController < ApplicationController
+class CheckinCheckoutsController < ApplicationController
   def index
-    render json: CheckinCheckout.all.where(deleted: false)
+    @records = CheckinCheckout.all.where(deleted: false)
   end
 
   def show

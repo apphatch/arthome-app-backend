@@ -2,8 +2,9 @@ class Shop < ApplicationRecord
   has_many :checklists
   has_many :users, through: :checklists
   has_and_belongs_to_many :stocks
-  has_many :photos, as: :dbfile
   has_many :checkin_checkouts
+
+  has_many :photos, as: :dbfiles
 
   def checkin user, params
     return nil unless [
@@ -20,8 +21,9 @@ class Shop < ApplicationRecord
         note: params[:note],
         is_checkin: true
       )
+
       record.photos.create(
-        data: params[:photo].read,
+        image: params[:photo],
         time: params[:time],
         name: params[:photo_name]
       )
@@ -47,7 +49,11 @@ class Shop < ApplicationRecord
         note: params[:note],
         is_checkin: false
       )
-      record.photos.create data: params[:photo], time: params[:time]
+      record.photos.create(
+        image: params[:photo],
+        time: params[:time],
+        name: params[:photo_name]
+      )
       record.save
       return record
     except
