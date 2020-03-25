@@ -6,7 +6,7 @@ class Shop < ApplicationRecord
   has_many :checkin_checkouts
 
   def checkin user, params
-    return None unless [
+    return nil unless [
       user.present?,
       params[:photo].present?,
       params[:time].present?
@@ -22,7 +22,28 @@ class Shop < ApplicationRecord
       record.save
       return record
     except
-      return None
+      return nil
+    end
+  end
+
+  def checkout user, params
+    return nil unless [
+      user.present?,
+      params[:photo].present?,
+      params[:time].present?
+    ].all?
+
+    begin
+      record = user.checkin_checkouts.create(
+        shop: self,
+        time: params[:time],
+        note: params[:note]
+      )
+      record.photos.create data: params[:photo], time: params[:time]
+      record.save
+      return record
+    except
+      return nil
     end
   end
 end
