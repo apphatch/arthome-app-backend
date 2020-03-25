@@ -28,6 +28,32 @@ class ShopsController < ApplicationController
     end
   end
 
+  def checkin
+    find_record do |shop|
+      if current_user.present?
+        record = shop.checkin current_user, params
+        if record.present?
+          render json: record
+        else
+          head 400
+        end
+      end
+    end
+  end
+
+  def checkout
+    find_record do |shop|
+      if current_user.present?
+        record = shop.checkout current_user, params
+        if record.present?
+          render json: record
+        else
+          head 400
+        end
+      end
+    end
+  end
+
   def permitted_params
     return params
   end

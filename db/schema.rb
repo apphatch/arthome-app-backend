@@ -10,10 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_21_140727) do
+ActiveRecord::Schema.define(version: 2020_03_25_043919) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "checkin_checkouts", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "shop_id", null: false
+    t.datetime "time"
+    t.boolean "deleted", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_id"], name: "index_checkin_checkouts_on_shop_id"
+    t.index ["user_id"], name: "index_checkin_checkouts_on_user_id"
+  end
 
   create_table "checklist_items", force: :cascade do |t|
     t.bigint "checklist_id"
@@ -45,6 +56,18 @@ ActiveRecord::Schema.define(version: 2020_02_21_140727) do
     t.bigint "stock_id"
     t.index ["checklist_id"], name: "index_checklists_stocks_on_checklist_id"
     t.index ["stock_id"], name: "index_checklists_stocks_on_stock_id"
+  end
+
+  create_table "photos", force: :cascade do |t|
+    t.string "name"
+    t.binary "data"
+    t.datetime "time"
+    t.string "dbfile_type"
+    t.bigint "dbfile_id"
+    t.boolean "deleted", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["dbfile_type", "dbfile_id"], name: "index_photos_on_dbfile_type_and_dbfile_id"
   end
 
   create_table "shops", force: :cascade do |t|
@@ -89,4 +112,6 @@ ActiveRecord::Schema.define(version: 2020_02_21_140727) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "checkin_checkouts", "shops"
+  add_foreign_key "checkin_checkouts", "users"
 end

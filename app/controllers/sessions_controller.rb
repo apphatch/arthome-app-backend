@@ -16,7 +16,7 @@ class SessionsController < ApplicationController
       session[:expires_at] = Time.current.+ 15.minutes
       render json: {result: 'logged in'} and return
     else
-      render json: {error: 'invalid username or password'} and return
+      head 401
     end
   end
 

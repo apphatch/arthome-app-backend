@@ -13,6 +13,10 @@ Rails.application.routes.draw do
   end
 
   resources :shops do
+    member do
+      post :checkin
+      post :checkout
+    end
   end
 
   resources :stocks do
