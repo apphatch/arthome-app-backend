@@ -38,4 +38,6 @@ yarn-debug.log*
 # Ignore import data
 /import/*
 
+# Ignore misc files
 .DS_Store
+passenger.8080.pid.lock
