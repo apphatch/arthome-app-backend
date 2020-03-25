@@ -4,6 +4,7 @@ class CreateCheckinCheckout < ActiveRecord::Migration[6.0]
       t.references  :user, null: false, foreign_key: true
       t.references  :shop, null: false, foreign_key: true
       t.datetime    :time
+      t.text        :note
       t.boolean     :deleted, default: false
       t.timestamps
     end

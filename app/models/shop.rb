@@ -16,6 +16,7 @@ class Shop < ApplicationRecord
       record = user.checkin_checkouts.create(
         shop: self,
         time: params[:time],
+        note: params[:note]
       )
       record.photos.create data: params[:photo], time: params[:time]
       record.save

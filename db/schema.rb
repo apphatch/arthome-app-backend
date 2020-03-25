@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_043919) do
     t.bigint "user_id", null: false
     t.bigint "shop_id", null: false
     t.datetime "time"
+    t.text "note"
     t.boolean "deleted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
