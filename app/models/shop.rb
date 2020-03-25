@@ -8,6 +8,7 @@ class Shop < ApplicationRecord
   def checkin user, params
     return nil unless [
       user.present?,
+      user.try(:can_checkin?),
       params[:photo].present?,
       params[:time].present?
     ].all?
@@ -16,9 +17,14 @@ class Shop < ApplicationRecord
       record = user.checkin_checkouts.create(
         shop: self,
         time: params[:time],
-        note: params[:note]
+        note: params[:note],
+        is_checkin: true
       )
-      record.photos.create data: params[:photo], time: params[:time]
+      record.photos.create(
+        data: params[:photo].read,
+        time: params[:time],
+        name: params[:photo_name]
+      )
       record.save
       return record
     except
@@ -29,6 +35,7 @@ class Shop < ApplicationRecord
   def checkout user, params
     return nil unless [
       user.present?,
+      user.try(:can_checkout?, self),
       params[:photo].present?,
       params[:time].present?
     ].all?
@@ -37,7 +44,8 @@ class Shop < ApplicationRecord
       record = user.checkin_checkouts.create(
         shop: self,
         time: params[:time],
-        note: params[:note]
+        note: params[:note],
+        is_checkin: false
       )
       record.photos.create data: params[:photo], time: params[:time]
       record.save
