@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :check_user_is_logged_in
+  before_action :set_csrf_token_for_api
   protect_from_forgery with: :exception
 
   def current_user
@@ -15,5 +16,13 @@ class ApplicationController < ActionController::Base
     unless current_user.present?
       render json: {error: 'please login'} and return
     end
+  end
+
+  def set_csrf_token_for_api
+    response.headers['X-CSRF-Token'] = form_authenticity_token
+  end
+
+  def verified_request?
+    super || form_authenticity_token == request.headers['X-CSRF-Token']
   end
 end
