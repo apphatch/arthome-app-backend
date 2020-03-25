@@ -3,6 +3,14 @@ class ShopsController < ApplicationController
     render json: Shop.all.where(deleted: false)
   end
 
+  def index_by_user
+    if current_user.present?
+      render json: current_user.shops
+    else
+      head 400
+    end
+  end
+
   def show
     find_record do |shop|
       render json: shop

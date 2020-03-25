@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :checklists do
+    collection do
+      get :index_by_user
+      get :index_by_shop
+    end
   end
 
   resources :checklist_items do
@@ -19,6 +23,10 @@ Rails.application.routes.draw do
   end
 
   resources :shops do
+    collection do
+      get :index_by_user
+    end
+
     member do
       post :checkin
       post :checkout

@@ -3,6 +3,23 @@ class ChecklistsController < ApplicationController
     render json: Checklist.all.where(deleted: false)
   end
 
+  def index_by_shop
+    shop = Shop.find_by_id params[:shop_id]
+    if shop.present?
+      render json: shop.checklists
+    else
+      render json: {error: 'missing shop_id'} and return
+    end
+  end
+
+  def index_by_user
+    if current_user.present?
+      render json: current_user.checklists
+    else
+      head 401
+    end
+  end
+
   def show
     find_record do |checklist|
       render json: checklist
