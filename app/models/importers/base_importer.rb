@@ -3,6 +3,11 @@ require 'roo'
 module Importers
   class BaseImporter
     def initialize params={}
+      # 1. override import or update methods
+      # 2. declare index to grab attribute - column associations
+      # 3. call super for default behaviour
+      # 4. super accepts a block with attributes, associations and row data
+
       @header_mappings = {}
       @spreadsheet = nil
 
@@ -21,7 +26,12 @@ module Importers
       return @spreadsheet.row(1)
     end
 
-    def index symbol, allowed_headers, params={allow_dup: false, is_uuid: false}
+    def associate model_symbol, allowed_headers, params={allow_dup: false, is_uuid: false}
+      #alias of index
+      index model_symbol, allowed_headers, params
+    end
+
+    def index model_symbol, allowed_headers, params={allow_dup: false, is_uuid: false}
       idx = nil
 
       allowed_headers.each do |text|
@@ -29,12 +39,12 @@ module Importers
         next if idx.nil?
 
         if params[:is_uuid]
-          @uuid = {key: symbol.to_s, idx: idx}
+          @uuid = {key: model_symbol.to_s, idx: idx}
         end
 
         unless @header_mappings.values.include?(idx) && !params[:allow_dup]
           @header_mappings = @header_mappings.merge(
-            symbol => idx
+            model_symbol => idx
           )
           break
         end
@@ -61,15 +71,29 @@ module Importers
         }.reject{ |k, v|
           !@model_class.new.attributes.keys.include?(k.to_s)
         }
+        header_mappings = @header_mappings.dup
+        assocs = header_mappings.each{ |k, v|
+          header_mappings[k] = row[v]
+        }.reject{ |k, v|
+          !@model_class.new.public_methods.include?(k.to_sym) ||
+            attributes.keys.include?(k.to_sym)
+        }
 
-        attributes = yield(attributes, row) if block_given?
+        attr_assocs = yield(attributes, assocs, row) if block_given?
+        raise Exception.new 'importer must return [attributes, assocs]' if attr_assocs.length != 2
 
         obj = @model_class.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
 
         if obj.nil?
-          @model_class.create attributes
+          obj = @model_class.create attr_assocs[0]
         else
-          obj.update attributes
+          obj.update attr_assocs[0]
+        end
+
+        attr_assocs[1].each do |k, v|
+          assoc = obj.send(k)
+          assoc.push v unless (assoc.include?(v) || v.nil?)
+          obj.save
         end
       end
     end
