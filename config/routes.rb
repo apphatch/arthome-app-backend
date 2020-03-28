@@ -39,6 +39,7 @@ Rails.application.routes.draw do
   resources :stocks do
     collection do
       get :index_by_shop
+      get :search
     end
   end
 end

@@ -37,6 +37,16 @@ class StocksController < ApplicationController
     end
   end
 
+  def search
+    ['name', 'sku', 'barcode', 'category', 'role'].each do |attr|
+      result = Stock.where(
+        "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
+      )
+      render json: result and return if result.present?
+    end
+    head 404
+  end
+
   def permitted_params
     return params
   end
