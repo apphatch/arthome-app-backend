@@ -1,6 +1,6 @@
 class ChecklistsController < ApplicationController
   def index
-    render json: Checklist.all.where(deleted: false)
+    render json: Checklist.all.where(deleted: false), each_serializer: ChecklistSerializer
   end
 
   def index_by_shop

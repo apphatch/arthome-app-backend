@@ -3,6 +3,15 @@ class ChecklistItemsController < ApplicationController
     render json: ChecklistItem.all.where(deleted: false)
   end
 
+  def index_by_checklist
+    checklist = Checklist.find_by_id params[:checklist_id]
+    if checklist.present?
+      render json: checklist.checklist_items
+    else
+      head 404
+    end
+  end
+
   def show
     find_record do |checklist_item|
       render json: checklist_item
