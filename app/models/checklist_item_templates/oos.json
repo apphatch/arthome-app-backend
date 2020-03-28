@@ -1,0 +1,21 @@
+{
+    "no_sale": {
+        "type": "checkbox",
+        "values": [
+            "true",
+            "false"
+        ]
+    },
+    "result": {
+        "type": "select",
+        "values": [
+            "not found root cause",
+            "no gift",
+            "peak sale (at store)"
+        ]
+    },
+    "mechanics": {
+        "type": "text",
+        "values": []
+    }
+}

@@ -1,0 +1,14 @@
+{
+    "length of unilever": {
+        "type": "input",
+        "values": []
+    },
+    "length of competitor": {
+        "type": "input",
+        "values": []
+    },
+    "space on shelf" : {
+        "type": "input",
+        "values": []
+    }
+}
