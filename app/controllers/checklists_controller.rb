@@ -22,7 +22,7 @@ class ChecklistsController < ApplicationController
 
   def show
     find_record do |checklist|
-      render json: checklist
+      render json: checklist, serializer: ChecklistSerializer
     end
   end
 

@@ -11,4 +11,10 @@ class Checklist < ApplicationRecord
 
     super params
   end
+
+  def template
+    return JSON.parse(File.read("#{Rails.root.join(
+      'app', 'models', 'checklist_item_templates', self.checklist_type)}.json")
+    )
+  end
 end
