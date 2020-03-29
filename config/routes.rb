@@ -11,6 +11,10 @@ Rails.application.routes.draw do
       get :index_by_user
       get :index_by_shop
     end
+
+    member do
+      post :update_checklist_items
+    end
   end
 
   resources :checklist_items do

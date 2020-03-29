@@ -33,7 +33,14 @@ class ChecklistsController < ApplicationController
 
   def update
     find_record do |checklist|
-      checklist.update = permitted_params
+      checklist.update = params
+      render json: checklist
+    end
+  end
+
+  def update_checklist_items
+    find_record do |checklist|
+      checklist.update_checklist_items params
       render json: checklist
     end
   end
