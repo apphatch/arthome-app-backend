@@ -13,4 +13,8 @@ class ChecklistItem < ApplicationRecord
   def checklist_type
     self.checklist.checklist_type
   end
+
+  def data
+    JSON.parse(super)
+  end
 end
