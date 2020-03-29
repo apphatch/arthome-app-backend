@@ -7,14 +7,14 @@ class SessionsController < ApplicationController
 
   def create
     if session[:user_id].present?
-      render json: {result: 'already logged in'} and return
+      render json: {result: 'already logged in', user_id: session[:user_id]} and return
     end
 
     user = User.find_by_username params[:username]
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
       session[:expires_at] = Time.current.+ 15.minutes
-      render json: {result: 'logged in'} and return
+      render json: {result: 'logged in', user_id: user.id} and return
     else
       head 401
     end

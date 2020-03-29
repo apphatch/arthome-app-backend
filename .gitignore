@@ -41,3 +41,6 @@ yarn-debug.log*
 # Ignore misc files
 .DS_Store
 passenger.8080.pid.lock
+
+# Ignore ansible
+ansible/
