@@ -22,5 +22,6 @@ class SessionsController < ApplicationController
 
   def destroy
     reset_session
+    render json: {result: 'logged out'}
   end
 end
