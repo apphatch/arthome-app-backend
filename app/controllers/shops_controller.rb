@@ -62,6 +62,16 @@ class ShopsController < ApplicationController
     end
   end
 
+  def search
+    ['name', 'full_address'].each do |attr|
+      result = Shop.where(
+        "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
+      )
+      render json: result and return if result.present?
+    end
+    head 404
+  end
+
   def permitted_params
     return params
   end

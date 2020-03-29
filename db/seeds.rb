@@ -16,6 +16,7 @@ user.shops.push shop
 checklist = user.checklists.first
 checklist.reference = '12345'
 checklist.checklist_type = 'oos'
+checklist.save
 
 stock = Stock.create name: 'Stock 1', sku: '123ABC', barcode: '1234567891011', category: 'Testers', group: 'Group 1', role: 'Tester', packaging: 'Paperbag', role_shop: 'IP'
 shop.stocks.push stock

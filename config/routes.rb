@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   resources :shops do
     collection do
       get :index_by_user
+      get :search
     end
 
     member do
