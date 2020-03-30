@@ -1,6 +1,11 @@
 class ChecklistsController < ApplicationController
   def index
-    render json: Checklist.all.where(deleted: false), each_serializer: ChecklistSerializer
+    if params[:exclude_empty]
+      result = Checklist.all.collect{|c| c if !c.deleted && c.checklist_items.length > 0}
+    else
+      result = Checklist.all.where(deleted: false)
+    end
+    render json: result, each_serializer: ChecklistSerializer
   end
 
   def index_by_shop
