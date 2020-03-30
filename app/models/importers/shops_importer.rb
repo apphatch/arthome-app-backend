@@ -6,14 +6,19 @@ module Importers
     end
 
     def import
-      index :importing_id, ['No.'], {is_uuid: true}
-      index :name, ['Store Name']
-      index :shop_type, ['Store Type (MT/DT/CVS)']
-      index :full_address, ['Store Address']
-      index :city, ['City']
-      index :district, ['Quận']
+      index :importing_id, ['No.', 'Outlet'], {is_uuid: true}
+      index :name, ['Store Name', 'Outlet Name']
+      index :shop_type, ['Store Type (MT/DT/CVS)', 'Outlet classification']
+      index :full_address, ['Store Address', 'Outlet Address']
+      index :city, ['City', 'Province']
+      index :district, ['Quận', 'Distrist']
+      associate :users, ['OSA Code']
 
-      super
+      super do |attributes, assocs, row|
+        assocs[:users] = User.find_by_importing_id assocs[:users]
+
+        [attributes, assocs]
+      end
     end
   end
 end

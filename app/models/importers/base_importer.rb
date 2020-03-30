@@ -10,6 +10,7 @@ module Importers
 
       @header_mappings = {}
       @spreadsheet = nil
+      @skip_if_record_exists = false
 
       if params[:file_name].present?
         @spreadsheet = Roo::Spreadsheet.open "import/#{params[:file_name]}"
@@ -57,6 +58,10 @@ module Importers
       return @header_mappings
     end
 
+    def skip_if_record_exists
+      @skip_if_record_exists = true
+    end
+
     def import
       # default import behaviour
       # find and update or create
@@ -84,17 +89,23 @@ module Importers
 
         obj = @model_class.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
 
+        next if (obj.present? && @skip_if_record_exists)
+
         if obj.nil?
-          obj = @model_class.create attr_assocs[0]
+          obj = @model_class.new attr_assocs[0]
         else
           obj.update attr_assocs[0]
         end
 
         attr_assocs[1].each do |k, v|
-          assoc = obj.send(k)
-          assoc.push v unless (assoc.include?(v) || v.nil?)
-          obj.save
+          begin
+            assoc = obj.send(k)
+            assoc.push v unless (assoc.include?(v) || v.nil?)
+          rescue
+            obj.send("#{k}=", v) unless v.nil?
+          end
         end
+        obj.save!
       end
     end
 
