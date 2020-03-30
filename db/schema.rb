@@ -93,10 +93,10 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
 
   create_table "shops", force: :cascade do |t|
     t.string "name"
+    t.string "importing_id"
     t.boolean "deleted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "importing_id"
     t.string "shop_type"
     t.string "full_address"
     t.string "city"
@@ -112,6 +112,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
 
   create_table "stocks", force: :cascade do |t|
     t.string "name"
+    t.string "importing_id"
     t.string "sku"
     t.boolean "deleted", default: false
     t.datetime "created_at", precision: 6, null: false
@@ -126,6 +127,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
 
   create_table "users", force: :cascade do |t|
     t.string "name"
+    t.string "importing_id"
     t.string "username"
     t.string "password_digest"
     t.boolean "deleted", default: false
