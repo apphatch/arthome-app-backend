@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
   create_table "checklist_items", force: :cascade do |t|
     t.bigint "checklist_id"
     t.bigint "stock_id"
+    t.string "importing_id"
     t.json "data"
     t.boolean "deleted", default: false
     t.datetime "created_at", precision: 6, null: false
