@@ -1,7 +1,9 @@
 class ChecklistsController < ApplicationController
   def index
     if params[:exclude_empty]
-      result = Checklist.all.collect{|c| c if !c.deleted && c.checklist_items.length > 0}
+      result = Checklist.all.collect{ |c|
+        c if !c.deleted && c.checklist_items.length > 0
+      }.compact
     else
       result = Checklist.all.where(deleted: false)
     end
