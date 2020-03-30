@@ -15,6 +15,6 @@ class ChecklistItem < ApplicationRecord
   end
 
   def data
-    JSON.parse(super)
+    JSON.parse(super) unless super.nil?
   end
 end
