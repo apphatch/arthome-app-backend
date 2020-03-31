@@ -43,7 +43,7 @@ class ShopsController < ApplicationController
         if record.present?
           render json: record
         else
-          head 400
+          render json: current_user.last_checkin_checkout
         end
       end
     end
@@ -56,7 +56,7 @@ class ShopsController < ApplicationController
         if record.present?
           render json: record
         else
-          head 400
+          render json: current_user.last_checkin_checkout
         end
       end
     end

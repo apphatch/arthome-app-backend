@@ -8,15 +8,19 @@ class User < ApplicationRecord
 
   def can_checkin?
     return true if self.checkin_checkouts.empty?
-    return !self.checkin_checkouts.order(:created_at).last.is_checkin
+    return !self.last_checkin_checkout.is_checkin
   end
 
   def can_checkout? shop
     return false if self.checkin_checkouts.empty?
 
-    last_checkin_checkout = self.checkin_checkouts.order(:created_at).last
-    return false unless last_checkin_checkout.is_checkin
-    return false unless shop.id == last_checkin_checkout.shop.id
+    return false unless self.last_checkin_checkout.is_checkin
+    return false unless shop.id == self.last_checkin_checkout.shop.id
     return true
+  end
+
+  def last_checkin_checkout
+    return [] if self.checkin_checkouts.empty?
+    return self.checkin_checkouts.order(:created_at).last
   end
 end
