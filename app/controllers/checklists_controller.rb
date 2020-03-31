@@ -13,7 +13,7 @@ class ChecklistsController < ApplicationController
   def index_by_shop
     shop = Shop.find_by_id params[:shop_id]
     if shop.present?
-      render json: shop.checklists
+      render json: shop.checklists, each_serializer: ChecklistSerializer
     else
       render json: {error: 'missing shop_id'} and return
     end
