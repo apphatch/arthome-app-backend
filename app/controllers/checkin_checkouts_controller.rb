@@ -16,7 +16,7 @@ class CheckinCheckoutsController < ApplicationController
 
   def update
     find_record do |record|
-      record.update = permitted_params
+      record.update permitted_params
       render json: record
     end
   end

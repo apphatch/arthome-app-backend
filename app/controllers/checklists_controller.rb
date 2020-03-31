@@ -40,7 +40,7 @@ class ChecklistsController < ApplicationController
 
   def update
     find_record do |checklist|
-      checklist.update = params
+      checklist.update params
       render json: checklist
     end
   end

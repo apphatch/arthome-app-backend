@@ -16,7 +16,7 @@ class UsersController < ApplicationController
 
   def update
     find_record do |user|
-      user.update = permitted_params
+      user.update permitted_params
       render json: user
     end
   end

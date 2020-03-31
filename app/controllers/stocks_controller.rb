@@ -25,7 +25,7 @@ class StocksController < ApplicationController
 
   def update
     find_record do |stock|
-      stock.update = permitted_params
+      stock.update permitted_params
       render json: stock
     end
   end

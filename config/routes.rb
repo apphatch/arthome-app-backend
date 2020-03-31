@@ -21,6 +21,10 @@ Rails.application.routes.draw do
     collection do
       get :index_by_checklist
     end
+
+    member do
+      post :update
+    end
   end
 
   resources :checkin_checkouts do
