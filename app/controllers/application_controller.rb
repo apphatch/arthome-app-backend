@@ -16,6 +16,9 @@ class ApplicationController < ActionController::Base
     unless current_user.present?
       render json: {error: 'please login'} and return
     end
+    if session[:expires_at] < Time.current
+      redirect_to controller: 'sessions', action: 'destroy'
+    end
   end
 
   private

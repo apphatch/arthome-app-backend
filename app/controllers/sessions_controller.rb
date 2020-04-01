@@ -13,7 +13,7 @@ class SessionsController < ApplicationController
     user = User.find_by_username params[:username]
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      session[:expires_at] = Time.current.+ 15.minutes
+      session[:expires_at] = Time.current + 15.minutes
       render json: {result: 'logged in', user_id: user.id} and return
     else
       head 401
