@@ -13,9 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_is_logged_in
-    unless current_user.present?
-      render json: {error: 'please login'} and return
-    end
+    head 401 unless current_user.present?
     if session[:expires_at] < Time.current
       redirect_to controller: 'sessions', action: 'destroy'
     end

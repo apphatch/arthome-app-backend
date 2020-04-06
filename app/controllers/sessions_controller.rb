@@ -23,6 +23,6 @@ class SessionsController < ApplicationController
   def destroy
     session[:user_id] = nil
     #reset_session
-    render json: {result: 'logged out'}
+    head 401
   end
 end
