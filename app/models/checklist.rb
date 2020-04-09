@@ -28,4 +28,14 @@ class Checklist < ApplicationRecord
       item.update data: entry['data'].to_json if item.present?
     end
   end
+
+  def completed?
+    self.checklist_items.collect{ |item|
+      item.data.present?
+    }.all?
+  end
+
+  def empty?
+    self.checklist_items.active.empty?
+  end
 end

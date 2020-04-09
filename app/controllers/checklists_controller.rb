@@ -1,11 +1,11 @@
 class ChecklistsController < ApplicationController
   def index
+    result = Checklist.all.where(deleted: false)
     if params[:exclude_empty]
-      result = Checklist.all.collect{ |c|
-        c if !c.deleted && c.checklist_items.length > 0
-      }.compact
-    else
-      result = Checklist.all.where(deleted: false)
+      result = result.reject{|c| c.deleted || c.empty?}
+    end
+    if params[:exclude_completed]
+      result = result.reject{|c| c.completed?}
     end
     render json: result, each_serializer: ChecklistSerializer
   end
