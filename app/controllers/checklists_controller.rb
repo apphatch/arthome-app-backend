@@ -1,19 +1,15 @@
 class ChecklistsController < ApplicationController
   def index
-    result = Checklist.all.where(deleted: false)
-    if params[:exclude_empty]
-      result = result.reject{|c| c.deleted || c.empty?}
-    end
-    if params[:exclude_completed]
-      result = result.reject{|c| c.completed?}
-    end
+    result = Checklist.active
+    result = result.reject{|c| c.empty?} if params[:exclude_empty]
+    result = result.reject{|c| c.completed?} if params[:exclude_completed]
     render json: result, each_serializer: ChecklistSerializer
   end
 
   def index_by_shop
     shop = Shop.find_by_id params[:shop_id]
     if shop.present?
-      render json: shop.checklists, each_serializer: ChecklistSerializer
+      render json: shop.checklists.active, each_serializer: ChecklistSerializer
     else
       render json: {error: 'missing shop_id'} and return
     end
@@ -21,7 +17,7 @@ class ChecklistsController < ApplicationController
 
   def index_by_user
     if current_user.present?
-      render json: current_user.checklists
+      render json: current_user.checklists.active, each_serializer: ChecklistSerializer
     else
       head 401
     end

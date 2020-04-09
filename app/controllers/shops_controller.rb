@@ -1,11 +1,11 @@
 class ShopsController < ApplicationController
   def index
-    render json: Shop.all.where(deleted: false)
+    render json: Shop.active
   end
 
   def index_by_user
     if current_user.present?
-      render json: current_user.shops
+      render json: current_user.shops.active
     else
       head 400
     end

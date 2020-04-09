@@ -6,6 +6,8 @@ class Shop < ApplicationRecord
 
   has_many :photos, as: :dbfiles
 
+  scope :active, -> {where(deleted: false)}
+
   def checkin user, params
     return nil unless [
       user.present?,

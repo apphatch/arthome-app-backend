@@ -6,6 +6,8 @@ class Checklist < ApplicationRecord
   has_many :checklist_items
   has_many :stocks, through: :checklist_items
 
+  scope :active, -> {where(deleted: false)}
+
   def self.create params
     unless params[:checklist_type].present?
       raise Exception.new 'checklist must have a type'
