@@ -13,6 +13,8 @@ class User < ApplicationRecord
 
   def can_checkout? shop
     return false if self.checkin_checkouts.empty?
+    #turn on later
+    #return false unless self.checklists.collect{|c| c.completed?}.all?
 
     return false unless self.last_checkin_checkout.is_checkin
     return false unless shop.id == self.last_checkin_checkout.shop.id

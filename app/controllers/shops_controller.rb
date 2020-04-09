@@ -41,9 +41,9 @@ class ShopsController < ApplicationController
       if current_user.present?
         record = shop.checkin current_user, params
         if record.present?
-          render json: record
+          render json: {status: 'success', last_checkin_checkout: record}
         else
-          render json: current_user.last_checkin_checkout
+          render json: {status: 'failed', last_checkin_checkout: current_user.last_checkin_checkout}
         end
       end
     end
@@ -54,9 +54,9 @@ class ShopsController < ApplicationController
       if current_user.present?
         record = shop.checkout current_user, params
         if record.present?
-          render json: record
+          render json: {status: 'success', last_checkin_checkout: record}
         else
-          render json: current_user.last_checkin_checkout
+          render json: {status: 'failed', last_checkin_checkout: current_user.last_checkin_checkout}
         end
       end
     end
