@@ -29,6 +29,12 @@ class ChecklistsController < ApplicationController
     end
   end
 
+  def show_incomplete_items
+    find_record do |checklist|
+      render json: checklist.incomplete_items, each_serializer: ChecklistItemSerializer
+    end
+  end
+
   def create
     checklist = Checklist.create permitted_params
     render json: checklist

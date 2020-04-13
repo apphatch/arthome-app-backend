@@ -31,6 +31,12 @@ class Checklist < ApplicationRecord
     end
   end
 
+  def incomplete_items
+    return self.checklist_items.collect{ |item|
+      item if item.data.nil?
+    }.compact
+  end
+
   def completed?
     self.checklist_items.collect{ |item|
       item.data.present?

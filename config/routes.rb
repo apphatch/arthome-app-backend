@@ -14,6 +14,7 @@ Rails.application.routes.draw do
 
     member do
       post :update_checklist_items
+      get  :show_incomplete_items
     end
   end
 
