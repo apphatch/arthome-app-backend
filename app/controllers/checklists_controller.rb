@@ -17,7 +17,9 @@ class ChecklistsController < ApplicationController
 
   def index_by_user
     if current_user.present?
-      render json: current_user.checklists.active, each_serializer: ChecklistSerializer
+      checklists = current_user.checklists.active
+      checklists = checklists.collect{|c| c unless c.completed?}.compact
+      render json: checklists, each_serializer: ChecklistSerializer
     else
       head 401
     end
