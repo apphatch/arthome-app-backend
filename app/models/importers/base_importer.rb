@@ -73,31 +73,35 @@ module Importers
         header_mappings = @header_mappings.dup
         attributes = header_mappings.each{ |k, v|
           header_mappings[k] = row[v]
-        }.reject{ |k, v|
-          !@model_class.new.attributes.keys.include?(k.to_s)
         }
         header_mappings = @header_mappings.dup
         assocs = header_mappings.each{ |k, v|
           header_mappings[k] = row[v]
-        }.reject{ |k, v|
-          !@model_class.new.public_methods.include?(k.to_sym) ||
-            attributes.keys.include?(k.to_sym)
         }
 
         attr_assocs = yield(attributes, assocs, row) if block_given?
         raise Exception.new 'importer must return [attributes, assocs]' if attr_assocs.length != 2
+        attributes, assocs = attr_assocs
+
+        attributes = attributes.reject{ |k, v|
+          !@model_class.new.attributes.keys.include?(k.to_s)
+        }
+        assocs = assocs.reject{ |k, v|
+          !@model_class.new.public_methods.include?(k.to_sym) ||
+            attributes.keys.include?(k.to_sym)
+        }
 
         obj = @model_class.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
 
         next if (obj.present? && @skip_if_record_exists)
 
         if obj.nil?
-          obj = @model_class.new attr_assocs[0]
+          obj = @model_class.new attributes
         else
-          obj.update attr_assocs[0]
+          obj.update attributes
         end
 
-        attr_assocs[1].each do |k, v|
+        assocs.each do |k, v|
           begin
             assoc = obj.send(k)
             assoc.push v unless (assoc.include?(v) || v.nil?)

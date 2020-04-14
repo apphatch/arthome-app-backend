@@ -119,11 +119,8 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "barcode"
-    t.string "category"
-    t.string "group"
-    t.string "role"
-    t.string "packaging"
-    t.string "role_shop"
+    t.json "custom_attributes"
+    t.string "role", default: "stock"
   end
 
   create_table "users", force: :cascade do |t|
