@@ -1,0 +1,11 @@
+{
+    "result": {
+        "type": "select",
+        "values": [
+            "OOS",
+            "ALMOOS_1",
+            "AVAILABLE_1",
+            "AVAILABLE_2"
+        ]
+    }
+}

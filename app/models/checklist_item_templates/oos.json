@@ -1,21 +1,17 @@
 {
-    "no_sale": {
-        "type": "checkbox",
-        "values": [
-            "true",
-            "false"
-        ]
-    },
     "result": {
         "type": "select",
         "values": [
-            "not found root cause",
-            "no gift",
-            "peak sale (at store)"
+            "Y",
+            "Customer's WH/store issue",
+            "No order from store (in 2 wks)",
+            "No gift",
+            "Wrong gift",
+            "Phantom stock",
+            "Stock not filled (but available at store)",
+            "No/wrong price tag",
+            "Not found root cause",
+            "Peak sale (at store)"
         ]
-    },
-    "mechanics": {
-        "type": "text",
-        "values": []
     }
 }
