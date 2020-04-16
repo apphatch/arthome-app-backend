@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_is_logged_in
-    head 401 unless current_user.present?
+    head 401 and return unless current_user.present?
     if session[:expires_at] < Time.current
       redirect_to controller: 'sessions', action: 'destroy'
     end
