@@ -95,6 +95,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
   create_table "shops", force: :cascade do |t|
     t.string "name"
     t.string "importing_id"
+    t.boolean "completed", default: false
     t.boolean "deleted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -109,6 +110,13 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
     t.bigint "stock_id"
     t.index ["shop_id"], name: "index_shops_stocks_on_shop_id"
     t.index ["stock_id"], name: "index_shops_stocks_on_stock_id"
+  end
+
+  create_table "shops_users", id: false, force: :cascade do |t|
+    t.bigint "shop_id"
+    t.bigint "user_id"
+    t.index ["shop_id"], name: "index_shops_users_on_shop_id"
+    t.index ["user_id"], name: "index_shops_users_on_user_id"
   end
 
   create_table "stocks", force: :cascade do |t|

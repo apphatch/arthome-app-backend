@@ -15,11 +15,11 @@ stock2 = Stock.create name: 'AXE DEO APOLLO 2X6X150ML', sku: '21018836', barcode
 
 user.shops.push shop
 
-#auto-gen when user - shop relation established
-checklist = user.checklists.first
-checklist.reference = 'oos template test'
-checklist.checklist_type = 'oos'
-checklist.save
+checklist = user.checklists.create(
+  shop: shop,
+  reference: 'oos template test',
+  checklist_type: 'oos'
+)
 
 shop.stocks.push stock1
 shop.stocks.push stock2

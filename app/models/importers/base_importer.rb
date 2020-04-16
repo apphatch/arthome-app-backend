@@ -102,11 +102,12 @@ module Importers
         end
 
         assocs.each do |k, v|
+          next if v.nil?
           begin
-            assoc = obj.send(k)
-            assoc.push v unless (assoc.include?(v) || v.nil?)
+            assoc = obj.send k
+            assoc.push(v) unless assoc.include?(v.id)
           rescue
-            obj.send("#{k}=", v) unless v.nil?
+            obj.send "#{k}=", v
           end
         end
         obj.save!

@@ -1,12 +1,12 @@
 class Shop < ApplicationRecord
   has_many :checklists
-  has_many :users, through: :checklists
+  has_and_belongs_to_many :users
   has_and_belongs_to_many :stocks
   has_many :checkin_checkouts
 
   has_many :photos, as: :dbfiles
 
-  scope :active, -> {where(deleted: false)}
+  scope :active, -> {where(deleted: false, completed: false)}
 
   def checkin user, params
     return nil unless [
@@ -61,5 +61,15 @@ class Shop < ApplicationRecord
     except
       return nil
     end
+  end
+
+  def check_is_completed!
+    self.update completed: self.checklists.all{|c|
+      c.completed?
+    }.all?
+  end
+
+  def completed?
+    return self.completed
   end
 end

@@ -65,10 +65,10 @@ class ShopsController < ApplicationController
   def search
     head 400 and return unless current_user.present?
     ['name', 'full_address'].each do |attr|
-      result = current_user.shops.where(
+      shops = current_user.shops.active.where(
         "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
       )
-      render json: result and return if result.present?
+      render json: shops and return if shops.present?
     end
     head 404
   end
