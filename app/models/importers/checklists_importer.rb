@@ -14,8 +14,8 @@ module Importers
       skip_if_record_exists
 
       super do |attributes, assocs, row|
-        assocs[:user] = User.find_by_importing_id assocs[:user]
-        assocs[:shop] = Shop.find_by_importing_id assocs[:shop]
+        assocs[:user] = User.find_by_importing_id assocs[:user].to_s
+        assocs[:shop] = Shop.find_by_importing_id assocs[:shop].to_s
 
         [attributes, assocs]
       end

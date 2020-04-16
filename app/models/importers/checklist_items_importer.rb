@@ -11,8 +11,8 @@ module Importers
       associate :stock, ['ULV code', 'Sub Category']
 
       super do |attributes, assocs, row|
-        assocs[:checklist] = Checklist.find_by_reference assocs[:checklist]
-        assocs[:stock] = Stock.find_by_importing_id assocs[:stock]
+        assocs[:checklist] = Checklist.find_by_reference assocs[:checklist].to_s
+        assocs[:stock] = Stock.find_by_importing_id assocs[:stock].to_s
 
         [attributes, assocs]
       end

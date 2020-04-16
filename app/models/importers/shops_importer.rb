@@ -15,7 +15,7 @@ module Importers
       associate :users, ['OSA Code']
 
       super do |attributes, assocs, row|
-        assocs[:users] = User.find_by_importing_id assocs[:users]
+        assocs[:users] = User.find_by_importing_id assocs[:users].to_s
 
         [attributes, assocs]
       end

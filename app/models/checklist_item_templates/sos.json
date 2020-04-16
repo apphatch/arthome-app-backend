@@ -1,13 +1,13 @@
 {
-    "length of unilever": {
+    "Length of Unilever": {
         "type": "input",
         "values": []
     },
-    "length of competitor": {
+    "Length of Competitor": {
         "type": "input",
         "values": []
     },
-    "space on shelf" : {
+    "Space on Shelf" : {
         "type": "input",
         "values": []
     }
