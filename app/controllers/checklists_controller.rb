@@ -45,7 +45,6 @@ class ChecklistsController < ApplicationController
   def update
     find_record do |checklist|
       checklist.update params
-      checklist.check_is_completed
       render json: checklist
     end
   end
@@ -53,7 +52,6 @@ class ChecklistsController < ApplicationController
   def update_checklist_items
     find_record do |checklist|
       checklist.update_checklist_items params
-      checklist.check_is_completed
       render json: checklist
     end
   end
