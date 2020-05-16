@@ -1,11 +1,11 @@
 class ShopsController < ApplicationController
   def index
-    render json: Shop.active
+    render json: Shop.active.order(:name)
   end
 
   def index_by_user
     if current_user.present?
-      render json: current_user.shops.active
+      render json: current_user.shops.active.order(:name)
     else
       head 400
     end
@@ -68,7 +68,7 @@ class ShopsController < ApplicationController
       shops = current_user.shops.active.where(
         "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
       )
-      render json: shops and return if shops.present?
+      render json: shops.order(:name) and return if shops.present?
     end
     head 404
   end

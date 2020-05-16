@@ -1,12 +1,12 @@
 class StocksController < ApplicationController
   def index
-    render json: Stock.all.where(deleted: false)
+    render json: Stock.all.where(deleted: false).order(:name)
   end
 
   def index_by_shop
     shop = Shop.find_by_id params[:shop_id]
     if shop.present?
-      render json: shop.stocks
+      render json: shop.stocks.order(:name)
     else
       head 404
     end
@@ -42,7 +42,7 @@ class StocksController < ApplicationController
       result = Stock.where(
         "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
       )
-      render json: result and return if result.present?
+      render json: result.order(:name) and return if result.present?
     end
     head 404
   end
