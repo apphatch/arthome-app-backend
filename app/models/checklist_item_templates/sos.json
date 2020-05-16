@@ -6,9 +6,5 @@
     "Length of Competitor": {
         "type": "input",
         "values": []
-    },
-    "Space on Shelf" : {
-        "type": "input",
-        "values": []
     }
 }
