@@ -37,11 +37,14 @@ class Shop < ApplicationRecord
   end
 
   def checkout user, params
+    self.check_is_completed!
+
     return nil unless [
       user.present?,
       user.try(:can_checkout?, self),
       params[:photo].present?,
-      params[:time].present?
+      params[:time].present?,
+      self.completed?
     ].all?
 
     begin
