@@ -37,19 +37,6 @@ class StocksController < ApplicationController
     end
   end
 
-  def search_by_checklist
-    checklist = Checklist.find_by_id params[:checklist_id]
-    render json: {error: 'checklist not found'} unless checklist.present?
-
-    ['name', 'sku', 'barcode', 'category', 'role'].each do |attr|
-      result = checklist.stocks.where(
-        "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
-      )
-      render json: result.order(:name) and return if result.present?
-    end
-    head 404
-  end
-
   def search
     ['name', 'sku', 'barcode', 'category', 'role'].each do |attr|
       result = Stock.where(

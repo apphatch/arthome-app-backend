@@ -63,6 +63,20 @@ class ChecklistsController < ApplicationController
     end
   end
 
+  def search_checklist_items
+    find_record do |checklist|
+      ['name', 'sku', 'barcode', 'category', 'role'].each do |attr|
+        result = checklist.checklist_items.select{ |item|
+          item.stock.send(attr.to_sym).match(/#{params[:search_term]}/)
+        }
+        if result.present?
+          render json: result.order(:name), each_serializer: ChecklistItemSerializer and return
+        end
+      end
+      head 404
+    end
+  end
+
   def permitted_params
     if ![
         params[:user_id], params[:shop_id]
