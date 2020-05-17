@@ -70,7 +70,8 @@ class ChecklistsController < ApplicationController
           item.stock.send(attr.to_sym).match(/#{params[:search_term]}/)
         }
         if result.present?
-          render json: result.order(:name), each_serializer: ChecklistItemSerializer and return
+          result = result.sort_by{|item| item.stock.name}
+          render json: result, each_serializer: ChecklistItemSerializer and return
         end
       end
       head 404
