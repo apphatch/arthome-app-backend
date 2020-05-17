@@ -65,15 +65,14 @@ class ChecklistsController < ApplicationController
 
   def search_checklist_items
     find_record do |checklist|
-      ['name', 'sku', 'barcode', 'category', 'role'].each do |attr|
-        result = checklist.checklist_items.select{ |item|
-          item.stock.send(attr.to_sym).match(/#{params[:search_term]}/)
-        }
-        if result.present?
-          result = result.sort_by{|item| item.stock.name}
-          render json: result, each_serializer: ChecklistItemSerializer and return
-        end
+      result = checklist.checklist_items.select{ |item|
+        item.stock.name.match(/#{params[:search_term]}/i)
+      }
+      if result.present?
+        result = result.sort_by{|item| item.stock.name}
+        render json: result, each_serializer: ChecklistItemSerializer and return
       end
+
       head 404
     end
   end
