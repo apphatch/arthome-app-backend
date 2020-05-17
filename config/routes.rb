@@ -50,6 +50,7 @@ Rails.application.routes.draw do
     collection do
       get :index_by_shop
       get :search
+      get :search_by_checklist
     end
   end
 end
