@@ -67,7 +67,7 @@ class Shop < ApplicationRecord
   end
 
   def check_is_completed!
-    self.update completed: self.checklists.all{|c|
+    self.update completed: self.checklists.collect{|c|
       c.completed?
     }.all?
   end
