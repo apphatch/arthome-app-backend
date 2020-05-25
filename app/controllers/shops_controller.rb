@@ -62,6 +62,19 @@ class ShopsController < ApplicationController
     end
   end
 
+  def shop_checkout
+    find_record do |shop|
+      if current_user.present?
+        record = shop.shop_checkout current_user, params
+        if record.present?
+          render json: {status: 'success', last_checkin_checkout: record}
+        else
+          render json: {status: 'failed'}
+        end
+      end
+    end
+  end
+
   def search
     head 400 and return unless current_user.present?
     ['name', 'full_address'].each do |attr|

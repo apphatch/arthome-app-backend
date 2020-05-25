@@ -27,7 +27,7 @@ class Shop < ApplicationRecord
       record.photos.create(
         image: params[:photo],
         time: params[:time],
-        name: params[:photo_name]
+        name: params[:photo_name],
       )
       record.save
       return record
@@ -57,7 +57,27 @@ class Shop < ApplicationRecord
       record.photos.create(
         image: params[:photo],
         time: params[:time],
-        name: params[:photo_name]
+        name: params[:photo_name],
+      )
+      record.save
+      return record
+    except
+      return nil
+    end
+  end
+
+  def shop_checkout user, params
+    begin
+      record = self.checkin_checkouts.create(
+        user: nil,
+        time: params[:time],
+        note: params[:note],
+        is_checkin: false
+      )
+      record.photos.create(
+        image: params[:photo],
+        time: params[:time],
+        name: params[:photo_name],
       )
       record.save
       return record
@@ -74,5 +94,9 @@ class Shop < ApplicationRecord
 
   def completed?
     return self.completed
+  end
+
+  def shop_checkin_checkouts
+    return self.checkin_checkouts.where user: nil
   end
 end
