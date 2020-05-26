@@ -74,13 +74,14 @@ class Shop < ApplicationRecord
         note: params[:note],
         is_checkin: false
       )
-      record.photos.create(
-        image: params[:photo],
-        time: params[:time],
-        name: params[:photo_name],
-      )
+      params[:photos].each do |photo|
+        record.photos.create(
+          image: photo[:photo],
+          time: photo[:time],
+          name: photo[:photo_name],
+        )
+      end
       record.save
-      return record
     except
       return nil
     end
