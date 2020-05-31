@@ -76,9 +76,9 @@ class Shop < ApplicationRecord
       )
       params[:photos].each do |photo|
         record.photos.create(
-          image: photo[:photo],
-          time: photo[:time],
-          name: photo[:photo_name],
+          image: photo,
+          time: params[:time],
+          name: "shop_checkout_#{params[:time].to_s}"
         )
       end
       record.save
