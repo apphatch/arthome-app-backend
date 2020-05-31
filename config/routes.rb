@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     member do
       post :checkin
       post :checkout
-      post :checkout_shop
+      post :shop_checkout
     end
   end
 
