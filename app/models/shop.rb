@@ -68,12 +68,14 @@ class Shop < ApplicationRecord
 
   def shop_checkout user, params
     begin
-      record = self.checkin_checkouts.create(
+      record = self.checkin_checkouts.new(
         user: nil,
         time: params[:time],
         note: params[:note],
         is_checkin: false
       )
+      record.save validate: false
+
       params[:photos].each do |photo|
         record.photos.create(
           image: photo,
