@@ -83,7 +83,6 @@ class Shop < ApplicationRecord
           name: "shop_checkout_#{params[:time].to_s}"
         )
       end
-      record.save
     rescue
       return nil
     end
