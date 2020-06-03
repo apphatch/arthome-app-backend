@@ -37,8 +37,8 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
   end
 
   create_table "checkin_checkouts", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.bigint "shop_id", null: false
+    t.bigint "user_id"
+    t.bigint "shop_id"
     t.datetime "time"
     t.text "note"
     t.boolean "is_checkin", default: false
