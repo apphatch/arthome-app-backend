@@ -31,7 +31,7 @@ class Shop < ApplicationRecord
       )
       record.save
       return record
-    except
+    rescue
       return nil
     end
   end
@@ -61,7 +61,7 @@ class Shop < ApplicationRecord
       )
       record.save
       return record
-    except
+    rescue
       return nil
     end
   end
@@ -84,7 +84,7 @@ class Shop < ApplicationRecord
         )
       end
       record.save
-    except
+    rescue
       return nil
     end
   end
