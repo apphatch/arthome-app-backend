@@ -44,7 +44,7 @@ class Shop < ApplicationRecord
       user.try(:can_checkout?, self),
       params[:photo].present?,
       params[:time].present?,
-      self.completed?
+      #self.completed?
     ].all?
 
     begin
