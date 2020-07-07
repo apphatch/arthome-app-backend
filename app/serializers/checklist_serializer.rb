@@ -4,6 +4,6 @@ class ChecklistSerializer < ActiveModel::Serializer
   has_many :checklist_items, each_serializer: ChecklistItemSerializer
 
   def checklist_type
-    object.checklist_type.upcase
+    object.checklist_type
   end
 end

@@ -2,6 +2,7 @@
     "result": {
         "type": "select",
         "values": [
+            "Not found root cause",
             "Y",
             "Customer's WH/store issue",
             "No order from store (in 2 wks)",
@@ -10,7 +11,6 @@
             "Phantom stock",
             "Stock not filled (but available at store)",
             "No/wrong price tag",
-            "Not found root cause",
             "Peak sale (at store)"
         ]
     }
