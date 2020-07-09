@@ -34,6 +34,9 @@ gem 'bootsnap', '>= 1.4.2', require: false
 # For your spreadsheet needs
 gem 'roo', '~> 2.8.0'
 
+# CORS
+gem 'rack-cors'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
