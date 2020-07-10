@@ -47,8 +47,20 @@ class StocksController < ApplicationController
     head 404
   end
 
+  def import
+    begin
+      # assume only 1 file
+      f = permitted_params[:files].first
+      importer = Importers::StocksImporter.new file_name: f
+      importer.import
+      head 201
+    rescue
+      head 500
+    end
+  end
+
   def permitted_params
-    return params
+    return params.permit(:files)
   end
 
   def find_record
