@@ -37,6 +37,18 @@ class ChecklistItemsController < ApplicationController
     end
   end
 
+  def import
+    begin
+      # assume only 1 file
+      f = params[:files].first
+      importer = Importers::ChecklistItemsImporter.new file: f
+      importer.import
+      head 201
+    rescue
+      head 500
+    end
+  end
+
   def permitted_params
     if ![
         params[:checklist_id], params[:stock_id]

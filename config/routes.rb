@@ -8,8 +8,9 @@ Rails.application.routes.draw do
 
   resources :checklists do
     collection do
-      get :index_by_user
-      get :index_by_shop
+      get  :index_by_user
+      get  :index_by_shop
+      post :import
     end
 
     member do
@@ -21,7 +22,8 @@ Rails.application.routes.draw do
 
   resources :checklist_items do
     collection do
-      get :index_by_checklist
+      get  :index_by_checklist
+      post :import
     end
 
     member do
