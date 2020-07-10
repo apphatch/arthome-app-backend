@@ -14,6 +14,8 @@ module Importers
 
       if params[:file_name].present?
         @spreadsheet = Roo::Spreadsheet.open "import/#{params[:file_name]}"
+      elsif params[:file].present?
+        @spreadsheet = Roo::Spreadsheet.open params[:file]
       else
         raise Exception.new 'file not found'
       end

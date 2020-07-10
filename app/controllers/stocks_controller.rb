@@ -50,8 +50,8 @@ class StocksController < ApplicationController
   def import
     begin
       # assume only 1 file
-      f = permitted_params[:files].first
-      importer = Importers::StocksImporter.new file_name: f
+      f = params[:files].first
+      importer = Importers::StocksImporter.new file: f
       importer.import
       head 201
     rescue
