@@ -29,7 +29,7 @@ class UsersController < ApplicationController
   end
 
   def permitted_params
-    return params
+    return params.permit(:username, :name, :password, :importing_id)
   end
 
   def find_record
