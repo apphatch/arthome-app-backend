@@ -1,12 +1,12 @@
 class StocksController < ApplicationController
   def index
-    render json: Stock.all.where(deleted: false).order(:name)
+    render json: Stock.all.where(deleted: false).order(:name), each_serializer: StockSerializer
   end
 
   def index_by_shop
     shop = Shop.find_by_id params[:shop_id]
     if shop.present?
-      render json: shop.stocks.order(:name)
+      render json: shop.stocks.order(:name), each_serializer: StockSerializer
     else
       head 404
     end
@@ -14,26 +14,26 @@ class StocksController < ApplicationController
 
   def show
     find_record do |stock|
-      render json: stock
+      render json: stock, serializer: StockSerializer
     end
   end
 
   def create
     stock = Stock.create permitted_params
-    render json: stock
+    render json: stock, serializer: StockSerializer
   end
 
   def update
     find_record do |stock|
       stock.update permitted_params
-      render json: stock
+      render json: stock, serializer: StockSerializer
     end
   end
 
   def destroy
     find_record do |stock|
       stock.deleted!
-      render json: stock
+      render json: stock, serializer: StockSerializer
     end
   end
 
@@ -42,7 +42,7 @@ class StocksController < ApplicationController
       result = Stock.where(
         "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
       )
-      render json: result.order(:name) and return if result.present?
+      render json: result.order(:name), each_serializer: StockSerializer and return if result.present?
     end
     head 404
   end
