@@ -30,6 +30,14 @@ class Checklist < ApplicationRecord
       item = self.checklist_items.find_by_id entry['id'].to_i
       item.update data: entry['data'].to_json if item.present?
     end
+
+    self.check_is_completed
+  end
+
+  def check_is_completed
+    self.update completed: true if self.checklist_items.collect{
+      |item| item.completed?
+    }.all?
   end
 
   def completed?

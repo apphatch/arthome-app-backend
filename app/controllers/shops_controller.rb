@@ -5,7 +5,7 @@ class ShopsController < ApplicationController
 
   def index_by_user
     if current_user.present?
-      render json: current_user.shops.active.order(:name)
+      render json: current_user.active_shops.order(:name)
     else
       head 400
     end

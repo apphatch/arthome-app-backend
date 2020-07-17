@@ -37,8 +37,6 @@ class Shop < ApplicationRecord
   end
 
   def checkout user, params
-    self.check_is_completed!
-
     return nil unless [
       user.present?,
       user.try(:can_checkout?, self),
@@ -86,16 +84,6 @@ class Shop < ApplicationRecord
     rescue
       return nil
     end
-  end
-
-  def check_is_completed!
-    self.update completed: self.checklists.collect{|c|
-      c.completed?
-    }.all?
-  end
-
-  def completed?
-    return self.completed
   end
 
   def shop_checkin_checkouts

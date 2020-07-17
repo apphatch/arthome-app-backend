@@ -25,4 +25,9 @@ class User < ApplicationRecord
     return [] if self.checkin_checkouts.empty?
     return self.checkin_checkouts.order(:created_at).last
   end
+
+  def active_shops
+    incompleted_checklists = self.checklists.active.incompleted
+    return incompleted_checklists.collect{|c| c.shop}.compact
+  end
 end

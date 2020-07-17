@@ -10,4 +10,8 @@ class Stock < ApplicationRecord
       return attrs[:category]
     end
   end
+
+  def category= value
+    nil
+  end
 end

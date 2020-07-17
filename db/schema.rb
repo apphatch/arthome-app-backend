@@ -96,7 +96,6 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
   create_table "shops", force: :cascade do |t|
     t.string "name"
     t.string "importing_id"
-    t.boolean "completed", default: false
     t.boolean "deleted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

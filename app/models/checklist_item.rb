@@ -20,4 +20,8 @@ class ChecklistItem < ApplicationRecord
   def data
     JSON.parse(super) unless super.nil?
   end
+
+  def completed?
+    return self.data.present?
+  end
 end
