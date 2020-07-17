@@ -33,7 +33,7 @@ class ChecklistsController < ApplicationController
 
   def show_incomplete_items
     find_record do |checklist|
-      render json: checklist.incomplete_items, each_serializer: ChecklistItemSerializer
+      render json: checklist.checklist_items.incompleted, each_serializer: ChecklistItemSerializer
     end
   end
 

@@ -5,6 +5,7 @@ class ChecklistItem < ApplicationRecord
   belongs_to :stock
 
   scope :active, -> { where(deleted: false) }
+  scope :incompleted, -> { where(data: nil) }
 
   def template
     return JSON.parse(File.read("#{Rails.root.join(
