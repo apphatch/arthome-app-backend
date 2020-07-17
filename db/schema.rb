@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2020_03_25_112948) do
     t.string "reference"
     t.string "checklist_type"
     t.boolean "deleted", default: false
+    t.boolean "completed", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["shop_id"], name: "index_checklists_on_shop_id"

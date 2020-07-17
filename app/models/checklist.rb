@@ -6,7 +6,8 @@ class Checklist < ApplicationRecord
   has_many :checklist_items
   has_many :stocks, through: :checklist_items
 
-  scope :active, -> {where(deleted: false)}
+  scope :active, -> { where(deleted: false) }
+  scope :incompleted, -> { where(completed: false) }
 
   def self.create params
     unless params[:checklist_type].present?
@@ -32,9 +33,7 @@ class Checklist < ApplicationRecord
   end
 
   def completed?
-    self.checklist_items.collect{ |item|
-      item.data.present?
-    }.all?
+    self.completed
   end
 
   def empty?

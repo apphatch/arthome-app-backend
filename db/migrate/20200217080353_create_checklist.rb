@@ -6,6 +6,7 @@ class CreateChecklist < ActiveRecord::Migration[6.0]
       t.string      :reference
       t.string      :checklist_type
       t.boolean     :deleted, default: false
+      t.boolean     :completed, default: false
 
       t.timestamps
     end
