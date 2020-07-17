@@ -2,8 +2,8 @@
     "result": {
         "type": "select",
         "values": [
-            "Not found root cause",
             "Y",
+            "Not found root cause",
             "Customer's WH/store issue",
             "No order from store (in 2 wks)",
             "No gift",
