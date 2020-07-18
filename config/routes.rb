@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     collection do
       get  :index_by_user
       get  :index_by_shop
+      get  :index_by_user_shop
       post :import
     end
 

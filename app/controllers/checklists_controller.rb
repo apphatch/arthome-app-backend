@@ -11,7 +11,7 @@ class ChecklistsController < ApplicationController
     if shop.present?
       render json: shop.checklists.active, each_serializer: ChecklistSerializer
     else
-      render json: {error: 'missing shop_id'} and return
+      head 401
     end
   end
 
@@ -23,6 +23,16 @@ class ChecklistsController < ApplicationController
     else
       head 401
     end
+  end
+
+  def index_by_user_shop
+    head 401 and return unless current_user.present?
+    shop = current_user.shops.find_by_id params[:shop_id]
+    head 401 and return unless shop.present?
+
+    checklists = current_user.checklists.active.incompleted
+    checklists = checklists.collect{|c| c if c.shop == shop}.compact
+    render json: checklists, each_serializer: ChecklistSerializer
   end
 
   def show
