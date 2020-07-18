@@ -30,6 +30,20 @@ class UsersController < ApplicationController
     end
   end
 
+  def lock
+    find_record do |user|
+      user.locked!
+      render json: user
+    end
+  end
+
+  def unlock
+    find_record do |user|
+      user.unlocked!
+      render json: user
+    end
+  end
+
   def permitted_params
     return params.permit(:username, :name, :password, :importing_id)
   end

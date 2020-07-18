@@ -34,4 +34,12 @@ class User < ApplicationRecord
   def admin?
     return self.role == 'admin'
   end
+
+  def locked!
+    self.update locked: true
+  end
+
+  def unlocked!
+    self.update locked: false
+  end
 end
