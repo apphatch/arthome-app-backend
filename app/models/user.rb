@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_secure_password
 
+  scope :active, -> { where(locked: false) }
+
   def can_checkin?
     return true if self.checkin_checkouts.empty?
     return !self.last_checkin_checkout.is_checkin
@@ -41,5 +43,9 @@ class User < ApplicationRecord
 
   def unlocked!
     self.update locked: false
+  end
+
+  def locked?
+    return self.locked
   end
 end

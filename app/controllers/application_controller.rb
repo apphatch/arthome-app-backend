@@ -4,11 +4,12 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def current_user
+    @current_user = nil
+
     if session[:user_id].present?
-      @current_user ||= User.find_by_id session[:user_id]
-    else
-      @current_user = nil
+      @current_user ||= User.active.find_by_id session[:user_id]
     end
+
     return @current_user
   end
 
