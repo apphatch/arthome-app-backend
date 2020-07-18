@@ -30,4 +30,8 @@ class User < ApplicationRecord
     incompleted_checklists = self.checklists.active.incompleted
     return incompleted_checklists.collect{|c| c.shop}.compact
   end
+
+  def admin?
+    return self.role == 'admin'
+  end
 end

@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  before_action :check_user_is_admin, except: [:index, :show]
+
   def index
     render json: User.all.where(deleted: false)
   end
@@ -39,5 +41,9 @@ class UsersController < ApplicationController
     else
       head 404
     end
+  end
+
+  def check_user_is_admin
+    head 401 unless current_user.admin?
   end
 end
