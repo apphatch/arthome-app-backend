@@ -30,7 +30,7 @@ class User < ApplicationRecord
 
   def active_shops
     incompleted_checklists = self.checklists.active.incompleted
-    return incompleted_checklists.collect{|c| c.shop}.compact
+    return incompleted_checklists.collect{|c| c.shop}.compact.uniq
   end
 
   def admin?
