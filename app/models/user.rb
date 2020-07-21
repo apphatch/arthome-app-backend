@@ -48,4 +48,13 @@ class User < ApplicationRecord
   def locked?
     return self.locked
   end
+
+  def clear_checklists!
+    self.checklists.each do |checklist|
+      checklist.checklist_items.each do |item|
+        item.update data: nil
+      end
+      checklist.update completed: false
+    end
+  end
 end
