@@ -11,7 +11,7 @@ class CheckinCheckoutsController < ApplicationController
   end
 
   def create
-    record = ChecklistItem.create permitted_params
+    record = CheckinCheckout.create permitted_params
     render json: record
   end
 
