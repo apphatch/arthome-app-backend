@@ -26,6 +26,7 @@ class ChecklistItemsController < ApplicationController
   def update
     find_record do |checklist_item|
       checklist_item.update_attributes params.permit(:data)
+      checklist_item.checklist.check_is_completed
       render json: checklist_item
     end
   end
