@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   before_action :check_user_is_logged_in
   before_action :set_csrf_token_for_api
+  before_action :set_jwt_for_api
   protect_from_forgery with: :exception
 
   def auth_info
@@ -24,9 +25,11 @@ class ApplicationController < ActionController::Base
   def check_user_is_logged_in
     head 401 and return unless current_user.present?
 
-    if Time.zone.at(auth_info[:expires_at]) < Time.current
+    if Time.zone.at(auth_info[:exp]) < Time.current
       redirect_to controller: 'sessions', action: 'destroy'
     end
+
+    set_jwt_for_api
   end
 
   private
@@ -34,7 +37,15 @@ class ApplicationController < ActionController::Base
     response.headers['X-CSRF-Token'] = form_authenticity_token
   end
 
+  def set_jwt_for_api user
+    token = JsonWebToken.encode user_id: user.id
+    user.update jwt: token
+    response.headers['Authorization'] = token
+    return token
+  end
+
   def verified_request?
     super || valid_authenticity_token?(session, request.headers['X-CSRF-Token'])
   end
+
 end
