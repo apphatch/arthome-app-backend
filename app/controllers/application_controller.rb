@@ -10,14 +10,23 @@ class ApplicationController < ActionController::Base
       @current_user ||= User.active.find_by_id session[:user_id]
     end
 
+    if params[:auth_token].present?
+      @jwt_payload = JsonWebToken.decode(params[:auth_token])
+      @current_user ||= User.active.find_by_id @jwt_payload[:user_id]
+    end
+
     return @current_user
   end
 
   def check_user_is_logged_in
     head 401 and return unless current_user.present?
-    if session[:expires_at] < Time.current
+    if Time.zone.at(@jwt_payload[:expires_at]) < Time.current
       redirect_to controller: 'sessions', action: 'destroy'
     end
+    # use jwt instead of sessions
+    #if session[:expires_at] < Time.current
+    #  redirect_to controller: 'sessions', action: 'destroy'
+    #end
   end
 
   private
