@@ -66,7 +66,7 @@ module Importers
         next if row == data_headers
 
         header_mappings = @header_mappings.dup
-        attributes = header_mappings.dup.each{ |k, v|
+        attributes = header_mappings.each{ |k, v|
           header_mappings[k] = row[v]
         }
         assocs = attributes.dup
