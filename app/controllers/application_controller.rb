@@ -4,8 +4,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   def auth_info
-    if params[:auth_token].present?
-      return JsonWebToken.decode params[:auth_token]
+    if request.headers['Authorization'].present?
+      return JsonWebToken.decode request.headers['Authorization']
     else
       return nil
     end
@@ -14,8 +14,8 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user = nil
 
-    if params[:auth_token].present?
-      @current_user ||= User.active.find_by_jwt params[:auth_token]
+    if request.headers['Authorization'].present?
+      @current_user ||= User.active.find_by_jwt request.headers['Authorization']
     end
 
     return @current_user
