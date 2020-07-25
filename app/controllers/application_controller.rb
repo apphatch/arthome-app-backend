@@ -1,7 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :check_user_is_logged_in
   before_action :set_csrf_token_for_api
-  before_action :set_jwt_for_api
   protect_from_forgery with: :exception
 
   def auth_info
@@ -16,7 +15,7 @@ class ApplicationController < ActionController::Base
     @current_user = nil
 
     if params[:auth_token].present?
-      @current_user ||= User.active.find_by_jwt @params[:auth_token]
+      @current_user ||= User.active.find_by_jwt params[:auth_token]
     end
 
     return @current_user
@@ -29,7 +28,7 @@ class ApplicationController < ActionController::Base
       redirect_to controller: 'sessions', action: 'destroy'
     end
 
-    set_jwt_for_api
+    set_jwt_for_api current_user
   end
 
   private
