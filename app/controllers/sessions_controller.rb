@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    current_user.update jwt: nil
+    current_user.update jwt: nil if current_user.present?
     head 401
   end
 end
