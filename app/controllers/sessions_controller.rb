@@ -6,18 +6,12 @@ class SessionsController < ApplicationController
   end
 
   def create
-    if session[:user_id].present? && false
-      # try jwt
-      render json: {result: 'already logged in', user_id: session[:user_id]} and return
-    end
-
     user = User.find_by_username params[:username]
     if user && user.authenticate(params[:password])
-      jwt = JsonWebToken.encode(user_id: user.id)
-      session[:user_id] = user.id
-      session[:expires_at] = Time.current + 30.minutes
+      token = JsonWebToken.encode(user_id: user.id)
+      user.update jwt: token
       render json: {
-        result: 'logged in', user_id: user.id, auth_token: jwt,
+        result: 'logged in', user_id: user.id, auth_token: token,
         last_checkin_checkout: user.last_checkin_checkout
       } and return
     else
@@ -26,8 +20,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
-    #reset_session
+    current_user.update jwt: nil
     head 401
   end
 end
