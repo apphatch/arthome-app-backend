@@ -12,48 +12,41 @@ module Importers
       @spreadsheet = nil
       @skip_if_record_exists = false
 
-      if params[:file_name].present?
-        @spreadsheet = Roo::Spreadsheet.open "import/#{params[:file_name]}"
-      elsif params[:file].present?
-        @spreadsheet = Roo::Spreadsheet.open params[:file]
-      else
+      f = params[:file] || "import/#{params[:file_name]}"
+      begin
+        @spreadsheet = Roo::Spreadsheet.open f
+      rescue
         raise Exception.new 'file not found'
       end
 
-      if @model_class.nil?
-        raise Exception.new 'must define @model_class'
-      end
+      raise Exception.new 'must define @model_class' if @model_class.nil?
     end
 
-    def headers
+    def data_headers
       return @spreadsheet.row(1)
     end
 
-    def associate model_symbol, allowed_headers, params={allow_dup: false, is_uuid: false}
-      #alias of index
-      index model_symbol, allowed_headers, params
+    def associate model_attr, allowed_data_headers, params={allow_dup: false, is_uuid: false}
+      #alias of index, improves readability
+      index model_attr, allowed_data_headers, params
     end
 
-    def index model_symbol, allowed_headers, params={allow_dup: false, is_uuid: false}
+    def index model_attr, allowed_data_headers, params={allow_dup: false, is_uuid: false}
       idx = nil
 
-      allowed_headers.each do |text|
-        idx = headers.find_index(text)
+      allowed_data_headers.each do |data_header|
+        idx = data_headers.find_index(data_header)
         next if idx.nil?
 
-        if params[:is_uuid]
-          @uuid = {key: model_symbol.to_s, idx: idx}
-        end
+        @uuid = {key: model_attr.to_s, idx: idx} if params[:is_uuid]
 
         unless @header_mappings.values.include?(idx) && !params[:allow_dup]
-          @header_mappings = @header_mappings.merge(
-            model_symbol => idx
-          )
+          @header_mappings = @header_mappings.merge(model_attr => idx)
           break
         end
       end
 
-      if params[:is_uuid] && idx.nil?
+      if params[:is_uuid].present? && idx.nil?
         raise Exception.new 'uuid column not found'
       end
 
@@ -70,16 +63,12 @@ module Importers
 
       raise Exception.new 'uuid not found' if @uuid.nil?
       @spreadsheet.each do |row|
-        next if row == headers
+        next if row == data_headers
 
-        header_mappings = @header_mappings.dup
-        attributes = header_mappings.each{ |k, v|
+        attributes = @header_mappings.dup.each{ |k, v|
           header_mappings[k] = row[v]
         }
-        header_mappings = @header_mappings.dup
-        assocs = header_mappings.each{ |k, v|
-          header_mappings[k] = row[v]
-        }
+        assocs = attributes.dup
 
         attr_assocs = yield(attributes, assocs, row) if block_given?
         raise Exception.new 'importer must return [attributes, assocs]' if attr_assocs.length != 2
@@ -122,7 +111,7 @@ module Importers
 
       raise Exception.new 'uuid not found' if @uuid.nil?
       @spreadsheet.each do |row|
-        next if row == headers
+        next if row == data_headers
 
         obj = @model_class.send "find_by_#{@uuid[:key]}", row[@uuid[:idx]]
         if obj.present?
