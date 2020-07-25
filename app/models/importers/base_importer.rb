@@ -65,7 +65,8 @@ module Importers
       @spreadsheet.each do |row|
         next if row == data_headers
 
-        attributes = @header_mappings.dup.each{ |k, v|
+        header_mappings = @header_mappings.dup
+        attributes = header_mappings.each{ |k, v|
           header_mappings[k] = row[v]
         }
         assocs = attributes.dup
