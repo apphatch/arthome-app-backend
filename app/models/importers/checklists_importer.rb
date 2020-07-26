@@ -8,6 +8,7 @@ module Importers
     def import
       index_uuid :reference, ['reference']
       index :checklist_type, ['Type', 'type']
+      index :yearweek, ['YearWeek']
       associate :user, ['OSA Code']
       associate :shop, ['Outlet']
 
