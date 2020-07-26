@@ -12,8 +12,6 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user = nil
-
     if request.headers['Authorization'].present?
       @current_user ||= User.active.find_by_jwt request.headers['Authorization']
     end
@@ -22,6 +20,8 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user_is_logged_in
+    @current_user = nil
+
     head 401 and return unless current_user.present?
 
     if Time.zone.at(auth_info[:exp]) < Time.current
