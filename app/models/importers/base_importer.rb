@@ -22,16 +22,17 @@ module Importers
       raise Exception.new 'must define @model_class' if @model_class.nil?
     end
 
+    def skip_if_record_exists
+      @skip_if_record_exists = true
+    end
+
     def data_headers
       return @spreadsheet.row(1)
     end
 
-    def associate model_attr, allowed_data_headers, params={allow_dup: false, is_uuid: false}
-      #alias of index, improves readability
-      index model_attr, allowed_data_headers, params
-    end
-
-    def index model_attr, allowed_data_headers, params={allow_dup: false, is_uuid: false}
+    def index model_attr, allowed_data_headers, params={
+      allow_dup: false, is_uuid: false
+    }
       idx = nil
 
       allowed_data_headers.each do |data_header|
@@ -53,9 +54,18 @@ module Importers
       return @header_mappings
     end
 
-    def skip_if_record_exists
-      @skip_if_record_exists = true
+    def associate model_attr, allowed_data_headers, params={allow_dup: false}
+      #alias of index, improves readability
+      index model_attr, allowed_data_headers, params
     end
+
+    def index_uuid model_attr, allowed_data_headers
+      #alias of index to mark column as uuid, improves readability
+      index model_attr, allowed_data_headers, {is_uuid: true}
+    end
+
+    #--------------------------------------------------------------------------
+    #main
 
     def import
       # default import behaviour
@@ -109,26 +119,6 @@ module Importers
     def update
       # default update behaviour
       # only update, no create
-
-      raise Exception.new 'uuid not found' if @uuid.nil?
-      @spreadsheet.each do |row|
-        next if row == data_headers
-
-        obj = @model_class.send "find_by_#{@uuid[:key]}", row[@uuid[:idx]]
-        if obj.present?
-          header_mappings = @header_mappings.dup
-          attributes = header_mappings.each{ |k, v|
-            header_mappings[k] = row[v]
-          }.reject{ |k, v|
-            !obj.attributes.keys.include?(k.to_s)
-          }
-
-          attributes = yield(attributes, row) if block_given?
-
-          obj.update(attributes)
-        end
-
-      end
     end
   end
 end

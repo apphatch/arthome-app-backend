@@ -6,7 +6,7 @@ module Importers
     end
 
     def import
-      index :importing_id, ['No.', 'Outlet'], {is_uuid: true}
+      index_uuid :importing_id, ['No.', 'Outlet']
       index :name, ['Store Name', 'Outlet Name']
       index :shop_type, ['Store Type (MT/DT/CVS)', 'Outlet classification']
       index :full_address, ['Store Address', 'Outlet Address']

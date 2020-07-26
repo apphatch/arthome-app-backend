@@ -6,7 +6,7 @@ module Importers
     end
 
     def import
-      index :reference, ['reference'], {is_uuid: true}
+      index_uuid :reference, ['reference']
       index :checklist_type, ['Type', 'type']
       associate :user, ['OSA Code']
       associate :shop, ['Outlet']

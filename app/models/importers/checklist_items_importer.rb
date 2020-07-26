@@ -6,9 +6,11 @@ module Importers
     end
 
     def import
-      index :importing_id, ['id'], {is_uuid: true}
+      index_uuid :importing_id, ['id']
       associate :checklist, ['checklist ref']
       associate :stock, ['ULV code', 'Sub Category']
+
+      auto_generate_uuid [:checklist]
 
       super do |attributes, assocs, row|
         assocs[:checklist] = Checklist.find_by_reference assocs[:checklist].to_s

@@ -8,7 +8,7 @@ module Importers
     end
 
     def import
-      index :importing_id, ['SKU_Barcode', 'ULV code', 'Sub Category'], {is_uuid: true}
+      index_uuid :importing_id, ['SKU_Barcode', 'ULV code', 'Sub Category']
       index :sku, ['SKU_Barcode', 'ULV code'], {allow_dup: true}
       index :name, ['SKU_Name', 'ULV DESCRIPTION', 'VI DESCRIPTION', 'ULV Description']
       index :barcode, ['barcode']
