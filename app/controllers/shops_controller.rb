@@ -39,7 +39,7 @@ class ShopsController < ApplicationController
   def checkin
     find_record do |shop|
       if current_user.present?
-        record = shop.checkin current_user, params
+        record = shop.checkin current_user, permitted_params
         if record.present?
           render json: {status: 'success', last_checkin_checkout: record}
         else
@@ -52,7 +52,7 @@ class ShopsController < ApplicationController
   def checkout
     find_record do |shop|
       if current_user.present?
-        record = shop.checkout current_user, params
+        record = shop.checkout current_user, permitted_params
         if record.present?
           render json: {status: 'success', last_checkin_checkout: record}
         else
@@ -65,7 +65,7 @@ class ShopsController < ApplicationController
   def shop_checkout
     find_record do |shop|
       if current_user.present?
-        record = shop.shop_checkout current_user, params
+        record = shop.shop_checkout current_user, permitted_params
         if record.present?
           render json: {status: 'success', last_checkin_checkout: record}
         else
@@ -87,7 +87,7 @@ class ShopsController < ApplicationController
   end
 
   def permitted_params
-    return params
+    return params.permit(:photo, :note, :time, :photo_name)
   end
 
   def find_record
