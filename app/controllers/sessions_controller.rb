@@ -22,6 +22,6 @@ class SessionsController < ApplicationController
   def destroy
     # LOGOUT
     current_user.update jwt: nil if current_user.present?
-    head 401
+    head 200
   end
 end
