@@ -8,6 +8,8 @@ module Importers
     end
 
     def import
+      is_uid :importing_id
+
       index :importing_id, ['SKU_Barcode', 'ULV code', 'Sub Category']
       index :sku, ['SKU_Barcode', 'ULV code'], {allow_dup: true}
       index :name, ['SKU_Name', 'ULV DESCRIPTION', 'VI DESCRIPTION', 'ULV Description']
@@ -25,7 +27,6 @@ module Importers
       index :packaging, ['SKU_Package']
 
       super do |attributes, assocs, row|
-        attributes[:importing_id] = auto_generate_uuid attributes
         unless assocs[:shops].nil?
           assocs[:shops] = Shop.find_by_importing_id assocs[:shops]
         end

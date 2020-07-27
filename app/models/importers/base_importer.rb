@@ -9,10 +9,11 @@ module Importers
       # 4. super accepts a block with attributes, associations and row data
 
       @header_mappings = {}
-      @uuid_headers =[]
+      @uid_attr =nil
       @spreadsheet = nil
       @skip_if_record_exists = false
-      @auto_generate_uuid = false
+      @auto_gen_uid = false
+      @model_attrs_to_use = []
 
       f = params[:file] || "import/#{params[:file_name]}"
       begin
@@ -28,29 +29,26 @@ module Importers
       @skip_if_record_exists = true
     end
 
-    def data_headers
-      return @spreadsheet.row(1)
+    def is_uid model_attr
+      @uid_attr = model_attr
     end
 
-    def index model_attr, allowed_data_headers, params={
-      allow_dup: false, is_uuid: false
-    }
+    def auto_gen_uid_with model_attrs_to_use=[:all]
+      @auto_gen_uid = true
+      @model_attrs_to_use = model_attrs_to_use
+    end
+
+    def index model_attr, allowed_data_headers, params={allow_dup: false}
       idx = nil
 
       allowed_data_headers.each do |data_header|
         idx = data_headers.find_index(data_header)
         next if idx.nil?
 
-        @uuid = {key: model_attr.to_s, idx: idx} if params[:is_uuid]
-
         unless @header_mappings.values.include?(idx) && !params[:allow_dup]
           @header_mappings = @header_mappings.merge(model_attr => idx)
           break
         end
-      end
-
-      if params[:is_uuid].present? && idx.nil?
-        raise Exception.new 'uuid column not found'
       end
 
       return @header_mappings
@@ -61,26 +59,25 @@ module Importers
       index model_attr, allowed_data_headers, params
     end
 
-    def index_uuid model_attr, allowed_data_headers
-      #alias of index to mark column as uuid, improves readability
-      index model_attr, allowed_data_headers
+    #--------------------------------------------------------------------------
+    #main
+
+    def data_headers
+      return @spreadsheet.row(1)
     end
 
-    def auto_generate_uuid model_attrs, model_attrs_to_use=[]
-      unless model_attrs_to_use.empty?
+    def auto_gen_uid model_attrs, model_attrs_to_use=[:all]
+      unless model_attrs_to_use == [:all]
         model_attrs = model_attrs.select{|k, v| model_attrs_to_use.include? k}
       end
       return model_attrs.collect{|k, v| v.to_s}.join()
     end
 
-    #--------------------------------------------------------------------------
-    #main
-
     def import
       # default import behaviour
       # find and update or create
 
-      raise Exception.new 'uuid not found' if @uuid.nil?
+      raise Exception.new 'uid not found. use is_uid to declare uid model attribute.' if @uid_attr.nil?
       @spreadsheet.each do |row|
         next if row == data_headers
 
@@ -89,7 +86,9 @@ module Importers
           header_mappings[k] = row[v]
         }
         assocs = attributes.dup
+        auto_gen_uid_attributes = attributes.dup
 
+        attr_assocs = [attributes, assocs]
         attr_assocs = yield(attributes, assocs, row) if block_given?
         raise Exception.new 'importer must return [attributes, assocs]' if attr_assocs.length != 2
         attributes, assocs = attr_assocs
@@ -102,7 +101,15 @@ module Importers
             attributes.keys.include?(k.to_sym)
         }
 
-        obj = @model_class.send "find_by_#{@uuid[:key]}".to_sym, row[@uuid[:idx]]
+        if @auto_gen_uid
+          uid = auto_gen_uid(auto_gen_uid_attributes, @model_attrs_to_use)
+        else
+          uid = attributes[@uid_attr]
+          raise Exception.new 'uid not indexed' if uid.nil?
+        end
+
+        attributes[@uid_attr] = uid
+        obj = @model_class.send "find_by_#{@uid_attr}".to_sym, uid
 
         next if (obj.present? && @skip_if_record_exists)
 
@@ -116,7 +123,7 @@ module Importers
           next if v.nil?
           begin
             assoc = obj.send k
-            assoc.push(v) unless assoc.include?(v.id)
+            assoc.push(v) unless assoc.include?(v)
           rescue
             obj.send "#{k}=", v
           end

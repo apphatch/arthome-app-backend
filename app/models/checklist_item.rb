@@ -14,7 +14,7 @@ class ChecklistItem < ApplicationRecord
   end
 
   def checklist_type
-    self.checklist.checklist_type
+    self.checklist.try(:checklist_type)
   end
 
   def data
