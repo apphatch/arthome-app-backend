@@ -1,5 +1,10 @@
 desc "import scripts"
 namespace :import do
+  task :users, [:file] => [:environment] do |t, args|
+    importer = Importers::UsersImporter.new file_name: args[:file]
+    importer.import
+  end
+
   task :shops, [:file] => [:environment] do |t, args|
     importer = Importers::ShopsImporter.new file_name: args[:file]
     importer.import
