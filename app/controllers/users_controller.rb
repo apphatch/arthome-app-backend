@@ -44,6 +44,22 @@ class UsersController < ApplicationController
     end
   end
 
+  def import
+    begin
+      # assume only 1 file
+      f = params[:files].first
+      importer = Importers::UsersImporter.new file: f
+      importer.import
+      head 201
+    rescue
+      head 500
+    end
+  end
+
+  def import_template
+    send_data User.import_template.string, filename: 'user-import-template.xlsx'
+  end
+
   def permitted_params
     return params.permit(:username, :name, :password, :importing_id)
   end

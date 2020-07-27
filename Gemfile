@@ -33,6 +33,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 # For your spreadsheet needs
 gem 'roo', '~> 2.8.0'
+gem 'spreadsheet'
 
 # CORS
 gem 'rack-cors'

@@ -1,3 +1,5 @@
+require 'roo'
+
 class User < ApplicationRecord
   has_many :checklists
   has_and_belongs_to_many :shops
@@ -56,5 +58,15 @@ class User < ApplicationRecord
       end
       checklist.update completed: false
     end
+  end
+
+  def self.import_template
+    headers = ['importing_id', 'name', 'username', 'password']
+    book = Spreadsheet::Workbook.new
+    sheet = book.create_worksheet
+    sheet.row(0).concat(headers)
+    data = StringIO.new("")
+    book.write data
+    return data
   end
 end

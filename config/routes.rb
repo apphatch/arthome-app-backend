@@ -6,6 +6,10 @@ Rails.application.routes.draw do
   resources :sessions, only: [:new, :create, :destroy]
 
   resources :users do
+    collection do
+      get  :import_template
+    end
+
     member do
       post :lock
       post :unlock
