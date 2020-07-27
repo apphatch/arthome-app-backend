@@ -9,8 +9,10 @@ module Importers
       # 4. super accepts a block with attributes, associations and row data
 
       @header_mappings = {}
+      @uuid_headers =[]
       @spreadsheet = nil
       @skip_if_record_exists = false
+      @auto_generate_uuid = false
 
       f = params[:file] || "import/#{params[:file_name]}"
       begin
@@ -61,7 +63,14 @@ module Importers
 
     def index_uuid model_attr, allowed_data_headers
       #alias of index to mark column as uuid, improves readability
-      index model_attr, allowed_data_headers, {is_uuid: true}
+      index model_attr, allowed_data_headers
+    end
+
+    def auto_generate_uuid model_attrs, model_attrs_to_use=[]
+      unless model_attrs_to_use.empty?
+        model_attrs = model_attrs.select{|k, v| model_attrs_to_use.include? k}
+      end
+      return model_attrs.collect{|k, v| v.to_s}.join()
     end
 
     #--------------------------------------------------------------------------

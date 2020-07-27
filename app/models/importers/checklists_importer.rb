@@ -6,7 +6,7 @@ module Importers
     end
 
     def import
-      index_uuid :reference, ['reference']
+      index :reference, ['reference']
       index :checklist_type, ['Type', 'type']
       index :yearweek, ['YearWeek']
       associate :user, ['OSA Code']
@@ -15,6 +15,7 @@ module Importers
       skip_if_record_exists
 
       super do |attributes, assocs, row|
+        attributes[:reference] = auto_generate_uuid attributes
         assocs[:user] = User.find_by_importing_id assocs[:user].to_s
         assocs[:shop] = Shop.find_by_importing_id assocs[:shop].to_s
 

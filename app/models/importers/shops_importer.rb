@@ -6,7 +6,7 @@ module Importers
     end
 
     def import
-      index_uuid :importing_id, ['No.', 'Outlet']
+      index :importing_id, ['No.', 'Outlet']
       index :name, ['Store Name', 'Outlet Name']
       index :shop_type, ['Store Type (MT/DT/CVS)', 'Outlet classification']
       index :full_address, ['Store Address', 'Outlet Address']
@@ -15,6 +15,7 @@ module Importers
       associate :users, ['OSA Code']
 
       super do |attributes, assocs, row|
+        attributes[:importing_id] = auto_generate_uuid attributes
         assocs[:users] = User.find_by_importing_id assocs[:users].to_s
 
         [attributes, assocs]
