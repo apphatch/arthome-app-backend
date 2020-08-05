@@ -1,0 +1,14 @@
+{
+    "available": {
+        "type": "slider",
+        "values": []
+    },
+    "void": {
+        "type": "slider",
+        "values": []
+    },
+    "promotion": {
+        "type": "slider",
+        "values": []
+    }
+}

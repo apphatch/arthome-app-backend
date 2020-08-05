@@ -13,5 +13,13 @@
             "No/wrong price tag",
             "Peak sale (at store)"
         ]
+    },
+    "available": {
+        "type": "slider",
+        "values": []
+    },
+    "void": {
+        "type": "slider",
+        "values": []
     }
 }

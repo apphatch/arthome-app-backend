@@ -1,0 +1,10 @@
+{
+    "available": {
+        "type": "slider",
+        "values": []
+    },
+    "void": {
+        "type": "slider",
+        "values": []
+    }
+}
