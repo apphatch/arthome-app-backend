@@ -1,0 +1,14 @@
+{
+    "available": {
+        "type": "slider",
+        "values": []
+    },
+    "inline": {
+        "type": "slider",
+        "values": []
+    },
+    "png": {
+        "type": "slider",
+        "values": []
+    }
+}
