@@ -15,11 +15,11 @@
         ]
     },
     "available": {
-        "type": "slider",
-        "values": []
+        "type": "radio",
+        "values": ["Y","N"]
     },
     "void": {
-        "type": "slider",
-        "values": []
+        "type": "radio",
+        "values": ["Y","N"]
     }
 }

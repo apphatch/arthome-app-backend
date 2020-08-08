@@ -1,14 +1,14 @@
 {
     "available": {
-        "type": "slider",
-        "values": []
+        "type": "radio",
+        "values": ["Y","N"]
     },
     "inline": {
-        "type": "slider",
-        "values": []
+        "type": "radio",
+        "values": ["Y","N"]
     },
     "png": {
-        "type": "slider",
-        "values": []
+        "type": "radio",
+        "values": ["Y","N"]
     }
 }
