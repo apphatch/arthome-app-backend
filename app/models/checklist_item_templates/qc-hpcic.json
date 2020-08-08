@@ -1,0 +1,22 @@
+{
+    "Lỗi": {
+        "type": "select",
+        "values": ["test"]
+    },
+    "HSD": {
+        "type": "input",
+        "value": []
+    },
+    "NSX": {
+        "type": "input",
+        "value": []
+    },
+    "Nhiệt độ": {
+        "type": "input",
+        "values": []
+    },
+    "Mức cảnh báo": {
+        "type": "select",
+        "values": ["Xanh", "Vàng", "Đỏ"]
+    }
+}
