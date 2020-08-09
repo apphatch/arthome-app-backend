@@ -4,11 +4,11 @@
         "values": ["test"]
     },
     "HSD": {
-        "type": "input",
+        "type": "date",
         "value": []
     },
     "NSX": {
-        "type": "input",
+        "type": "date",
         "value": []
     },
     "Mức cảnh báo": {
