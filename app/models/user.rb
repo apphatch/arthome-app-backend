@@ -54,6 +54,7 @@ class User < ApplicationRecord
   def clear_checklists!
     self.checklists.each do |checklist|
       checklist.checklist_items.each do |item|
+        next if item.data.nil?
         item.update data: nil
       end
       checklist.update completed: false
