@@ -1,11 +1,11 @@
 class ShopsController < ApplicationController
   def index
-    render json: Shop.active.order(:name)
+    render json: Shop.active.order(:name), each_serializer: ShopSerializer
   end
 
   def index_by_user
     if current_user.present?
-      render json: current_user.active_shops.sort_by(&:name)
+      render json: current_user.active_shops.sort_by(&:name), each_serializer: ShopSerializer
     else
       head 400
     end
@@ -13,26 +13,26 @@ class ShopsController < ApplicationController
 
   def show
     find_record do |shop|
-      render json: shop
+      render json: shop, serializer: ShopSerializer
     end
   end
 
   def create
     shop = Shop.create permitted_params
-    render json: shop
+    render json: shop, serializer: ShopSerializer
   end
 
   def update
     find_record do |shop|
       shop.update permitted_params
-      render json: shop
+      render json: shop, serializer: ShopSerializer
     end
   end
 
   def destroy
     find_record do |shop|
       shop.deleted!
-      render json: shop
+      render json: shop, serializer: ShopSerializer
     end
   end
 
@@ -81,7 +81,7 @@ class ShopsController < ApplicationController
       shops = current_user.shops.active.where(
         "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
       )
-      render json: shops.order(:name) and return if shops.present?
+      render json: shops.order(:name), serializer: ShopSerializer and return if shops.present?
     end
     head 404
   end

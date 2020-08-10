@@ -42,7 +42,6 @@ class Shop < ApplicationRecord
       user.try(:can_checkout?, self),
       params[:photo].present?,
       params[:time].present?,
-      #self.completed?
     ].all?
 
     begin
@@ -88,5 +87,9 @@ class Shop < ApplicationRecord
 
   def shop_checkin_checkouts
     return self.checkin_checkouts.where user: nil
+  end
+
+  def completed?
+    return self.checklists.collect{|c| c.completed?}.all?
   end
 end
