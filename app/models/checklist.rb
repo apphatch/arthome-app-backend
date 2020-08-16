@@ -31,10 +31,10 @@ class Checklist < ApplicationRecord
       item.update data: entry['data'].to_json if item.present?
     end
 
-    self.check_is_completed
+    self.completed!
   end
 
-  def check_is_completed
+  def completed!
     self.update completed: true if self.checklist_items.collect{
       |item| item.completed?
     }.all?
