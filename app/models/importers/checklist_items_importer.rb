@@ -14,6 +14,7 @@ module Importers
       ]
 
       index :quantity, ['Stock']
+      index :mechanic, ['Mechanic']
       index :checklist_type, ['Type']
       index :yearweek, ['YearWeek']
       index :date, ['Date']
