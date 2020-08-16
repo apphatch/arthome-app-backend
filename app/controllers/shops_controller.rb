@@ -5,7 +5,7 @@ class ShopsController < ApplicationController
 
   def index_by_user
     if current_user.present?
-      render json: current_user.active_shops.sort_by(&:name), each_serializer: ShopSerializer
+      render json: current_user.shops.sort_by(&:name), each_serializer: ShopSerializer
     else
       head 400
     end
