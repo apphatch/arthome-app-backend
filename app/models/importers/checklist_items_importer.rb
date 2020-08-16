@@ -20,11 +20,12 @@ module Importers
         checklist_ref = [
           attributes[:checklist_type],
           attributes[:yearweek],
+          attributes[:date],
           assocs[:user],
           assocs[:shop]
         ].join()
 
-        attributes[:date] = DateTime.parse attributes[:date]
+        attributes[:date] = nil
         assocs[:checklist] = Checklist.find_by_reference checklist_ref
         assocs[:stock] = Stock.find_by_importing_id assocs[:stock].to_s
         assocs.delete :checklist_type #prevent no method error
