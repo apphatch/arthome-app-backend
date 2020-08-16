@@ -11,6 +11,7 @@ module Importers
 
       index :checklist_type, ['Type', 'type']
       index :yearweek, ['YearWeek']
+      index :date, ['Date']
       associate :user, ['OSA Code']
       associate :shop, ['Outlet']
 
