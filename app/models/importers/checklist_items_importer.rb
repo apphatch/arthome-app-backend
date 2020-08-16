@@ -7,8 +7,13 @@ module Importers
 
     def import
       is_uid :importing_id
-      auto_gen_uid_with [:all]
+      auto_gen_uid_with [
+        :checklist_type,
+        :yearweek, :date, :user,
+        :shop, :stock
+      ]
 
+      index :quantity, ['Stock']
       index :checklist_type, ['Type']
       index :yearweek, ['YearWeek']
       index :date, ['Date']
