@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+  before_action :set_current_app
   before_action :check_user_is_logged_in
   before_action :set_csrf_token_for_api
   protect_from_forgery with: :exception
@@ -17,6 +18,11 @@ class ApplicationController < ActionController::Base
     end
 
     return @current_user
+  end
+
+  def set_current_app
+    head 404 and return unless request.headers['App'].present?
+    @current_app = request.headers['App'].downcase
   end
 
   def check_user_is_logged_in
