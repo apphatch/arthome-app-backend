@@ -8,6 +8,9 @@ class Checklist < ApplicationRecord
 
   scope :active, -> { where(deleted: false) }
   scope :incompleted, -> { where(completed: false) }
+  scope :today, -> { where(
+    date: DateTime.now.beginning_of_day..DateTime.now.end_of_day
+  )}
 
   def self.create params
     unless params[:checklist_type].present?

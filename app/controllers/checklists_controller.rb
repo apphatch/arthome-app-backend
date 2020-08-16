@@ -31,6 +31,7 @@ class ChecklistsController < ApplicationController
     head 401 and return unless shop.present?
 
     checklists = current_user.checklists.active.incompleted
+    checklists = checklists.today if params[:daily]
     checklists = checklists.collect{|c| c if c.shop == shop}.compact
     render json: checklists, each_serializer: ChecklistSerializer
   end
