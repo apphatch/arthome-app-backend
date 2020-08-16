@@ -1,5 +1,3 @@
-require 'json'
-
 module Importers
   class StocksImporter < BaseImporter
     def initialize params={}
@@ -32,13 +30,14 @@ module Importers
         end
         attributes[:custom_attributes] = {
           category: attributes[:category],
+          sub_category: attributes[:sub_category],
           division: attributes[:division],
           short_division: attributes[:short_division],
           group: attributes[:group],
           brand: attributes[:brand],
           role_shop: attributes[:role_shop],
           packaging: attributes[:packaging]
-        }.to_json
+        }
         [attributes, assocs]
       end
     end
