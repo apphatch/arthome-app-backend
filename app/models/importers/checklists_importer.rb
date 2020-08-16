@@ -18,6 +18,7 @@ module Importers
       skip_if_record_exists
 
       super do |attributes, assocs, row|
+        attributes[:date] = DateTime.parse attributes[:date]
         assocs[:user] = User.find_by_importing_id assocs[:user].to_s
         assocs[:shop] = Shop.find_by_importing_id assocs[:shop].to_s
 
