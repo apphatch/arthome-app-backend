@@ -90,6 +90,6 @@ class Shop < ApplicationRecord
   end
 
   def completed? user
-    return self.checklists.collect{|c| c.completed? && c.user == user}.all?
+    return self.checklists.select{|c| c.user == user}.collect{|c| c.completed?}.all?
   end
 end
