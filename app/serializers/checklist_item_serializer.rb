@@ -1,5 +1,5 @@
 class ChecklistItemSerializer < ActiveModel::Serializer
-  attributes :id, :data, :stock_name, :category, :sub_category
+  attributes :id, :data, :stock_name, :category, :sub_category, :mechanic, :quantity
 
   def stock_name
     object.stock.name
