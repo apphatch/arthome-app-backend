@@ -27,7 +27,7 @@ class ChecklistItemsController < ApplicationController
     find_record do |checklist_item|
       checklist_item.update_attributes params.permit(:data)
       checklist_item.checklist.completed!
-      render json: checklist_item
+      render json: checklist_item, serializer: ChecklistItemSerializer
     end
   end
 
