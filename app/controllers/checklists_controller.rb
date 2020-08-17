@@ -62,7 +62,7 @@ class ChecklistsController < ApplicationController
   def update_checklist_items
     find_record do |checklist|
       checklist.update_checklist_items params
-      render json: checklist
+      render json: checklist, serializer: ChecklistSerializer
     end
   end
 
