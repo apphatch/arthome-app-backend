@@ -13,13 +13,5 @@
             "No/wrong price tag",
             "Peak sale (at store)"
         ]
-    },
-    "available": {
-        "type": "radio",
-        "values": ["Y","N"]
-    },
-    "void": {
-        "type": "radio",
-        "values": ["Y","N"]
     }
 }
