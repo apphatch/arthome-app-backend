@@ -22,6 +22,22 @@ class Checklist < ApplicationRecord
     super params
   end
 
+  def self.index_for app
+    checklists = self.active.incompleted
+    return checklists if app.nil?
+
+    if app == 'osa'
+      start_time = DateTime.now.beginning_of_day
+      end_time = DateTime.now.end_of_day
+      checklists = checklists.select do |c|
+        ['npd', 'promotion'].include?(c.checklist_type) ||
+        c.date.between?(start_time, end_time)
+      end
+    end
+
+    return checklists.compact
+  end
+
   def template
     return JSON.parse(File.read("#{Rails.root.join(
       'app', 'models', 'checklist_item_templates', self.checklist_type.downcase)}.json")
