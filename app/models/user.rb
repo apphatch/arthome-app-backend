@@ -76,4 +76,10 @@ class User < ApplicationRecord
     book.write data
     return data
   end
+
+  def self.mass_logout
+    User.all.each do |u|
+      u.update jwt: nil
+    end
+  end
 end
