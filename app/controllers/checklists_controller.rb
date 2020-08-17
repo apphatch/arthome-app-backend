@@ -76,7 +76,9 @@ class ChecklistsController < ApplicationController
   def search_checklist_items
     find_record do |checklist|
       result = checklist.checklist_items.select{ |item|
-        item.stock.name.match(/#{params[:search_term]}/i)
+        if item.stock.name.present?
+          item.stock.name.match(/#{params[:search_term]}/i)
+        end
       }
       if result.present?
         result = result.sort_by{|item| item.stock.name}
