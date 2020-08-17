@@ -30,7 +30,7 @@ class Checklist < ApplicationRecord
       start_time = DateTime.now.beginning_of_day
       end_time = DateTime.now.end_of_day
       checklists = checklists.select do |c|
-        ['npd', 'promotion'].include?(c.checklist_type) ||
+        !(['npd', 'promotion'].include?(c.checklist_type)) ||
         c.date.between?(start_time, end_time)
       end
     end
