@@ -44,6 +44,10 @@ class Checklist < ApplicationRecord
     )
   end
 
+  def checklist_type
+    super.downcase
+  end
+
   def update_checklist_items params
     data = JSON.parse(params['checklist_items'])
 
