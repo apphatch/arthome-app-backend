@@ -89,7 +89,7 @@ class Shop < ApplicationRecord
     return self.checkin_checkouts.where user: nil
   end
 
-  def completed?
-    return self.checklists.collect{|c| c.completed?}.all?
+  def completed? user
+    return self.checklists.collect{|c| c.completed? && c.user == user}.all?
   end
 end
