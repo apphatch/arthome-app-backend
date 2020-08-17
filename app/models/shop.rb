@@ -74,14 +74,17 @@ class Shop < ApplicationRecord
       record.save validate: false
 
       params[:photos].each do |photo|
+        #TODO: fix how FE returns data to construct this object
         record.photos.create(
           image: photo,
           time: params[:time],
           name: "shop_checkout_#{params[:time].to_s}"
         )
       end
+      return record
     rescue
-      return nil
+      return record
+      #return nil
     end
   end
 
