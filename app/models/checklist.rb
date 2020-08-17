@@ -15,6 +15,8 @@ class Checklist < ApplicationRecord
   def self.create params
     unless params[:checklist_type].present?
       raise Exception.new 'checklist must have a type'
+    else
+      params[:chekclist_type] = params[:checklist_type].downcase
     end
 
     super params
@@ -22,7 +24,7 @@ class Checklist < ApplicationRecord
 
   def template
     return JSON.parse(File.read("#{Rails.root.join(
-      'app', 'models', 'checklist_item_templates', self.checklist_type)}.json")
+      'app', 'models', 'checklist_item_templates', self.checklist_type.downcase)}.json")
     )
   end
 
