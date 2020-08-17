@@ -61,6 +61,12 @@ class User < ApplicationRecord
     end
   end
 
+  def clear_checkin_checkouts!
+    self.checkin_checkouts.each do |cico|
+      cico.deleted!
+    end
+  end
+
   def self.import_template
     headers = ['importing_id', 'name', 'username', 'password']
     book = Spreadsheet::Workbook.new
