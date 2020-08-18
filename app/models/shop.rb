@@ -89,7 +89,7 @@ class Shop < ApplicationRecord
   end
 
   def shop_checkin_checkouts
-    return self.checkin_checkouts.where user: nil
+    return self.checkin_checkouts.active.where user: nil
   end
 
   def completed? user

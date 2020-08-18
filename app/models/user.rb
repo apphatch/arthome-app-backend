@@ -11,12 +11,12 @@ class User < ApplicationRecord
   scope :active, -> { where(locked: false) }
 
   def can_checkin?
-    return true if self.checkin_checkouts.empty?
+    return true if self.checkin_checkouts.active.empty?
     return !self.last_checkin_checkout.is_checkin
   end
 
   def can_checkout? shop
-    return false if self.checkin_checkouts.empty?
+    return false if self.checkin_checkouts.active.empty?
     #turn on later
     #return false unless self.checklists.collect{|c| c.completed?}.all?
 
@@ -26,8 +26,8 @@ class User < ApplicationRecord
   end
 
   def last_checkin_checkout
-    return [] if self.checkin_checkouts.empty?
-    return self.checkin_checkouts.order(:created_at).last
+    return [] if self.checkin_checkouts.active.empty?
+    return self.checkin_checkouts.active.order(:created_at).last
   end
 
   def active_shops
