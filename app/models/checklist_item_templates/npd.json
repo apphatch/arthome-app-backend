@@ -1,7 +1,8 @@
 {
     "available": {
-        "type": "radio",
-        "values": ["Y","N"]
+        "type": "input",
+        "values": [],
+        "default_value_use": "quantity"
     },
     "void": {
         "type": "radio",
