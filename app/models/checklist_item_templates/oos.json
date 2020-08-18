@@ -1,19 +1,4 @@
 {
-    "result": {
-        "type": "select",
-        "values": [
-            "Y",
-            "Not found root cause",
-            "Customer's WH/store issue",
-            "No order from store (in 2 wks)",
-            "No gift",
-            "Wrong gift",
-            "Phantom stock",
-            "Stock not filled (but available at store)",
-            "No/wrong price tag",
-            "Peak sale (at store)"
-        ]
-    },
     "available": {
         "type": "radio",
         "values": ["Y","N"]
@@ -21,5 +6,9 @@
     "void": {
         "type": "radio",
         "values": ["Y","N"]
+    },
+    "note": {
+        "type": "textarea",
+        "values": []
     }
 }

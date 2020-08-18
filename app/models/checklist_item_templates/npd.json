@@ -6,5 +6,9 @@
     "void": {
         "type": "radio",
         "values": ["Y","N"]
+    },
+    "note": {
+        "type": "textarea",
+        "values": []
     }
 }
