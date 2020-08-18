@@ -1,14 +1,14 @@
 {
-    "available": {
+    "Available": {
         "type": "input",
         "values": [],
         "default_value_use": "quantity"
     },
-    "void": {
+    "Void": {
         "type": "radio",
         "values": ["Y","N"]
     },
-    "note": {
+    "Note": {
         "type": "textarea",
         "values": []
     }

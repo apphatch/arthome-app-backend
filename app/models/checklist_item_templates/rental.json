@@ -1,13 +1,13 @@
 {
-    "available": {
+    "Available": {
         "type": "radio",
         "values": ["Y","N"]
     },
-    "inline": {
+    "Inline": {
         "type": "radio",
         "values": ["Y","N"]
     },
-    "png": {
+    "Png": {
         "type": "radio",
         "values": ["Y","N"]
     }

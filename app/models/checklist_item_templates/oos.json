@@ -1,13 +1,13 @@
 {
-    "available": {
+    "Available": {
         "type": "radio",
         "values": ["Y","N"]
     },
-    "void": {
+    "Void": {
         "type": "radio",
         "values": ["Y","N"]
     },
-    "note": {
+    "Note": {
         "type": "textarea",
         "values": []
     }
