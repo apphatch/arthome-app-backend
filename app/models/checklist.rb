@@ -6,7 +6,6 @@ class Checklist < ApplicationRecord
   has_many :checklist_items
   has_many :stocks, through: :checklist_items
 
-  scope :active, -> { where(deleted: false) }
   scope :incompleted, -> { where(completed: false) }
   scope :today, -> { where(
     date: DateTime.now.beginning_of_day..DateTime.now.end_of_day

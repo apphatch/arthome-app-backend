@@ -4,7 +4,6 @@ class ChecklistItem < ApplicationRecord
   belongs_to :checklist
   belongs_to :stock
 
-  scope :active, -> { where(deleted: false) }
   scope :incompleted, -> { where(data: nil) }
 
   def template
