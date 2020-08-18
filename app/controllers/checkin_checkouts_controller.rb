@@ -34,7 +34,7 @@ class CheckinCheckoutsController < ApplicationController
   end
 
   def find_record
-    record = CheckinCheckout.find_by_id params[:id]
+    record = CheckinCheckout.active.find_by_id params[:id]
     if record.present?
       yield record
     else

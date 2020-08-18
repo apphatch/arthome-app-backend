@@ -5,7 +5,7 @@ class ShopsController < ApplicationController
 
   def index_by_user
     if current_user.present?
-      render json: current_user.shops.sort_by(&:name), each_serializer: ShopSerializer, user: current_user
+      render json: current_user.shops.active.sort_by(&:name), each_serializer: ShopSerializer, user: current_user
     else
       head 400
     end
@@ -91,7 +91,7 @@ class ShopsController < ApplicationController
   end
 
   def find_record
-    shop = Shop.find_by_id params[:id]
+    shop = Shop.active.find_by_id params[:id]
     if shop.present?
       yield shop
     else

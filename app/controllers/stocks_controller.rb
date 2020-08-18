@@ -1,10 +1,10 @@
 class StocksController < ApplicationController
   def index
-    render json: Stock.all.where(deleted: false).order(:name), each_serializer: StockSerializer
+    render json: Stock.active.order(:name), each_serializer: StockSerializer
   end
 
   def index_by_shop
-    shop = Shop.find_by_id params[:shop_id]
+    shop = Shop.active.find_by_id params[:shop_id]
     if shop.present?
       render json: shop.stocks.order(:name), each_serializer: StockSerializer
     else
@@ -39,7 +39,7 @@ class StocksController < ApplicationController
 
   def search
     ['name', 'sku', 'barcode', 'category', 'role'].each do |attr|
-      result = Stock.where(
+      result = Stock.active.where(
         "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
       )
       render json: result.order(:name), each_serializer: StockSerializer and return if result.present?
@@ -64,7 +64,7 @@ class StocksController < ApplicationController
   end
 
   def find_record
-    stock = Stock.find_by_id params[:id]
+    stock = Stock.active.find_by_id params[:id]
     if stock.present?
       yield stock
     else

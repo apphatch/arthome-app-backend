@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     if request.headers['Authorization'].present?
-      @current_user ||= User.active.find_by_jwt request.headers['Authorization']
+      @current_user ||= User.find_by_jwt request.headers['Authorization']
     end
 
     return @current_user

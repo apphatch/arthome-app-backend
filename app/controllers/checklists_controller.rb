@@ -7,7 +7,7 @@ class ChecklistsController < ApplicationController
   end
 
   def index_by_shop
-    shop = Shop.find_by_id params[:shop_id]
+    shop = Shop.active.find_by_id params[:shop_id]
     if shop.present?
       render json: shop.checklists.active, each_serializer: ChecklistSerializer
     else
@@ -27,10 +27,10 @@ class ChecklistsController < ApplicationController
 
   def index_by_user_shop
     head 401 and return unless current_user.present?
-    shop = current_user.shops.find_by_id params[:shop_id]
+    shop = current_user.shops.active.find_by_id params[:shop_id]
     head 401 and return unless shop.present?
 
-    checklists = current_user.checklists.index_for @current_app
+    checklists = current_user.checklists.active.index_for @current_app
     checklists = checklists.select{|c| c.shop == shop}.compact if checklists.present?
     render json: checklists, each_serializer: ChecklistSerializer
   end
@@ -75,7 +75,7 @@ class ChecklistsController < ApplicationController
 
   def search_checklist_items
     find_record do |checklist|
-      result = checklist.checklist_items.select{ |item|
+      result = checklist.checklist_items.active.select{ |item|
         if item.stock.name.present?
           item.stock.name.match(/#{params[:search_term]}/i)
         end
@@ -111,7 +111,7 @@ class ChecklistsController < ApplicationController
   end
 
   def find_record
-    checklist = Checklist.find_by_id params[:id]
+    checklist = Checklist.active.find_by_id params[:id]
     if checklist.present?
       yield checklist
     else

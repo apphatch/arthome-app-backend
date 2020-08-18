@@ -1,12 +1,12 @@
 class ChecklistItemsController < ApplicationController
   def index
-    render json: ChecklistItem.all.where(deleted: false)
+    render json: ChecklistItem.active
   end
 
   def index_by_checklist
-    checklist = Checklist.find_by_id params[:checklist_id]
+    checklist = Checklist.active.find_by_id params[:checklist_id]
     if checklist.present?
-      render json: checklist.checklist_items
+      render json: checklist.checklist_items.active
     else
       head 404
     end
