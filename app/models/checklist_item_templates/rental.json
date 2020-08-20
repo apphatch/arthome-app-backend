@@ -1,8 +1,7 @@
 {
     "Available": {
-        "type": "input",
-        "values": [],
-        "default_value_use": "quantity"
+        "type": "radio",
+        "values": ["Y","N"]
     },
     "Inline": {
         "type": "radio",

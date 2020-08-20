@@ -2,7 +2,8 @@
     "Available": {
         "type": "input",
         "values": [],
-        "default_value_use": "quantity"
+        "default_value_use": "quantity",
+        "restrict": "numeric"
     },
     "Void": {
         "type": "radio",

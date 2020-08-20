@@ -1,6 +1,6 @@
 {
     "Result": {
-        "type": "select",
+        "type": "radio",
         "values": [
             "OOS",
             "ALMOOS_1",
