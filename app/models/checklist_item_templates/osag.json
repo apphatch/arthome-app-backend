@@ -3,9 +3,9 @@
         "type": "radio",
         "values": [
             "OOS",
-            "ALMOOS_1",
-            "AVAILABLE_1",
-            "AVAILABLE_2"
+            "A",
+            "B",
+            "C"
         ]
     }
 }
