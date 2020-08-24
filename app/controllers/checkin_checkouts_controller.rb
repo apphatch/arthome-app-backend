@@ -1,31 +1,31 @@
 class CheckinCheckoutsController < ApplicationController
   def index
     @records = CheckinCheckout.active
-    render json: @records
+    render json: @records, each_serializer: CheckinCheckoutSerializer
   end
 
   def show
     find_record do |record|
-      render json: record
+      render json: record, serializer: CheckinCheckoutSerializer
     end
   end
 
   def create
     record = CheckinCheckout.create permitted_params
-    render json: record
+    render json: record, serializer: CheckinCheckoutSerializer
   end
 
   def update
     find_record do |record|
       record.update permitted_params
-      render json: record
+      render json: record, serializer: CheckinCheckoutSerializer
     end
   end
 
   def destroy
     find_record do |record|
       record.deleted!
-      render json: record
+      render json: record, serializer: CheckinCheckoutSerializer
     end
   end
 
