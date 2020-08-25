@@ -6,6 +6,7 @@ class Shop < ApplicationRecord
 
   has_many :photos, as: :dbfiles
 
+  #TODO: makes more sense in user model
   def checkin user, params
     return nil unless [
       user.present?,
@@ -34,6 +35,7 @@ class Shop < ApplicationRecord
     end
   end
 
+  #TODO: makes more sense in user model
   def checkout user, params
     return nil unless [
       user.present?,
@@ -61,6 +63,7 @@ class Shop < ApplicationRecord
     end
   end
 
+  #TODO: refac to just be checkout (after top 2 methods moved)
   def shop_checkout user, params
     begin
       record = self.checkin_checkouts.new(
@@ -91,6 +94,8 @@ class Shop < ApplicationRecord
   end
 
   def completed? user
-    return self.checklists.select{|c| c.user == user}.collect{|c| c.completed?}.all?
+    checklists = self.checklists.where user: user
+    checklists = checklists.undated + checklists.dated.today
+    return checklists.collect{|c| c.completed?}.all?
   end
 end

@@ -31,6 +31,10 @@ class ChecklistItemsController < ApplicationController
     end
   end
 
+  def update_many
+    #TODO move from checklist controller
+  end
+
   def destroy
     find_record do |checklist_item|
       checklist_item.deleted!

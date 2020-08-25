@@ -59,6 +59,7 @@ class ChecklistsController < ApplicationController
     end
   end
 
+  #TODO: move to checklist_item controller
   def update_checklist_items
     find_record do |checklist|
       checklist.update_checklist_items params

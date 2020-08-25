@@ -7,6 +7,8 @@ class Checklist < ApplicationRecord
   has_many :stocks, through: :checklist_items
 
   scope :incompleted, -> { where(completed: false) }
+  scope :dated, -> { where.not(date: nil) }
+  scope :undated, -> { where(date: nil) }
   scope :today, -> { where(
     date: DateTime.now.beginning_of_day..DateTime.now.end_of_day
   )}
@@ -15,25 +17,19 @@ class Checklist < ApplicationRecord
     unless params[:checklist_type].present?
       raise Exception.new 'checklist must have a type'
     else
-      params[:chekclist_type] = params[:checklist_type].downcase
+      params[:checklist_type] = params[:checklist_type].downcase
     end
 
     super params
   end
 
   def self.index_for app
-    checklists = self.active.incompleted
-    return checklists if app.nil?
-
+    checklists = self.active.undated.incompleted
     if app == 'osa'
-      start_time = DateTime.now.beginning_of_day
-      end_time = DateTime.now.end_of_day
-      checklists = checklists.select do |c|
-        !(['npd', 'promotion'].include?(c.checklist_type)) ||
-        c.date.between?(start_time, end_time)
-      end
+      checklists = checklists + self.active.dated.today.incompleted
     end
 
+    return checklists if app.nil?
     return checklists.compact
   end
 
@@ -47,6 +43,7 @@ class Checklist < ApplicationRecord
     super.downcase
   end
 
+  #TODO: move or deprecate
   def update_checklist_items params
     data = JSON.parse(params['checklist_items'])
 

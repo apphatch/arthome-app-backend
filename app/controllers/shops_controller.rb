@@ -87,7 +87,7 @@ class ShopsController < ApplicationController
   end
 
   def permitted_params
-    return params.permit(:photo, :photos, :note, :time, :photo_name)
+    return params.permit(:photo, :photos, :note, :time, :photo_name, :incomplete)
   end
 
   def find_record
