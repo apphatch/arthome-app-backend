@@ -23,6 +23,7 @@ module Importers
       end
 
       raise Exception.new 'must define @model_class' if @model_class.nil?
+      @model_class_instance = @model_class.new
     end
 
     def skip_if_record_exists
@@ -81,23 +82,24 @@ module Importers
       @spreadsheet.each do |row|
         next if row == data_headers
 
+        # get data from file header mappings
         header_mappings = @header_mappings.dup
-        attributes = header_mappings.each{ |k, v|
-          header_mappings[k] = row[v]
-        }
+        attributes = header_mappings.each{ |k, v| header_mappings[k] = row[v] }
         assocs = attributes.dup
         auto_gen_uid_attributes = attributes.dup
 
+        # prepare and yield data for manipulation before import
         attr_assocs = [attributes, assocs]
         attr_assocs = yield(attributes, assocs, row) if block_given?
         raise Exception.new 'importer must return [attributes, assocs]' if attr_assocs.length != 2
         attributes, assocs = attr_assocs
 
+        # clean manipulated data
         attributes = attributes.reject{ |k, v|
-          !@model_class.new.attributes.keys.include?(k.to_s)
+          !@model_class_instance.attributes.keys.include?(k.to_s)
         }
         assocs = assocs.reject{ |k, v|
-          !@model_class.new.public_methods.include?(k.to_sym) ||
+          !@model_class_instance.public_methods.include?(k.to_sym) ||
             attributes.keys.include?(k.to_sym)
         }
 
@@ -108,17 +110,14 @@ module Importers
           raise Exception.new 'uid not indexed' if uid.nil?
         end
 
+        # find or create object
         attributes[@uid_attr] = uid
         obj = @model_class.send "find_by_#{@uid_attr}".to_sym, uid
-
         next if (obj.present? && @skip_if_record_exists)
+        obj = @model_class.new attributes if obj.nil?
 
-        if obj.nil?
-          obj = @model_class.new attributes
-        else
-          obj.update attributes
-        end
-
+        # fill object data
+        obj.assign_attributes(attributes)
         assocs.each do |k, v|
           next if v.nil?
           begin
