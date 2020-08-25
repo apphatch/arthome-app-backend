@@ -1,3 +1,5 @@
+require 'json'
+
 class Shop < ApplicationRecord
   has_many :checklists
   has_and_belongs_to_many :users
@@ -57,6 +59,17 @@ class Shop < ApplicationRecord
         name: params[:photo_name],
       )
       record.save
+      #HACK: refac later
+      if params[:incomplete]
+        checklists = self.checklists.where user: user
+        checklists = checklists.undated + checklists.dated.today
+        checklists.each do |c|
+          c.checklist_items.each do |ci|
+            ci.update data: JSON.parse('{"error": "cửa hàng đóng cửa"}')
+          end
+          c.completed!
+        end
+      end
       return record
     rescue
       return nil
