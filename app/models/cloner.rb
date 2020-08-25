@@ -3,7 +3,7 @@ class Cloner
     excluded_attributes_cl = ['id', 'user_id', 'updated_at', 'created_at']
 
     source_user.checklists.each do |cl|
-      reference = "user_id_#{dest_user.id}-" + new_cl.reference + "-cloned"
+      reference = "user_id_#{dest_user.id}-" + cl.reference + "-cloned"
       new_cl = dest_user.checklists.find_by_reference reference
 
       attributes = cl.attributes.filter{|k, v| excluded_attributes_cl.exclude? k}
@@ -22,7 +22,7 @@ class Cloner
     excluded_attributes = ['id', 'updated_at', 'created_at']
 
     source_checklist.checklist_items.each do |cli|
-      importing_id = "checklist_id_#{dest_checklist.id}" + new_cli.importing_id + "-cloned"
+      importing_id = "checklist_id_#{dest_checklist.id}" + cli.importing_id + "-cloned"
       new_cli = dest_checklist.checklist_items.find_by_importing_id importing_id
 
       attributes = cli.attributes.filter{|k, v| excluded_attributes.exclude? k}
