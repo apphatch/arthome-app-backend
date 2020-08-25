@@ -10,6 +10,77 @@ class User < ApplicationRecord
 
   scope :active, -> { where(deleted: false, locked: false) }
 
+  def active_shops
+    incompleted_checklists = self.checklists.active.incompleted
+    return incompleted_checklists.collect{|c| c.shop}.compact.uniq
+  end
+
+  def checkin shop, params
+    return nil unless [
+      shop.present?,
+      self.can_checkin?,
+      params[:photo].present?,
+      params[:time].present?
+    ].all?
+
+    begin
+      record = self.checkin_checkouts.create(
+        shop: shop,
+        time: params[:time],
+        note: params[:note],
+        is_checkin: true
+      )
+
+      record.photos.create(
+        image: params[:photo],
+        time: params[:time],
+        name: params[:photo_name],
+      )
+      record.save
+      return record
+    rescue
+      return nil
+    end
+  end
+
+  def checkout shop, params
+    return nil unless [
+      shop.present?,
+      self.can_checkout?(shop),
+      params[:photo].present?,
+      params[:time].present?,
+    ].all?
+
+    begin
+      record = self.checkin_checkouts.create(
+        shop: shop,
+        time: params[:time],
+        note: params[:note],
+        is_checkin: false
+      )
+      record.photos.create(
+        image: params[:photo],
+        time: params[:time],
+        name: params[:photo_name],
+      )
+      record.save
+      #HACK: refac later
+      if params[:incomplete]
+        checklists = self.checklists.where shop: shop
+        checklists = checklists.undated + checklists.dated.today
+        checklists.each do |c|
+          c.checklist_items.each do |ci|
+            ci.update data: {error: "cửa hàng đóng cửa"}
+          end
+          c.completed!
+        end
+      end
+      return record
+    rescue
+      return nil
+    end
+  end
+
   def can_checkin?
     return true if self.checkin_checkouts.active.empty?
     return !self.last_checkin_checkout.is_checkin
@@ -28,11 +99,6 @@ class User < ApplicationRecord
   def last_checkin_checkout
     return [] if self.checkin_checkouts.active.empty?
     return self.checkin_checkouts.active.order(:created_at).last
-  end
-
-  def active_shops
-    incompleted_checklists = self.checklists.active.incompleted
-    return incompleted_checklists.collect{|c| c.shop}.compact.uniq
   end
 
   def admin?
