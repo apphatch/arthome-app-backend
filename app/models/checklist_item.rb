@@ -4,6 +4,8 @@ class ChecklistItem < ApplicationRecord
   belongs_to :checklist
   belongs_to :stock
 
+  serialize :data, Hash
+
   scope :incompleted, -> { where(data: nil) }
 
   def template
@@ -14,10 +16,6 @@ class ChecklistItem < ApplicationRecord
 
   def checklist_type
     self.checklist.try(:checklist_type)
-  end
-
-  def data
-    JSON.parse(super) unless super.nil?
   end
 
   def completed?
