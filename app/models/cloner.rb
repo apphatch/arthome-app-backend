@@ -27,7 +27,7 @@ class Cloner
 
       attributes = cli.attributes.filter{|k, v| excluded_attributes.exclude? k}
       unless new_cli.present?
-        new_cli = dest_checklist.checklist_items.new 
+        new_cli = dest_checklist.checklist_items.new attributes
         new_cli.importing_id = importing_id
         new_cli.save!
       else
