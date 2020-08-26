@@ -12,6 +12,10 @@ class Checklist < ApplicationRecord
   scope :today, -> { where(
     date: DateTime.now.beginning_of_day..DateTime.now.end_of_day
   )}
+  scope :osa, -> { where(
+    checklist_type: ['oos', 'sos', 'osa weekend', 'npd', 'rental', 'promotion']
+  ) }
+  scope :qc, -> { where(checklist_type: 'qc') }
 
   def self.create params
     unless params[:checklist_type].present?
@@ -24,9 +28,12 @@ class Checklist < ApplicationRecord
   end
 
   def self.index_for app
-    checklists = self.active.undated.incompleted
+    checklists = self.active.osa.undated.incompleted
     if app == 'osa'
       checklists = checklists + self.active.dated.today.incompleted
+    end
+    if app == 'qc'
+      checklists = self.active.qc.undated.incompleted
     end
 
     return checklists if app.nil?
@@ -56,7 +63,7 @@ class Checklist < ApplicationRecord
   end
 
   def completed!
-    self.update completed: true if self.checklist_items.collect{
+    self.update completed: true if self.checklist_items.active.collect{
       |item| item.completed?
     }.all?
   end
