@@ -28,15 +28,10 @@ class Checklist < ApplicationRecord
   end
 
   def self.index_for app
-    checklists = self.active.osa.undated.incompleted
-    if app == 'osa'
-      checklists = checklists + self.active.dated.today.incompleted
-    end
-    if app == 'qc'
-      checklists = self.active.qc.undated.incompleted
-    end
-
-    return checklists if app.nil?
+    raise Exception.new 'must provide app header' if app.nil?
+    checklists = self.active.osa.incompleted if app == 'osa'
+    checklists = self.active.qc.incompleted if app == 'qc'
+    checklists = checklists.undated + checklists.dated.today
     return checklists.compact
   end
 
