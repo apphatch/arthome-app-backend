@@ -18,6 +18,7 @@ module Importers
       skip_if_record_exists
 
       super do |attributes, assocs, row|
+        attributes[:checklist_type] = attributes[:checklist_type].downcase
         attributes[:date] = DateTime.parse attributes[:date].to_s if attributes[:date].present?
         assocs[:user] = User.find_by_importing_id assocs[:user].to_s
         assocs[:shop] = Shop.find_by_importing_id assocs[:shop].to_s
