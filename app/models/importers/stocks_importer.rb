@@ -10,7 +10,7 @@ module Importers
 
       index :importing_id, ['SKU_Barcode', 'ULV code', 'Sub Category', 'Rental ID']
       index :sku, ['SKU_Barcode', 'ULV code', 'Rental ID'], {allow_dup: true}
-      index :name, ['SKU_Name', 'ULV DESCRIPTION', 'VI DESCRIPTION', 'ULV Description']
+      index :name, ['SKU_Name', 'ULV DESCRIPTION', 'VI DESCRIPTION', 'ULV Description', 'VN Descriptions']
       index :barcode, ['barcode', 'Barcode']
       index :role, ['role']
       associate :shops, ['Outlet']
