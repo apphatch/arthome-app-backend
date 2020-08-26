@@ -83,10 +83,10 @@ class ChecklistsController < ApplicationController
       }
       if result.present?
         result = result.sort_by{|item| item.stock.name}
-        render json: result, each_serializer: ChecklistItemSerializer and return
+      else
+        result = []
       end
-
-      head 404
+      render json: result, each_serializer: ChecklistItemSerializer and return
     end
   end
 
