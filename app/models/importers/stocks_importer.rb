@@ -8,14 +8,14 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['SKU_Barcode', 'ULV code', 'Sub Category', 'Rental ID']
-      index :sku, ['SKU_Barcode', 'ULV code', 'Rental ID'], {allow_dup: true}
-      index :name, ['SKU_Name', 'ULV DESCRIPTION', 'VI DESCRIPTION', 'ULV Description', 'VN Descriptions']
+      index :importing_id, ['ULV code', 'Rental ID', 'Category']
+      index :sku, ['ULV code', 'Rental ID'], {allow_dup: true}
+      index :name, ['VN Descriptions', 'Rental ID']
       index :barcode, ['barcode', 'Barcode']
       index :role, ['role']
       associate :shops, ['Outlet']
 
-      index :category, ['SKU_Categogy', 'Category', 'Rental Type']
+      index :category, ['Category', 'Rental Type']
       index :sub_category, ['Sub Category']
       index :division, ['Division']
       index :short_division, ['Short Division']
