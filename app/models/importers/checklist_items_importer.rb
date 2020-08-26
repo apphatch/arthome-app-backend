@@ -20,7 +20,7 @@ module Importers
       index :date, ['Date']
       associate :user, ['OSA Code']
       associate :shop, ['Outlet']
-      associate :stock, ['ULV code', 'Sub Category']
+      associate :stock, ['ULV code', 'Rental ID', 'Category']
 
       super do |attributes, assocs, row|
         checklist_ref = [
