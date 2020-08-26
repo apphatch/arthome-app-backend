@@ -3,5 +3,5 @@ class CheckinCheckoutSerializer < ActiveModel::Serializer
 
   has_one :user
   has_one :shop
-  has_many :photos
+  has_many :photos, each_serializer: PhotoSerializer
 end
