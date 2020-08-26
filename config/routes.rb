@@ -45,6 +45,7 @@ Rails.application.routes.draw do
   resources :checkin_checkouts do
     collection do
       get :report
+      get :index_shop
     end
   end
 

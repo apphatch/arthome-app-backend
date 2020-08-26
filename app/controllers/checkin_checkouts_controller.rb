@@ -1,6 +1,11 @@
 class CheckinCheckoutsController < ApplicationController
   def index
-    @records = CheckinCheckout.active
+    @records = CheckinCheckout.user.active
+    render json: @records, each_serializer: CheckinCheckoutSerializer
+  end
+
+  def index_shop
+    @records = CheckinCheckout.shop.active
     render json: @records, each_serializer: CheckinCheckoutSerializer
   end
 
