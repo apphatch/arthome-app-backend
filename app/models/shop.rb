@@ -6,8 +6,7 @@ class Shop < ApplicationRecord
 
   has_many :photos, as: :dbfiles
 
-  #TODO: refac to just be checkout (after top 2 methods moved)
-  def shop_checkout user, params
+  def checkout user, params
     begin
       record = self.checkin_checkouts.new(
         user: nil,
