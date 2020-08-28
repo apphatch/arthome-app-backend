@@ -35,8 +35,9 @@
 yarn-debug.log*
 .yarn-integrity
 
-# Ignore import data
+# Ignore import export data
 /import/*
+/export/*
 
 # Ignore misc files
 .DS_Store
@@ -44,3 +45,8 @@ passenger.8080.pid.lock
 
 # Ignore ansible
 ansible/
+
+# Ignore excel files
+*.xlsx
+*.xls
+
