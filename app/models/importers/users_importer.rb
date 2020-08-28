@@ -10,10 +10,10 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['importing_id']
-      index :username, ['username']
+      index :importing_id, ['importing_id', 'US_ID']
+      index :username, ['username', 'US_Username']
       index :password, ['password']
-      index :name, ['name']
+      index :name, ['name', 'US_Name']
       index :role, ['role']
 
       super

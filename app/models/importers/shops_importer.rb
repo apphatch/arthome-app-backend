@@ -8,13 +8,13 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['No.', 'Outlet']
-      index :name, ['Store Name', 'Outlet Name']
-      index :shop_type, ['Store Type (MT/DT/CVS)', 'Outlet classification']
-      index :full_address, ['Store Address', 'Outlet Address']
+      index :importing_id, ['Outlet', 'Shop_ID']
+      index :name, ['Outlet Name', 'Shop_Name']
+      index :shop_type, ['Outlet classification']
+      index :full_address, ['Shop_Adress', 'Outlet Address']
       index :city, ['City', 'Province']
-      index :district, ['Quận', 'Distrist']
-      associate :users, ['OSA Code']
+      index :district, ['District']
+      associate :users, ['OSA Code', 'US_ID']
 
       super do |attributes, assocs, row|
         assocs[:users] = User.find_by_importing_id assocs[:users].to_s

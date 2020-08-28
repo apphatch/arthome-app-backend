@@ -9,7 +9,7 @@ module Importers
       is_uid :reference
       auto_gen_uid_with [:all]
 
-      index :checklist_type, ['Type', 'type']
+      index :checklist_type, ['Type']
       index :yearweek, ['YearWeek']
       index :date, ['Date']
       associate :user, ['OSA Code']
