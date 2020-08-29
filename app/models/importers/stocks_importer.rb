@@ -12,7 +12,7 @@ module Importers
       index :sku, ['ULV code', 'Rental ID', 'SKU_SKU'], {allow_dup: true}
       index :name, ['VN Descriptions', 'Rental ID', 'Category', 'SKU_Name'], {allow_dup: true}
       index :barcode, ['barcode', 'Barcode', 'SKU_Barcode']
-      index :role, ['role']
+      index :role, ['role', 'SKU_RoleShop']
       associate :shops, ['Outlet', 'Shop_ID']
 
       index :category, ['Category', 'Rental Type', 'SKU_Categogy']
@@ -21,7 +21,6 @@ module Importers
       index :short_division, ['Short Division']
       index :group, ['SKU_Group']
       index :brand, ['Brand']
-      index :role_shop, ['SKU_RoleShop']
       index :packaging, ['SKU_Package']
 
       super do |attributes, assocs, row|
@@ -35,7 +34,6 @@ module Importers
           short_division: attributes[:short_division],
           group: attributes[:group],
           brand: attributes[:brand],
-          role_shop: attributes[:role_shop],
           packaging: attributes[:packaging]
         }
         [attributes, assocs]
