@@ -10,7 +10,7 @@ module Importers
 
       index :importing_id, ['Outlet', 'Shop_ID']
       index :name, ['Outlet Name', 'Shop_Name']
-      index :shop_type, ['Outlet classification']
+      index :shop_type, ['Outlet classification', 'Shop_RoleShop']
       index :full_address, ['Shop_Adress', 'Outlet Address']
       index :city, ['City', 'Province']
       index :district, ['District']
