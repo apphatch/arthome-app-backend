@@ -36,9 +36,9 @@ module Generators
           checklist_type: 'qc',
           yearweek: "#{t.year}#{t.month}"
         )
-        generate_hpc(checklist) if @shop.shop_type.downcase == 'hpc'
-        generate_ic(checklist) if @shop.shop_type.downcase == 'ic'
-        generate_hpcic(checklist) if @shop.shop_type.downcase == 'hpcic'
+        generate_hpc(checklist) if shop.shop_type.downcase == 'hpc'
+        generate_ic(checklist) if shop.shop_type.downcase == 'ic'
+        generate_hpcic(checklist) if shop.shop_type.downcase == 'hpcic'
       end
     end
 
