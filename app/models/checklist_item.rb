@@ -23,7 +23,7 @@ class ChecklistItem < ApplicationRecord
   end
 
   def update_data params
-    if self.checklist_type.in? ['ic', 'hpc', 'hpcic']
+    if self.checklist_type.try(:downcase) == 'qc'
       self.data = [] if self.data.empty?
       self.data.push params[:data]
       self.save!
