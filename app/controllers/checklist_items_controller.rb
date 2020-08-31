@@ -27,7 +27,7 @@ class ChecklistItemsController < ApplicationController
 
   def update
     find_record do |checklist_item|
-      checklist_item.update_attributes(data: JSON.parse(params[:data]))
+      checklist_item.update_data(data: JSON.parse(params[:data]))
       checklist_item.checklist.completed!
       render json: checklist_item, serializer: ChecklistItemSerializer
     end

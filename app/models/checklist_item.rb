@@ -22,13 +22,13 @@ class ChecklistItem < ApplicationRecord
     return self.data.present?
   end
 
-  def update_attributes params
+  def update_data params
     if self.checklist_type.in? ['ic', 'hpc', 'hpcic']
       self.data = [] if self.data.empty?
       self.data.push params[:data]
       self.save!
     else
-      super params
+      self.update_attributes params
     end
   end
 end
