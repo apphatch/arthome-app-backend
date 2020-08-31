@@ -27,7 +27,7 @@ module Importers
         unless assocs[:shops].nil?
           assocs[:shops] = Shop.find_by_importing_id assocs[:shops]
         end
-        attributes[:role] = attributes[:role].downcase
+        attributes[:role] = attributes[:role].try(:downcase)
         attributes[:custom_attributes] = {
           category: attributes[:category],
           sub_category: attributes[:sub_category],
