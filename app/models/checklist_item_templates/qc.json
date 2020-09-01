@@ -59,6 +59,10 @@
         "type": "date",
         "value": []
     },
+    "Số lô": {
+        "type": "input",
+        "value": []
+    },
     "Nhiệt độ": {
         "type": "input",
         "values": []

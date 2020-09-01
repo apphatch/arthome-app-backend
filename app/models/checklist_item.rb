@@ -21,14 +21,4 @@ class ChecklistItem < ApplicationRecord
   def completed?
     return self.data.present?
   end
-
-  def update_data params
-    if self.checklist_type.try(:downcase) == 'qc'
-      self.data[:records] ||= []
-      self.data[:records].push params[:data]
-      self.save!
-    else
-      self.update_attributes params
-    end
-  end
 end
