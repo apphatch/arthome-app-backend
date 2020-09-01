@@ -64,7 +64,7 @@
         "value": []
     },
     "Nhiệt độ": {
-        "type": "input",
+        "type": "number",
         "values": []
     },
     "Mức cảnh báo": {
