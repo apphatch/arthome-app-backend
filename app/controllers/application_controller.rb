@@ -43,7 +43,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_jwt_for_api user
-    token = JsonWebToken.encode user_id: user.id
+    token = JsonWebToken.encode user_id: user.id, exp: 10.minutes.from_now
     user.update jwt: token
     response.headers['Authorization'] = token
     return token
