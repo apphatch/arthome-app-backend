@@ -35,4 +35,22 @@ class Cloner
       end
     end
   end
+
+  def self.clone_shops source_user, dest_user
+    source_user.shops.each do |s|
+      unless dest_user.shops.include? s
+        dest_user.shops.push s
+      end
+    end
+    dest_user.save!
+  end
+
+  def self.clone_users source_shop, dest_shop
+    source_shop.users.each do |u|
+      unless dest_shop.users.include? u
+        dest_shop.users.push u
+      end
+    end
+    dest_shop.save!
+  end
 end
