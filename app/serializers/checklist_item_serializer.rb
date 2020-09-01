@@ -1,7 +1,7 @@
 class ChecklistItemSerializer < ActiveModel::Serializer
   attributes :id, :data, :stock_name,
     :category, :sub_category, :mechanic, :quantity, :barcode,
-    :rental_type
+    :rental_type, :role
 
   def stock_name
     object.stock.try(:name)
@@ -21,5 +21,9 @@ class ChecklistItemSerializer < ActiveModel::Serializer
 
   def rental_type
     object.stock.try(:rental_type)
+  end
+
+  def role
+    object.stock.try(:role)
   end
 end
