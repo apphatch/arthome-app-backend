@@ -6,12 +6,12 @@ namespace :qc_import do
   end
 
   task :shops, [:file] => [:environment] do |t, args|
-    importer = Importers::ShopsImporter.new file_name: args[:file]
+    importer = Importers::QcShopsImporter.new file_name: args[:file]
     importer.import
   end
 
   task :stocks, [:file] => [:environment] do |t, args|
-    importer = Importers::StocksImporter.new file_name: args[:file]
+    importer = Importers::QcStocksImporter.new file_name: args[:file]
     importer.import
   end
 
