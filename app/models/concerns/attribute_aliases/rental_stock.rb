@@ -1,5 +1,7 @@
 module AttributeAliases::RentalStock
   def rental_type
-    self.category
+    #change back to category
+    #self.category
+    self.sub_category
   end
 end
