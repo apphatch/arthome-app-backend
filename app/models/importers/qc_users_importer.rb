@@ -1,7 +1,7 @@
 require 'json'
 
 module Importers
-  class UsersImporter < BaseImporter
+  class QcUsersImporter < BaseImporter
     def initialize params={}
       @model_class = User
       super params
@@ -10,10 +10,10 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['importing_id', 'US_ID']
-      index :username, ['username', 'US_Username']
+      index :importing_id, ['US_ID']
+      index :username, ['US_Username']
       index :password, ['password']
-      index :name, ['name', 'US_Name']
+      index :name, ['US_Name']
       index :role, ['role']
 
       super
