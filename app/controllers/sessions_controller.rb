@@ -8,13 +8,18 @@ class SessionsController < ApplicationController
   def create
     # LOGIN
     user = User.find_by_username params[:username]
-    if user && user.authenticate(params[:password])
+    head 404 unless user.present?
+    head 401 unless user.failed_login_attempts < 5
+
+    if user.authenticate(params[:password])
+      user.update failed_login_attempts: 0
       set_jwt_for_api user
       render json: {
         result: 'logged in', user_id: user.id,
         last_checkin_checkout: user.last_checkin_checkout
       } and return
     else
+      user.update failed_login_attempts: user.failed_login_attempts + 1
       head 401
     end
   end
