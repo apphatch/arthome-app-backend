@@ -58,8 +58,8 @@ class UsersController < ApplicationController
   end
 
   def import_template
-    data = Importers::OsaUserImporter.import_template.string if @current_app == 'osa'
-    data = Importers::QcUserImporter.import_template.string if @current_app == 'qc'
+    data = Importers::OsaUserImporter.template.string if @current_app == 'osa'
+    data = Importers::QcUserImporter.template.string if @current_app == 'qc'
     send_data data, filename: 'user-import-template.xlsx'
   end
 

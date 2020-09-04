@@ -136,7 +136,7 @@ module Importers
       # only update, no create
     end
 
-    def import_template
+    def template
       headers = @header_mappings.collect{|k, v| v}
 
       book = Spreadsheet::Workbook.new

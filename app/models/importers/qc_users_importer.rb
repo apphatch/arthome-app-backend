@@ -19,7 +19,7 @@ module Importers
       super
     end
 
-    def import_template
+    def template
       index :importing_id, ['US_ID']
       index :username, ['US_Username']
       index :password, ['password']
