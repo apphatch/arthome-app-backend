@@ -135,5 +135,16 @@ module Importers
       # default update behaviour
       # only update, no create
     end
+
+    def import_template
+      headers = @header_mappings.collect{|k, v| v}
+
+      book = Spreadsheet::Workbook.new
+      sheet = book.create_worksheet
+      sheet.row(0).concat(headers)
+      data = StringIO.new("")
+      book.write data
+      return data
+    end
   end
 end

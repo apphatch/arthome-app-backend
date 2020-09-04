@@ -18,5 +18,15 @@ module Importers
 
       super
     end
+
+    def import_template
+      index :importing_id, ['importing_id']
+      index :username, ['username']
+      index :password, ['password']
+      index :name, ['name']
+      index :role, ['role']
+
+      super
+    end
   end
 end
