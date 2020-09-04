@@ -40,5 +40,18 @@ module Importers
         [attributes, assocs]
       end
     end
+
+    def self.template
+      super [
+        'ULV Code', 'VN Descriptions', 'barcode', 'role', 'Outlet',
+        'Category', 'Sub Category', 'Division'
+      ]
+    end
+
+    def self.template_rental
+      super [
+        'Outlet', 'Outlet Name', 'Rental ID', 'Sub Category', 'Rental Type'
+      ]
+    end
   end
 end

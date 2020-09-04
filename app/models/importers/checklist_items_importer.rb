@@ -39,5 +39,13 @@ module Importers
         [attributes, assocs]
       end
     end
+
+    def self.template
+      super [
+        'Type', 'YearWeek', 'Date', 'OSA Code', 'Outlet',
+        'ULV code', 'VN Descriptions', 'Category', 'Brand',
+        'Barcode', 'Stock'
+      ]
+    end
   end
 end

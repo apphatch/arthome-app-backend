@@ -13,7 +13,7 @@ module Importers
       index :yearweek, ['YearWeek']
       index :date, ['Date']
       associate :user, ['OSA Code']
-      associate :shop, ['Outlet']
+      associate :shop, ['Outlet', 'Outlet Name']
 
       skip_if_record_exists
 
@@ -25,6 +25,14 @@ module Importers
 
         [attributes, assocs]
       end
+    end
+
+    def self.template
+      super [
+        'Type', 'YearWeek', 'Date', 'OSA Code', 'Outlet',
+        'ULV code', 'VN Descriptions', 'Category', 'Brand',
+        'Barcode', 'Stock'
+      ]
     end
   end
 end

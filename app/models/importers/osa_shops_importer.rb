@@ -22,5 +22,12 @@ module Importers
         [attributes, assocs]
       end
     end
+
+    def self.template
+      super [
+        'Outlet', 'Outlet Name', 'Outlet classification',
+        'Outlet Address', 'City', 'District', 'OSA Code'
+      ]
+    end
   end
 end
