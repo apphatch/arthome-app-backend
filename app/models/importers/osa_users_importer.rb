@@ -19,14 +19,11 @@ module Importers
       super
     end
 
-    def template
-      index :importing_id, ['importing_id']
-      index :username, ['username']
-      index :password, ['password']
-      index :name, ['name']
-      index :role, ['role']
-
-      super
+    def self.template
+      super [
+        'importing_id', 'username', 'password',
+        'name', 'role'
+      ]
     end
   end
 end
