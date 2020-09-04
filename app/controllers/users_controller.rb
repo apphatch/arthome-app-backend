@@ -60,7 +60,7 @@ class UsersController < ApplicationController
   def import_template
     data = Importers::OsaUsersImporter.template.string if @current_app == 'osa'
     data = Importers::QcUsersImporter.template.string if @current_app == 'qc'
-    send_data data, type: :xls, filename: 'user-import-template.xlsx'
+    send_data data, type: :xlsx, filename: 'user-import-template.xlsx'
   end
 
   def permitted_params
