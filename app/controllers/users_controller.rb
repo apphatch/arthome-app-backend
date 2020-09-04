@@ -48,7 +48,8 @@ class UsersController < ApplicationController
     begin
       # assume only 1 file
       f = params[:files].first
-      importer = Importers::UsersImporter.new file: f
+      importer = Importers::OsaUsersImporter.new(file: f) if @current_app == 'osa'
+      importer = Importers::QcUsersImporter.new(file: f) if @current_app == 'qc'
       importer.import
       head 201
     rescue
@@ -57,7 +58,9 @@ class UsersController < ApplicationController
   end
 
   def import_template
-    send_data User.import_template.string, filename: 'user-import-template.xlsx'
+    data = Importers::OsaUserImporter.import_template.string if @current_app == 'osa'
+    data = Importers::QcUserImporter.import_template.string if @current_app == 'qc'
+    send_data data, filename: 'user-import-template.xlsx'
   end
 
   def permitted_params
