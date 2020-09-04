@@ -88,6 +88,12 @@ class ShopsController < ApplicationController
     render json: []
   end
 
+  def template
+    data = Importers::OsaShopsImporter.template.string if @current_app == 'osa'
+    data = Importers::QcShopsImporter.template.string if @current_app == 'qc'
+    send_data data, filename: 'shop-import-template.xlsx'
+  end
+
   def permitted_params
     return params.permit(
       :photo, :note, :time, :photo_name, :incomplete,

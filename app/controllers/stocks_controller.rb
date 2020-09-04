@@ -59,6 +59,15 @@ class StocksController < ApplicationController
     end
   end
 
+  def template
+    if @current_app == 'osa'
+      data = Importers::OsaStocksImporter.template.string
+      data = Importers::OsaStocksImporter.template_rental.string if params[:rental]
+    end
+    data = Importers::QcStocksImporter.template.string if @current_app == 'qc'
+    send_data data, filename: 'stock-import-template.xlsx'
+  end
+
   def permitted_params
     return params.permit(:files)
   end

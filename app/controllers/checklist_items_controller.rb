@@ -56,6 +56,12 @@ class ChecklistItemsController < ApplicationController
     end
   end
 
+  def template
+    data = Importers::ChecklistItemsImporter.template.string if @current_app == 'osa'
+    data = Importers::ChecklistItemsImporter.template.string if @current_app == 'qc'
+    send_data data, filename: 'checklist-item-import-template.xlsx'
+  end
+
   def permitted_params
     if ![
         params[:checklist_id], params[:stock_id]
