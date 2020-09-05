@@ -60,7 +60,7 @@ class StocksController < ApplicationController
   end
 
   def template
-    if @current_app == 'osa'
+    if @current_app == 'osa-webportal'
       data = Importers::OsaStocksImporter.template.string
       data = Importers::OsaStocksImporter.template_rental.string if params[:rental]
     end

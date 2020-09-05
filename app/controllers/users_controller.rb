@@ -48,7 +48,7 @@ class UsersController < ApplicationController
     begin
       # assume only 1 file
       f = params[:files].first
-      importer = Importers::OsaUsersImporter.new(file: f) if @current_app == 'osa'
+      importer = Importers::OsaUsersImporter.new(file: f) if @current_app == 'osa-webportal'
       importer = Importers::QcUsersImporter.new(file: f) if @current_app == 'qc'
       importer.import
       head 201
@@ -58,7 +58,7 @@ class UsersController < ApplicationController
   end
 
   def import_template
-    data = Importers::OsaUsersImporter.template.string if @current_app == 'osa'
+    data = Importers::OsaUsersImporter.template.string if @current_app == 'osa-webportal'
     data = Importers::QcUsersImporter.template.string if @current_app == 'qc'
     send_data data, type: :xls, filename: 'user-import-template.xls'
   end

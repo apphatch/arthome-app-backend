@@ -89,7 +89,7 @@ class ShopsController < ApplicationController
   end
 
   def template
-    data = Importers::OsaShopsImporter.template.string if @current_app == 'osa'
+    data = Importers::OsaShopsImporter.template.string if @current_app == 'osa-webportal'
     data = Importers::QcShopsImporter.template.string if @current_app == 'qc'
     send_data data, filename: 'shop-import-template.xlsx'
   end

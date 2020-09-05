@@ -103,7 +103,7 @@ class ChecklistsController < ApplicationController
   end
 
   def template
-    data = Importers::ChecklistsImporter.template.string if @current_app == 'osa'
+    data = Importers::ChecklistsImporter.template.string if @current_app == 'osa-webportal'
     data = Importers::ChecklistsImporter.template.string if @current_app == 'qc'
     send_data data, filename: 'checklist-import-template.xlsx'
   end
