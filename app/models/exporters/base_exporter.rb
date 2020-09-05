@@ -5,29 +5,30 @@ module Exporters
     def initialize params={}
     end
 
-    def self.set_headers list
+    def set_headers list
       @headers = list
     end
 
-    def self.set_data list
+    def set_data list
       @data = list
     end
 
-    def self.export
+    def export
       raise Exception.new 'provide headers as array' if @headers.empty?
       raise Exception.new 'provide data as array' if @data.empty?
 
-      @book = Spreadsheet::Workbook.new
-      @book.create_worksheet
+      book = Spreadsheet::Workbook.new
+      book.create_worksheet
 
-      @book.worksheet(0).insert_row(0, @headers)
+      book.worksheet(0).insert_row(0, @headers)
       @data.each_with_index do |row, index|
-        @book.worksheet(0).insert_row(index+1, row)
+        book.worksheet(0).insert_row(index+1, row)
       end
-      @book.write('test.xlsx')
-      #write_data
-      #@data = StringIO.new("")
-      #@book.write data
+
+      #write to io stream for download
+      data = StringIO.new("")
+      book.write data
+      return data
     end
   end
 end
