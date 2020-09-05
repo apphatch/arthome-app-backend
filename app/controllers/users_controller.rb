@@ -63,6 +63,12 @@ class UsersController < ApplicationController
     send_data data, type: :xls, filename: 'user-import-template.xls'
   end
 
+  def export_oos
+    exporter = Exporters::OosExporter.new
+    data = exporter.export.string
+    send_data data, type: :xls, filename: 'oos-exported-data.xls'
+  end
+
   def permitted_params
     return params.permit(:username, :name, :password, :importing_id)
   end
