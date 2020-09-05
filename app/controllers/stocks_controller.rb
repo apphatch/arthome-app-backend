@@ -1,3 +1,4 @@
+require 'base64'
 class StocksController < ApplicationController
   def index
     render json: Stock.active.order(:name), each_serializer: StockSerializer
@@ -59,13 +60,15 @@ class StocksController < ApplicationController
     end
   end
 
-  def template
+  def import_template
     if @current_app == 'osa-webportal'
-      data = Importers::OsaStocksImporter.template.string
-      data = Importers::OsaStocksImporter.template_rental.string if params[:rental]
+      data = Importers::OsaStocksImporter.template
+      data = Importers::OsaStocksImporter.template_rental if params[:rental]
     end
-    data = Importers::QcStocksImporter.template.string if @current_app == 'qc'
-    send_data data, filename: 'stock-import-template.xlsx'
+    data = Importers::QcStocksImporter.template if @current_app == 'qc'
+    f = File.open 'export/import-template.xls', 'rb'
+    enc = Base64.encode64 f.read
+    send_data enc, type: :xls, filename: 'stock-import-template.xls'
   end
 
   def permitted_params

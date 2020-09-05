@@ -1,4 +1,5 @@
 require 'json'
+require 'base64'
 
 class ChecklistItemsController < ApplicationController
   def index
@@ -56,10 +57,12 @@ class ChecklistItemsController < ApplicationController
     end
   end
 
-  def template
-    data = Importers::ChecklistItemsImporter.template.string if @current_app == 'osa-webportal'
-    data = Importers::ChecklistItemsImporter.template.string if @current_app == 'qc'
-    send_data data, filename: 'checklist-item-import-template.xlsx'
+  def import_template
+    data = Importers::ChecklistItemsImporter.template if @current_app == 'osa-webportal'
+    data = Importers::ChecklistItemsImporter.template if @current_app == 'qc'
+    f = File.open 'export/import-template.xls', 'rb'
+    enc = Base64.encode64 f.read
+    send_data enc, type: :xls, filename: 'checklist-items-import-template.xls'
   end
 
   def permitted_params

@@ -1,3 +1,4 @@
+require 'base64'
 class ChecklistsController < ApplicationController
   def index
     result = Checklist.active
@@ -102,10 +103,12 @@ class ChecklistsController < ApplicationController
     end
   end
 
-  def template
-    data = Importers::ChecklistsImporter.template.string if @current_app == 'osa-webportal'
-    data = Importers::ChecklistsImporter.template.string if @current_app == 'qc'
-    send_data data, filename: 'checklist-import-template.xlsx'
+  def import_template
+    data = Importers::ChecklistsImporter.template if @current_app == 'osa-webportal'
+    data = Importers::ChecklistsImporter.template if @current_app == 'qc'
+    f = File.open 'export/import-template.xls', 'rb'
+    enc = Base64.encode64 f.read
+    send_data enc, type: :xls, filename: 'checklist-import-template.xls'
   end
 
   def permitted_params

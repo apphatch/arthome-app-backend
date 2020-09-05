@@ -140,7 +140,7 @@ module Importers
       book = Spreadsheet::Workbook.new
       sheet = book.create_worksheet
       sheet.row(0).concat(headers)
-      book.write 'export/user-import-template.xls'
+      book.write 'export/import-template.xls'
     end
   end
 end

@@ -1,3 +1,4 @@
+require 'base64'
 class ShopsController < ApplicationController
   def index
     render json: Shop.active.order(:name), each_serializer: ShopSerializer, user: current_user
@@ -88,10 +89,13 @@ class ShopsController < ApplicationController
     render json: []
   end
 
-  def template
-    data = Importers::OsaShopsImporter.template.string if @current_app == 'osa-webportal'
-    data = Importers::QcShopsImporter.template.string if @current_app == 'qc'
-    send_data data, filename: 'shop-import-template.xlsx'
+  def import_template
+    data = Importers::OsaShopsImporter.template if @current_app == 'osa-webportal'
+    data = Importers::QcShopsImporter.template if @current_app == 'qc'
+
+    f = File.open 'export/import-template.xls', 'rb'
+    enc = Base64.encode64 f.read
+    send_data enc, type: :xls, filename: 'shop-import-template.xls'
   end
 
   def permitted_params
