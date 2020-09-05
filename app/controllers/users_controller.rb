@@ -69,8 +69,10 @@ class UsersController < ApplicationController
 
   def export_oos
     exporter = Exporters::OosExporter.new
-    data = exporter.export.string
-    send_data data, type: :xls, filename: 'oos-exported-data.xls'
+    data = exporter.export
+    f = File.open 'export/oos-export.xls', 'rb'
+    enc = Base64.encode64 f.read
+    send_data enc, type: :xls, filename: 'oos-export.xls'
   end
 
   def permitted_params

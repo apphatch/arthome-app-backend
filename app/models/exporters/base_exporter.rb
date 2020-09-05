@@ -25,10 +25,7 @@ module Exporters
         book.worksheet(0).insert_row(index+1, row)
       end
 
-      #write to io stream for download
-      data = StringIO.new("")
-      book.write data
-      return data
+      book.write 'export/oos-export.xls'
     end
   end
 end
