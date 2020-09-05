@@ -140,9 +140,7 @@ module Importers
       book = Spreadsheet::Workbook.new
       sheet = book.create_worksheet
       sheet.row(0).concat(headers)
-      data = StringIO.new("")
-      book.write data
-      return data
+      book.write 'export/user-import-template.xls'
     end
   end
 end

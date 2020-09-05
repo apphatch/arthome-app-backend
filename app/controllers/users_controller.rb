@@ -1,3 +1,5 @@
+require 'base64'
+
 class UsersController < ApplicationController
   before_action :check_user_is_admin, except: [:index, :show]
 
@@ -60,7 +62,9 @@ class UsersController < ApplicationController
   def import_template
     data = Importers::OsaUsersImporter.template.string if @current_app == 'osa-webportal'
     data = Importers::QcUsersImporter.template.string if @current_app == 'qc'
-    send_data data, type: :xls, filename: 'user-import-template.xls'
+    f = File.open 'export/user-import-template.xls', 'rb'
+    enc = Base64.encode64 f.read
+    send_data enc, type: :xls, filename: 'user-import-template.xls'
   end
 
   def export_oos
