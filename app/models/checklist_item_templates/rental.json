@@ -1,14 +1,17 @@
 {
     "Available": {
         "type": "radio",
-        "values": ["Y","N"]
+        "values": ["Y","N"],
+        "required": true
     },
     "Inline": {
         "type": "radio",
-        "values": ["Y","N"]
+        "values": ["Y","N"],
+        "required": true
     },
     "Png": {
         "type": "radio",
-        "values": ["Y","N"]
+        "values": ["Y","N"],
+        "required": true
     }
 }

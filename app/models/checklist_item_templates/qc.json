@@ -1,6 +1,7 @@
 {
     "Lỗi": {
         "type": "select",
+        "required": true,
         "values": [
             "Không lỗi",
             "Mã vạch",
@@ -53,22 +54,27 @@
     },
     "HSD": {
         "type": "date",
-        "value": []
+        "value": [],
+        "required": true
     },
     "NSX": {
         "type": "date",
-        "value": []
+        "value": [],
+        "required": true
     },
     "Số lô": {
         "type": "input",
-        "value": []
+        "value": [],
+        "required": false
     },
     "Nhiệt độ": {
         "type": "number",
-        "values": []
+        "values": [],
+        "required": true
     },
     "Mức cảnh báo": {
         "type": "select",
-        "values": ["Xanh", "Vàng", "Đỏ"]
+        "values": ["Xanh", "Vàng", "Đỏ"],
+        "required": true
     }
 }

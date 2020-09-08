@@ -1,10 +1,12 @@
 {
     "Length of Unilever": {
         "type": "number",
-        "values": []
+        "values": [],
+        "required": true
     },
     "Length of Competitor": {
         "type": "number",
-        "values": []
+        "values": [],
+        "required": true
     }
 }

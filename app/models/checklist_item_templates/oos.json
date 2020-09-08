@@ -2,14 +2,17 @@
     "Available": {
         "type": "number",
         "values": [],
-        "default_value_use": "quantity"
+        "default_value_use": "quantity",
+        "required": true
     },
     "Void": {
         "type": "radio",
-        "values": ["Y","N"]
+        "values": ["Y","N"],
+        "required": true
     },
     "Note": {
         "type": "textarea",
-        "values": []
+        "values": [],
+        "required": false
     }
 }
