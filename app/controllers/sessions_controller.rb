@@ -24,6 +24,11 @@ class SessionsController < ApplicationController
     end
   end
 
+  def keep_alive
+    #do nothing
+    head 200
+  end
+
   def destroy
     # LOGOUT
     current_user.update jwt: nil if current_user.present?

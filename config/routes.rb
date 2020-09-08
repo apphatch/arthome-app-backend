@@ -3,7 +3,11 @@ Rails.application.routes.draw do
   post 'login', to: 'sessions#create', as: :login
   get 'logout', to: 'sessions#destroy', as: :logout
 
-  resources :sessions, only: [:new, :create, :destroy]
+  resources :sessions, only: [:new, :create, :destroy] do
+    collection do
+      get :keep_alive
+    end
+  end
 
   resources :users do
     collection do
