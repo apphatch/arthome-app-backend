@@ -55,12 +55,12 @@
     "HSD": {
         "type": "date",
         "value": [],
-        "required": true
+        "required": false
     },
     "NSX": {
         "type": "date",
         "value": [],
-        "required": true
+        "required": false
     },
     "Số lô": {
         "type": "input",
