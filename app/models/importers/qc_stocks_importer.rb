@@ -8,8 +8,8 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['SKU_Barcode']
-      index :sku, ['SKU_SKU'], {allow_dup: true}
+      index :importing_id, ['SKU_Name']
+      index :sku, ['SKU_SKU']
       index :name, ['SKU_Name'], {allow_dup: true}
       index :barcode, ['SKU_Barcode']
       index :role, ['SKU_RoleShop']
