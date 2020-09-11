@@ -6,6 +6,8 @@ class Shop < ApplicationRecord
 
   has_many :photos, as: :dbfiles
 
+  serialize :custom_attributes, Hash
+
   def checkout user, params
     begin
       record = self.checkin_checkouts.new(
