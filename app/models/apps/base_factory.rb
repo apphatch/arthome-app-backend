@@ -10,6 +10,7 @@ module Apps
     def self.make app
       apps = {
         'osa-webportal' => ::Apps::OsaWebportalFactory,
+        'qc' => ::Apps::QcMobileFactory,
       }
       app_obj = apps[app].new
       app_obj.name = app
