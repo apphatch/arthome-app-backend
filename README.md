@@ -1,9 +1,9 @@
 # README
 
-1. Install Ruby 2.7.0. We suggest using RVM. On Mac:
+1. Uses Ruby 2.6.3. We suggest using RVM. On Mac:
 ```
 brew install rvm
-rvm install 2.7.0
+rvm install 2.6.3
 ```
 
 2. This repo requires PostgreSQL 9.5.20.
@@ -18,4 +18,9 @@ rake db:setup
 5. Run the server
 ```
 rails server
+```
+
+6. Run production server
+```
+bundle exec passenger start
 ```
