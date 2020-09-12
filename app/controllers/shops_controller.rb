@@ -83,7 +83,7 @@ class ShopsController < ApplicationController
       shops = current_user.shops.active.where(
         "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
       )
-      render json: shops.order(:name), serializer: ShopSerializer, user: current_user and return if shops.present?
+      render json: shops.order(:name), each_serializer: ShopSerializer, user: current_user and return if shops.present?
     end
 
     render json: []
