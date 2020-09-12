@@ -9,6 +9,6 @@ class CheckinCheckoutSerializer < ActiveModel::Serializer
   belongs_to :checkin, serializer: CheckinCheckoutSerializer
 
   def user_checkout
-    super || CheckinCheckout.new.attributes
+    object.user_checkout.present? ? object.user_checkout : CheckinCheckout.new.attributes
   end
 end
