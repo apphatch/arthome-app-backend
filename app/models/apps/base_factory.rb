@@ -3,7 +3,14 @@ module Apps
     attr_accessor :name
 
     def initialize
-      @object_mappings = {}
+      @object_mappings = {
+        user_importer: Importers::BaseImporter,
+        shop_importer: Importers::BaseImporter,
+        stock_importer: Importers::BaseImporter,
+        checklist_importer: Importers::BaseImporter,
+        checklist_item_importer: Importers::BaseImporter,
+        master_importer: Importers::BaseImporter,
+      }
       @name = nil
     end
 
