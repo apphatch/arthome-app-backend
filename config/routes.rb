@@ -61,7 +61,7 @@ Rails.application.routes.draw do
       get :index_by_user
       get :search
       get :import_template
-      get :import_osa
+      post :import_osa
     end
 
     member do
