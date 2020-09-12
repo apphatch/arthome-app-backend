@@ -61,11 +61,11 @@ class StocksController < ApplicationController
   end
 
   def import_template
-    if @current_app == 'osa-webportal'
+    if @current_app.name == 'osa-webportal'
       data = Importers::OsaStocksImporter.template
       data = Importers::OsaStocksImporter.template_rental if params[:rental]
     end
-    data = Importers::QcStocksImporter.template if @current_app == 'qc'
+    data = Importers::QcStocksImporter.template if @current_app.name == 'qc'
     f = File.open 'export/import-template.xls', 'rb'
     enc = Base64.encode64 f.read
     send_data enc, type: :xls, filename: 'stock-import-template.xls'

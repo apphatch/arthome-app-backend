@@ -90,8 +90,8 @@ class ShopsController < ApplicationController
   end
 
   def import_template
-    data = Importers::OsaShopsImporter.template if @current_app == 'osa-webportal'
-    data = Importers::QcShopsImporter.template if @current_app == 'qc'
+    data = Importers::OsaShopsImporter.template if @current_app.name == 'osa-webportal'
+    data = Importers::QcShopsImporter.template if @current_app.name == 'qc'
 
     f = File.open 'export/import-template.xls', 'rb'
     enc = Base64.encode64 f.read

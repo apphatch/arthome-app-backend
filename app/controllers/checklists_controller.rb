@@ -31,7 +31,7 @@ class ChecklistsController < ApplicationController
     shop = current_user.shops.active.find_by_id params[:shop_id]
     head 401 and return unless shop.present?
 
-    checklists = current_user.checklists.active.index_for @current_app
+    checklists = current_user.checklists.active.index_for @current_app.name
     checklists = checklists.select{|c| c.shop == shop}.compact if checklists.present?
     render json: checklists, each_serializer: ChecklistSerializer
   end
@@ -104,8 +104,8 @@ class ChecklistsController < ApplicationController
   end
 
   def import_template
-    data = Importers::ChecklistsImporter.template if @current_app == 'osa-webportal'
-    data = Importers::ChecklistsImporter.template if @current_app == 'qc'
+    data = Importers::ChecklistsImporter.template if @current_app.name == 'osa-webportal'
+    data = Importers::ChecklistsImporter.template if @current_app.name == 'qc'
     f = File.open 'export/import-template.xls', 'rb'
     enc = Base64.encode64 f.read
     send_data enc, type: :xls, filename: 'checklist-import-template.xls'
