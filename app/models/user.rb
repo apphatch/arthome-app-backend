@@ -62,16 +62,19 @@ class User < ApplicationRecord
     ].all?
 
     begin
+      last_record = self.last_checkin_checkout
+      last_record = last_record.try(:checkin?) ? last_record : nil
       record = self.checkin_checkouts.create(
         shop: shop,
         time: params[:time],
         note: params[:note],
-        is_checkin: false
+        is_checkin: false,
+        checkin: last_record
       )
       record.photos.create(
         image: params[:photo],
         time: params[:time],
-        name: params[:photo_name],
+        name: params[:photo_name]
       )
       record.save
       #HACK: refac later

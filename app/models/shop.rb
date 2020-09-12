@@ -10,16 +10,18 @@ class Shop < ApplicationRecord
 
   def checkout user, params
     begin
+      last_record = user.last_checkin_checkout
+      last_record = last_record.try(:checkin?) ? last_record : nil
       record = self.checkin_checkouts.new(
         user: nil,
         time: params[:time],
         note: params[:note],
-        is_checkin: false
+        is_checkin: false,
+        checkin: last_record
       )
       record.save validate: false
 
       params[:photos].each do |photo|
-        #TODO: fix how FE returns data to construct this object
         record.photos.create(
           image: photo,
           time: params[:time],

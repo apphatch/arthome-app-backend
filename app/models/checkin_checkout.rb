@@ -3,7 +3,7 @@ class CheckinCheckout < ApplicationRecord
   belongs_to :shop
   has_many :photos, as: :dbfile
 
-  has_one :checkout, class_name: "CheckinCheckout",
+  has_many :checkouts, class_name: "CheckinCheckout",
     inverse_of: :checkin, foreign_key: "checkin_id"
   belongs_to :checkin, class_name: "CheckinCheckout",
     foreign_key: "checkin_id", optional: true
