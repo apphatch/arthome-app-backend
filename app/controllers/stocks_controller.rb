@@ -52,7 +52,7 @@ class StocksController < ApplicationController
     begin
       # assume only 1 file
       f = params[:files].first
-      importer = Importers::StocksImporter.new file: f
+      importer = @current_app.get(:stock_importer).new(file: f)
       importer.import
       head 201
     rescue
