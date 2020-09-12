@@ -18,4 +18,12 @@ class CheckinCheckout < ApplicationRecord
   def checkout?
     return !self.is_checkin
   end
+
+  def user_checkout
+    return self.checkouts.find{|c| c.user.present?}
+  end
+
+  def shop_checkouts
+    return self.checkouts.filter{|c| c.user.nil?}
+  end
 end
