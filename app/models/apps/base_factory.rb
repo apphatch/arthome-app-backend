@@ -19,7 +19,8 @@ module Apps
         'osa-webportal' => ::Apps::OsaWebportalFactory,
         'qc' => ::Apps::QcMobileFactory,
       }
-      app_obj = apps[app].new
+      app_obj = apps[app] || self
+      app_obj = app_obj.new
       app_obj.name = app
       app_obj.declare
       return app_obj
