@@ -104,8 +104,7 @@ class ChecklistsController < ApplicationController
   end
 
   def import_template
-    data = Importers::ChecklistsImporter.template if @current_app.name == 'osa-webportal'
-    data = Importers::ChecklistsImporter.template if @current_app.name == 'qc'
+    data = @current_app.get(:checklist_importer).template
     f = File.open 'export/import-template.xls', 'rb'
     enc = Base64.encode64 f.read
     send_data enc, type: :xls, filename: 'checklist-import-template.xls'
