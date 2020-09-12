@@ -14,7 +14,7 @@ module Apps
       app_obj = apps[app].new
       app_obj.name = app
       app_obj.declare
-      return app
+      return app_obj
     end
 
     def use klass, options
