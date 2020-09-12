@@ -1,15 +1,19 @@
 module Apps
   class BaseFactory
+    attr_accessor :name
+
     def initialize
       @object_mappings = {}
+      @name = nil
     end
 
     def self.make app
       apps = {
         'osa-webportal' => ::Apps::OsaWebportalFactory,
       }
-      app = apps[app].new
-      app.declare
+      app_obj = apps[app].new
+      app_obj.name = app
+      app_obj.declare
       return app
     end
 
