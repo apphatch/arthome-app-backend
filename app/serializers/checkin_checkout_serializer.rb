@@ -5,6 +5,7 @@ class CheckinCheckoutSerializer < ActiveModel::Serializer
   has_one :user
   has_one :shop
   has_many :photos, each_serializer: PhotoSerializer
+  has_many :shop_checkout_photos, each_serializer: PhotoSerializer
   has_many :checkouts, each_serializer: CheckinCheckoutSerializer
   belongs_to :checkin, serializer: CheckinCheckoutSerializer
 
