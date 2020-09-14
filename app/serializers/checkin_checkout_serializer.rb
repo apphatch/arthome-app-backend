@@ -10,4 +10,8 @@ class CheckinCheckoutSerializer < ActiveModel::Serializer
   def user_checkout
     object.user_checkout.present? ? object.user_checkout : CheckinCheckout.new.attributes
   end
+
+  def shop_checkouts
+    object.shop_checkouts.present? ? object.shop_checkouts : [CheckinCheckout.new.attributes]
+  end
 end
