@@ -1,5 +1,5 @@
 module Apps
-  class QcMobileFactory < BaseFactory
+  class QcWebportalFactory < BaseFactory
     def declare
       use Importers::QcUsersImporter, as: :user_importer
       use Importers::QcStocksImporter, as: :stock_importer

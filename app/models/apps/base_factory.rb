@@ -17,7 +17,7 @@ module Apps
     def self.make app
       apps = {
         'osa-webportal' => ::Apps::OsaWebportalFactory,
-        'qc' => ::Apps::QcMobileFactory,
+        'qc-webportal' => ::Apps::QcWebportalFactory,
       }
       app_obj = apps[app] || self
       app_obj = app_obj.new
@@ -31,7 +31,6 @@ module Apps
     end
 
     def declare
-      raise Exception.new 'provide declaration of object mappings'
     end
 
     def get object_klass
