@@ -4,6 +4,7 @@ module Exporters
   class BaseExporter
     def initialize params={}
       @output_file = params[:output]
+      @params = params
     end
 
     def set_headers list
