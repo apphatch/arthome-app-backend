@@ -8,7 +8,6 @@ module Mappers
         shop.try(:name),
         stock.try(:name),
         stock.try(:sub_category),
-        checklist_item.quantity,
         checklist_item.data["Length of Unilever"],
         checklist_item.data["Length of Competitor"],
       ]
