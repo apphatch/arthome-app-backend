@@ -3,7 +3,7 @@ require 'spreadsheet'
 module Exporters
   class BaseExporter
     def initialize params={}
-      @file = params[:file]
+      @output_file = params[:output]
     end
 
     def set_headers list
@@ -26,7 +26,7 @@ module Exporters
         book.worksheet(0).insert_row(index+1, row)
       end
 
-      book.write @file
+      book.write @output_file
     end
   end
 end
