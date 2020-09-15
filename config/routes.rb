@@ -80,4 +80,14 @@ Rails.application.routes.draw do
       get  :import_template
     end
   end
+
+  resources :io do
+    endpoints = {
+      oos: :oos_exporter,
+      sos: :sos_exporter,
+    }
+    endpoints.each do |k, v|
+      post "export_osa_#{k.to_s}"
+    end
+  end
 end

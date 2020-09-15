@@ -112,7 +112,7 @@ class ShopsController < ApplicationController
   #TODO move into own controller
   def export_osa
     begin
-      exporter = @current_app.get(:oos_exporter).new(file: 'export/oos-export.xls')
+      exporter = @current_app.get(:oos_exporter).new(output: 'export/oos-export.xls')
       exporter.export
       f = File.open 'export/oos-export.xls', 'rb'
       enc = Base64.encode64 f.read
