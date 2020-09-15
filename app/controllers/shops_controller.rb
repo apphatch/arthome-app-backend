@@ -96,6 +96,7 @@ class ShopsController < ApplicationController
     send_data enc, type: :xls, filename: 'shop-import-template.xls'
   end
 
+  #TODO move into own controller
   def import_osa
     begin
       # assume only 1 file
@@ -103,6 +104,18 @@ class ShopsController < ApplicationController
       importer = @current_app.get(:master_importer).new(file: f.path())
       importer.import
       head 201
+    rescue
+      head 500
+    end
+  end
+
+  def export_osa
+    begin
+      exporter = @current_app.get(:oos_exporter).new(file: 'export/oos-export.xls')
+      exporter.export
+      f = File.open 'export/oos-export.xls', 'rb'
+      enc = Base64.encode64 f.read
+      send_data enc, type: :xls, filename: 'oos-export.xls'
     rescue
       head 500
     end

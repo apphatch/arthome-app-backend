@@ -58,10 +58,11 @@ Rails.application.routes.draw do
 
   resources :shops do
     collection do
-      get :index_by_user
-      get :search
-      get :import_template
+      get  :index_by_user
+      get  :search
+      get  :import_template
       post :import_osa
+      get  :export_osa
     end
 
     member do
