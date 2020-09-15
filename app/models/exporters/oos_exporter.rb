@@ -11,9 +11,8 @@ module Exporters
         'Stock', 'Available', 'Void', 'Note'
       ]
       set_data Mappers::OosExportMapper.map ChecklistItem.active.filter{ |c|
-        c.checklist.user.importing_id == @params[:user_id] &&
-          c.checklist.checklist_type == 'oos' &&
-          c.checklist.yearweek == @params[:yearweek]
+        c.checklist.checklist_type == 'oos' &&
+        c.checklist.yearweek == @params[:yearweek]
       }
 
       super
