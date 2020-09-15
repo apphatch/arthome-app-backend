@@ -86,6 +86,10 @@ Rails.application.routes.draw do
       endpoints = {
         oos: :oos_exporter,
         sos: :sos_exporter,
+        npd: :npd_exporter,
+        promotions: :promotions_exporter,
+        osaweekend: :osaweekend_exporter,
+        rental: :rental_exporter,
       }
       endpoints.each do |k, v|
         get "export_osa_#{k.to_s}"

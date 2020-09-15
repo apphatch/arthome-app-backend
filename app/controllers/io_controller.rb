@@ -1,9 +1,14 @@
 require 'base64'
 
 class IoController < ApplicationController
+  #TODO move this into Apps model
   @endpoints = {
     oos: :oos_exporter,
     sos: :sos_exporter,
+    npd: :npd_exporter,
+    promotions: :promotions_exporter,
+    osaweekend: :osaweekend_exporter,
+    rental: :rental_exporter,
   }
 
   @endpoints.each do |k, v|
