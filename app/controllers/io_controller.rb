@@ -7,7 +7,7 @@ class IoController < ApplicationController
     sos: :sos_exporter,
     npd: :npd_exporter,
     promotions: :promotions_exporter,
-    osaweekend: :osaweekend_exporter,
+    osa_weekend: :osa_weekend_exporter,
     rental: :rental_exporter,
   }
 
