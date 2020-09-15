@@ -1,4 +1,5 @@
 require 'roo'
+require 'roo-xls'
 
 module Importers
   class BaseImporter
@@ -17,7 +18,9 @@ module Importers
 
       f = params[:file] || "import/#{params[:file_name]}"
       begin
-        @spreadsheet = Roo::Spreadsheet.open f
+        klass = Roo::Excel
+        klass = Roo::Excelx if f.match(/\.xlsx/)
+        @spreadsheet = klass.new f
       rescue
         raise Exception.new 'file not found'
       end

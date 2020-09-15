@@ -100,7 +100,7 @@ class ShopsController < ApplicationController
     begin
       # assume only 1 file
       f = params[:files].first
-      importer = @current_app.get(:master_importer).new(file: f)
+      importer = @current_app.get(:master_importer).new(file: f.path())
       importer.import
       head 201
     rescue
