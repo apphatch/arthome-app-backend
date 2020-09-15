@@ -17,7 +17,7 @@ module Exporters
 
     def export
       raise Exception.new 'provide headers as array' if @headers.empty?
-      raise Exception.new 'provide data as array' if @data.empty?
+      raise Exception.new 'provide data as array' unless @data.is_a?(Array)
 
       book = Spreadsheet::Workbook.new
       book.create_worksheet
