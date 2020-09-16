@@ -9,7 +9,6 @@ module Importers
       # 3. call super for default behaviour
       # 4. super accepts a block with attributes, associations and row data
 
-      @model_class = params[:model_class]
       @header_mappings = {}
       @uid_attr =nil
       @spreadsheet = nil
