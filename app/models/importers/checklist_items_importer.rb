@@ -19,7 +19,7 @@ module Importers
       index :yearweek, ['YearWeek']
       index :date, ['Date']
       associate :user, ['OSA Code']
-      associate :shop, ['Outlet']
+      associate :shop, ['Outlet', 'Outlet Name']
       associate :stock, ['ULV code', 'Rental ID', 'Category']
 
       super do |attributes, assocs, row|
@@ -31,10 +31,10 @@ module Importers
           assocs[:shop]
         ].join()
 
-        attributes[:date] = nil
         assocs[:checklist] = Checklist.find_by_reference checklist_ref
         assocs[:stock] = Stock.find_by_importing_id assocs[:stock].to_s
         assocs.delete :checklist_type #prevent no method error
+        attributes.delete :date #prevent no method error, only used to construct checklist ref
 
         [attributes, assocs]
       end
