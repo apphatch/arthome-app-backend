@@ -15,8 +15,9 @@ class IoController < ApplicationController
     define_method "export_osa_#{k.to_s}".to_sym do
       begin
         options = {
-          output: "export/#{k.to_s}-export.xls"
-        }.merge(permitted_params)
+          output: "export/#{k.to_s}-export.xls",
+          yearweek: params[:yearweek]
+        }
         exporter = @current_app.get(v).new options
         exporter.export
         f = File.open "export/#{k.to_s}-export.xls", 'rb'
