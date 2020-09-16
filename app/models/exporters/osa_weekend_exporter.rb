@@ -11,7 +11,7 @@ module Exporters
       ]
       set_data Mappers::OsaWeekendExportMapper.map ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'osa weekend' &&
-        c.checklist.yearweek == @params[:yearweek]
+        c.checklist.yearweek == @params[:yearweek].to_s
       }
 
       super

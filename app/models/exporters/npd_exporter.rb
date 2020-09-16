@@ -12,7 +12,7 @@ module Exporters
       ]
       set_data Mappers::NpdExportMapper.map ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'npd' &&
-        c.checklist.yearweek == @params[:yearweek]
+        c.checklist.yearweek == @params[:yearweek].to_s
       }
 
       super
