@@ -6,8 +6,7 @@ module Exporters
 
     def export
       set_headers [
-        'Outlet', 'Outlet Name', 'Category',
-        'Sub category', 'Stock',
+        'Outlet', 'Outlet Name', 'Category', 'Sub category',
         'Length of Unilever', 'Length of Competitor'
       ]
       set_data Mappers::SosExportMapper.map ChecklistItem.active.filter{ |c|
