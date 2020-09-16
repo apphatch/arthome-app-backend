@@ -20,6 +20,8 @@ module Importers
 
       super do |attributes, assocs, row|
         attributes[:password] ||= 'password'
+
+        [attributes, assocs]
       end
     end
 
