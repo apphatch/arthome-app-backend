@@ -10,15 +10,17 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['importing_id']
-      index :username, ['username']
+      index :importing_id, ['importing_id', 'OSA Code']
+      index :username, ['username', 'OSA Code'], {allow_dup: true}
       index :password, ['password']
-      index :name, ['name']
+      index :name, ['name', 'OSA Checker Name']
       index :role, ['role']
 
       skip_if_record_exists
 
-      super
+      super do |attributes, assocs, row|
+        attributes[:password] ||= 'password'
+      end
     end
 
     def self.template
