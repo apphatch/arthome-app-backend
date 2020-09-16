@@ -5,6 +5,8 @@ module Importers
     end
 
     def import
+      importer = Importers::OsaUsersImporter.new file: @file
+      importer.import
       importer = Importers::OsaShopsImporter.new file: @file
       importer.import
       importer = Importers::OsaStocksImporter.new file: @file

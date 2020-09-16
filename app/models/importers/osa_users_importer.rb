@@ -16,6 +16,8 @@ module Importers
       index :name, ['name']
       index :role, ['role']
 
+      skip_if_record_exists
+
       super
     end
 
