@@ -4,7 +4,7 @@ module Importers
       @klass = BaseSpreadsheetImporter
       @klass = BaseFileImporter if @model_class == Photo
 
-      @klass_instance = @klass.new params
+      @klass_instance = @klass.new({model_class: @model_class}.merge(params))
     end
 
     def import
