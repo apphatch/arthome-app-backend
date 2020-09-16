@@ -1,5 +1,5 @@
 module Importers
-  class QcStocksImporter < BaseImporter
+  class QcStocksImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = Stock
       super params

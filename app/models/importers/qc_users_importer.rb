@@ -1,7 +1,7 @@
 require 'json'
 
 module Importers
-  class QcUsersImporter < BaseImporter
+  class QcUsersImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = User
       super params

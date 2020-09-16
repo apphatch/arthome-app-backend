@@ -1,5 +1,5 @@
 module Importers
-  class ChecklistItemsImporter < BaseImporter
+  class ChecklistItemsImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = ChecklistItem
       super params

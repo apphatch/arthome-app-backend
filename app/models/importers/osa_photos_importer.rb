@@ -1,7 +1,7 @@
 require 'json'
 
 module Importers
-  class OsaPhotosImporter < BaseImporter
+  class OsaPhotosImporter < BaseFileImporter
     def initialize params={}
       @model_class = Photo
       super params

@@ -1,7 +1,7 @@
 require 'json'
 
 module Importers
-  class OsaUsersImporter < BaseImporter
+  class OsaUsersImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = User
       super params
