@@ -91,6 +91,12 @@ module Importers
         assocs = attributes.dup
         auto_gen_uid_attributes = attributes.dup
 
+        # prepare and yield data for manipulation before import
+        attr_assocs = [attributes, assocs]
+        attr_assocs = yield(attributes, assocs, row) if block_given?
+        raise Exception.new 'importer must return [attributes, assocs]' if attr_assocs.length != 2
+        attributes, assocs = attr_assocs
+
         # clean data
         attributes = attributes.reject{ |k, v|
           !@model_class_instance.attributes.keys.include?(k.to_s)
@@ -99,12 +105,6 @@ module Importers
           !@model_class_instance.public_methods.include?(k.to_sym) ||
             attributes.keys.include?(k.to_sym)
         }
-
-        # prepare and yield data for manipulation before import
-        attr_assocs = [attributes, assocs]
-        attr_assocs = yield(attributes, assocs, row) if block_given?
-        raise Exception.new 'importer must return [attributes, assocs]' if attr_assocs.length != 2
-        attributes, assocs = attr_assocs
 
         # perform import
         if @auto_gen_uid
