@@ -16,6 +16,8 @@ module Apps
 
     def self.make app
       apps = {
+        'osa' => ::Apps::OsaMobileFactory,
+        'qc' => ::Apps::QcMobileFactory,
         'osa-webportal' => ::Apps::OsaWebportalFactory,
         'qc-webportal' => ::Apps::QcWebportalFactory,
       }
@@ -31,6 +33,7 @@ module Apps
     end
 
     def declare
+      #do not raise exception, by default use self if no definitions given
     end
 
     def get object_klass
