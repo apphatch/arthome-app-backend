@@ -12,6 +12,9 @@ class Checklist < ApplicationRecord
   scope :today, -> { where(
     date: DateTime.now.beginning_of_day..DateTime.now.end_of_day
   )}
+  scope :this_week, -> { where(
+    date: DateTime.now.beginning_of_week..DateTime.now.end_of_week
+  )}
   scope :osa, -> { where(
     checklist_type: ['oos', 'sos', 'osa weekend', 'npd', 'rental', 'promotion']
   ) }
