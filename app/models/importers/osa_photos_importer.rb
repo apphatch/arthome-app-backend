@@ -4,16 +4,18 @@ module Importers
   class OsaPhotosImporter < BaseFileImporter
     def initialize params={}
       @model_class = Photo
+      @files = params[:files]
+
       super params
     end
 
     def import
-      is_uid :importing_id
-
-      index :importing_id, ['Photo ID']
-      index :photo, ['photo']
-
-      super
+      @files.each do |f|
+        Photo.new(
+          image: f,
+          name: f.original_filename
+        )
+      end
     end
   end
 end

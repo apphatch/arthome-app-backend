@@ -2,7 +2,7 @@ require 'base64'
 
 class IoController < ApplicationController
   #TODO move this into Apps model
-  @endpoints = {
+  @exporters = {
     oos: :oos_exporter,
     sos: :sos_exporter,
     npd: :npd_exporter,
@@ -11,7 +11,7 @@ class IoController < ApplicationController
     rental: :rental_exporter,
   }
 
-  @endpoints.each do |k, v|
+  @exporters.each do |k, v|
     define_method "export_osa_#{k.to_s}".to_sym do
       begin
         options = {
@@ -23,6 +23,24 @@ class IoController < ApplicationController
         f = File.open "export/#{k.to_s}-export.xls", 'rb'
         enc = Base64.encode64 f.read
         send_data enc, type: :xls, filename: "#{k.to_s}-export.xls"
+      rescue
+        head 500
+      end
+    end
+  end
+
+  @importers = {
+    photos: :photo_importer
+  }
+
+  @importers.each do |k, v|
+    define_method "import_osa_#{k.to_s}".to_sym do
+      begin
+        # assume only 1 file
+        f = params[:files]
+        importer = @current_app.get(v).new(files: f)
+        importer.import
+        head 201
       rescue
         head 500
       end

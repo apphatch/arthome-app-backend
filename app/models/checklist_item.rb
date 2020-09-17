@@ -3,6 +3,7 @@ require 'json'
 class ChecklistItem < ApplicationRecord
   belongs_to :checklist
   belongs_to :stock
+  has_many :photos, as: :dbfiles
 
   serialize :data, Hash
 

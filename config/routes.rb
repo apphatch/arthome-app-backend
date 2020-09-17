@@ -83,7 +83,7 @@ Rails.application.routes.draw do
 
   resources :io do
     collection do
-      endpoints = {
+      exporters = {
         oos: :oos_exporter,
         sos: :sos_exporter,
         npd: :npd_exporter,
@@ -91,8 +91,15 @@ Rails.application.routes.draw do
         osaweekend: :osaweekend_exporter,
         rental: :rental_exporter,
       }
-      endpoints.each do |k, v|
+      exporters.each do |k, v|
         get "export_osa_#{k.to_s}"
+      end
+
+      importers = {
+        photos: :osa_photos_importer,
+      }
+      importers.each do |k, v|
+        post "import_osa_#{k.to_s}"
       end
     end
   end
