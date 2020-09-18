@@ -36,7 +36,7 @@ class Checklist < ApplicationRecord
     checklists = self.active.qc.incompleted if app == 'qc'
     #not used for now, everything has a date
     #checklists = checklists.undated + checklists.dated.today
-    checklists = checklists.dated.this_week
+    checklists = checklists.dated.today
     return checklists.compact
   end
 
