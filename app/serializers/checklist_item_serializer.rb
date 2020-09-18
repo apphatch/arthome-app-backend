@@ -1,7 +1,7 @@
 class ChecklistItemSerializer < ActiveModel::Serializer
   attributes :id, :data, :stock_name,
     :category, :sub_category, :mechanic, :quantity, :barcode,
-    :rental_type, :role
+    :rental_type, :photo, :role
 
   def stock_name
     object.stock.try(:name)

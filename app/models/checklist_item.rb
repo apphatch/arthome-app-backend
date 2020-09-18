@@ -1,9 +1,11 @@
 require 'json'
 
 class ChecklistItem < ApplicationRecord
+  include Rails.application.routes.url_helpers
+  include AttributeAliases::SosChecklistItem
+
   belongs_to :checklist
   belongs_to :stock
-  has_many :photos, as: :dbfiles
 
   serialize :data, Hash
 
@@ -21,5 +23,17 @@ class ChecklistItem < ApplicationRecord
 
   def completed?
     return self.data.present?
+  end
+
+  def photo
+    p = Photo.where(dbfile: nil).find_by_name self.photo_ref
+    if p.present? && p.image.attached?
+      return rails_blob_path(
+        p.image,
+        disposition: "preview",
+        only_path: true
+      )
+    end
+    return nil
   end
 end

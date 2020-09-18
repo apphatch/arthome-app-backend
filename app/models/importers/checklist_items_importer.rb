@@ -18,6 +18,7 @@ module Importers
       index :checklist_type, ['Type']
       index :yearweek, ['YearWeek']
       index :date, ['Date']
+      index :photo_ref, ['Photo ID']
       associate :user, ['OSA Code']
       associate :shop, ['Outlet', 'Outlet Name']
       associate :stock, ['ULV code', 'Rental ID', 'Category']
