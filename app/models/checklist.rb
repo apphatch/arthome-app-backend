@@ -34,7 +34,9 @@ class Checklist < ApplicationRecord
     raise Exception.new 'must provide app header' if app.nil?
     checklists = self.active.osa.incompleted if app == 'osa'
     checklists = self.active.qc.incompleted if app == 'qc'
-    checklists = checklists.undated + checklists.dated.today
+    #not used for now, everything has a date
+    #checklists = checklists.undated + checklists.dated.today
+    checklists = checklist.dated.this_week
     return checklists.compact
   end
 
