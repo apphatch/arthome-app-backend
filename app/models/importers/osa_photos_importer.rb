@@ -11,7 +11,7 @@ module Importers
 
     def import
       @files.each do |f|
-        Photo.new(
+        Photo.create(
           image: f,
           name: f.original_filename
         )
