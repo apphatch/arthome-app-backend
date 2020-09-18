@@ -11,7 +11,7 @@ module ArthomeQcApp
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0
     config.autoload_paths << Rails.root.join('lib')
-    config.hosts << "18.141.11.78"
+    config.hosts << "54.251.164.171"
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
