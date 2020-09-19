@@ -37,8 +37,8 @@ class Checklist < ApplicationRecord
       #HACK
       #checklists = checklists.undated + checklists.dated.today
       checklists = checklists.dated
-      daily = checklists.today.where checklist_type: ['npd', 'promotions']
-      weekly = checklists.this_week.where.not checklist_type: ['npd', 'promotions']
+      daily = checklists.today.where checklist_type: ['npd', 'promotion']
+      weekly = checklists.this_week.where.not checklist_type: ['npd', 'promotion']
       checklists = daily + weekly
     end
     checklists = self.active.qc.incompleted if app == 'qc'
