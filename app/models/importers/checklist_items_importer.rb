@@ -17,7 +17,7 @@ module Importers
       index :mechanic, ['Mechanic']
       index :checklist_type, ['Type']
       index :yearweek, ['YearWeek'], as: :string
-      index :date, ['Date']
+      index :date, ['Date'], as: :string
       index :photo_ref, ['Photo ID']
       associate :user, ['OSA Code'], as: :string
       associate :shop, ['Outlet', 'Outlet Name'], as: :string
