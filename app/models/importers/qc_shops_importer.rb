@@ -8,7 +8,7 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['No.']
+      index :importing_id, ['No.'], as: :string
       index :name, ['Store Name']
       index :shop_type, ['Shop_RoleShop']
       index :full_address, ['Store Address']
@@ -16,10 +16,10 @@ module Importers
       index :district, ['Quận']
       index :distributor, ['NPP']
       index :shop_type_2, ['Store Type (MT/DT/CVS)']
-      associate :users, ['US_ID']
+      associate :users, ['US_ID'], as: :string
 
       super do |attributes, assocs, row|
-        assocs[:users] = User.find_by_importing_id assocs[:users].to_s
+        assocs[:users] = User.find_by_importing_id assocs[:users]
 
         attributes[:custom_attributes] = {
           distributor: attributes[:distributor],

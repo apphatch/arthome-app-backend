@@ -8,12 +8,12 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['SKU_Name']
+      index :importing_id, ['SKU_Name'], as: :string
       index :sku, ['SKU_SKU']
-      index :name, ['SKU_Name'], {allow_dup: true}
+      index :name, ['SKU_Name'], allow_dup: true
       index :barcode, ['SKU_Barcode']
       index :role, ['SKU_RoleShop']
-      associate :shops, ['Shop_ID']
+      associate :shops, ['Shop_ID'], as: :string
 
       index :category, ['SKU_Category']
       index :sub_category, ['Sub Category']

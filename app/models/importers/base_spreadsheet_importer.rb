@@ -15,6 +15,7 @@ module Importers
       @skip_if_record_exists = false
       @auto_gen_uid = false
       @model_attrs_to_use = []
+      @bypass_filter_attrs = []
 
       f = params[:file] || "import/#{params[:file_name]}"
       begin
@@ -42,23 +43,30 @@ module Importers
       @model_attrs_to_use = model_attrs_to_use
     end
 
-    def index model_attr, allowed_data_headers, params={allow_dup: false}
+    def index model_attr, allowed_data_headers, params={allow_dup: false, as: :none}
       idx = nil
+      typecast_method = {
+        none: nil,
+        string: :to_s,
+        int: :to_i,
+        float: :to_f,
+      }[params[:as].to_sym]
 
       allowed_data_headers.each do |data_header|
         idx = data_headers.find_index(data_header)
         next if idx.nil?
 
         unless @header_mappings.values.include?(idx) && !params[:allow_dup]
-          @header_mappings = @header_mappings.merge(model_attr => idx)
+          @header_mappings = @header_mappings.merge(model_attr => [idx, typecast_method])
           break
         end
+        @bypass_filter_attrs += [model_attr] if params[:bypass_filter]
       end
 
       return @header_mappings
     end
 
-    def associate model_attr, allowed_data_headers, params={allow_dup: false}
+    def associate model_attr, allowed_data_headers, params={allow_dup: false, as: :none}
       #alias of index, improves readability
       index model_attr, allowed_data_headers, params
     end
@@ -87,7 +95,11 @@ module Importers
 
         # get data from file header mappings
         header_mappings = @header_mappings.dup
-        attributes = header_mappings.each{ |k, v| header_mappings[k] = row[v] }
+        attributes = header_mappings.each do |k, v|
+          # v = [value, typecast method]
+          header_mappings[k] = v[0]
+          header_mappings[k] = v[0].try(:send, v[1]) if v[1].present?
+        end
         assocs = attributes.dup
         auto_gen_uid_attributes = attributes.dup
 
@@ -99,7 +111,9 @@ module Importers
 
         # clean data
         attributes = attributes.reject{ |k, v|
-          !@model_class_instance.attributes.keys.include?(k.to_s)
+          (
+            @model_class_instance.attributes.keys + @bypass_filter_attrs
+          ).exclude? k.to_s
         }
         assocs = assocs.reject{ |k, v|
           !@model_class_instance.public_methods.include?(k.to_sym) ||

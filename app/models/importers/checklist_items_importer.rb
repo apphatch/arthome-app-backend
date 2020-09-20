@@ -13,15 +13,15 @@ module Importers
         :shop, :stock
       ]
 
-      index :quantity, ['Stock']
+      index :quantity, ['Stock'], as: :float
       index :mechanic, ['Mechanic']
       index :checklist_type, ['Type']
-      index :yearweek, ['YearWeek']
+      index :yearweek, ['YearWeek'], as: :string
       index :date, ['Date']
       index :photo_ref, ['Photo ID']
-      associate :user, ['OSA Code']
-      associate :shop, ['Outlet', 'Outlet Name']
-      associate :stock, ['ULV code', 'Rental ID', 'Category']
+      associate :user, ['OSA Code'], as: :string
+      associate :shop, ['Outlet', 'Outlet Name'], as: :string
+      associate :stock, ['ULV code', 'Rental ID', 'Category'], as: :string
 
       super do |attributes, assocs, row|
         checklist_ref = [
@@ -33,7 +33,7 @@ module Importers
         ].join()
 
         assocs[:checklist] = Checklist.find_by_reference checklist_ref
-        assocs[:stock] = Stock.find_by_importing_id assocs[:stock].to_s
+        assocs[:stock] = Stock.find_by_importing_id assocs[:stock]
         assocs.delete :checklist_type #prevent no method error
         attributes.delete :date #prevent no method error, only used to construct checklist ref
 

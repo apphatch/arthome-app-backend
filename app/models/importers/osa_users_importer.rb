@@ -10,9 +10,9 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['importing_id', 'OSA Code']
-      index :username, ['username', 'OSA Code'], {allow_dup: true}
-      index :password, ['password']
+      index :importing_id, ['importing_id', 'OSA Code'], as: :string
+      index :username, ['username', 'OSA Code'], allow_dup: true, as: :string
+      index :password, ['password'], bypass_filter: true, as: :string
       index :name, ['name', 'OSA Checker Name']
       index :role, ['role']
 
