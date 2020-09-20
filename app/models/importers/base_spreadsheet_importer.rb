@@ -17,7 +17,8 @@ module Importers
       @model_attrs_to_use = []
       @bypass_filter_attrs = []
 
-      f = params[:file] || "import/#{params[:file_name]}"
+      #dealing with actiondispatch uploaded files and normal file paths
+      f = params[:file].path() || "import/#{params[:file_name]}"
       begin
         klass = Roo::Excel
         klass = Roo::Excelx if f.match(/\.xlsx/)

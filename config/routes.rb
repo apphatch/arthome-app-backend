@@ -96,7 +96,13 @@ Rails.application.routes.draw do
       end
 
       importers = {
-        photos: :osa_photos_importer,
+        users: :user_importer,
+        shops: :shop_importer,
+        stocks: :stock_importer,
+        checklists: :checklist_importer,
+        checklist_items: :checklist_item_importer,
+        full: :master_importer,
+        photos: :photo_importer
       }
       importers.each do |k, v|
         post "import_osa_#{k.to_s}"
