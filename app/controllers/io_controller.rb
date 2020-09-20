@@ -43,8 +43,8 @@ class IoController < ApplicationController
     define_method "import_osa_#{k.to_s}".to_sym do
       begin
         # assume only 1 file
-        f = params[:files]
-        importer = @current_app.get(v).new(files: f)
+        f = params[:files].first
+        importer = @current_app.get(v).new(file: f)
         importer.import
         head 201
       rescue
