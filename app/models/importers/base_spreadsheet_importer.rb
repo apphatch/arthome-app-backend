@@ -44,14 +44,13 @@ module Importers
       @model_attrs_to_use = model_attrs_to_use
     end
 
-    def index model_attr, allowed_data_headers, params={allow_dup: false, as: :none}
+    def index model_attr, allowed_data_headers, params={allow_dup: false, as: nil}
       idx = nil
       typecast_method = {
-        none: nil,
         string: :to_s,
         int: :to_i,
         float: :to_f,
-      }[params[:as].to_sym]
+      }[params[:as].try(:to_sym)]
 
       allowed_data_headers.each do |data_header|
         idx = data_headers.find_index(data_header)
