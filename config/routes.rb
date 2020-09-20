@@ -1,7 +1,10 @@
+require 'resque/server'
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   post 'login', to: 'sessions#create', as: :login
   get 'logout', to: 'sessions#destroy', as: :logout
+
+  mount Resque::Server.new, at: "/resque"
 
   resources :sessions, only: [:new, :create, :destroy] do
     collection do
