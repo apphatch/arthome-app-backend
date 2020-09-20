@@ -98,8 +98,8 @@ module Importers
         header_mappings = @header_mappings.dup
         attributes = header_mappings.each do |k, v|
           # v = [value, typecast method]
-          header_mappings[k] = v[0]
-          header_mappings[k] = v[0].try(:send, v[1]) if v[1].present?
+          header_mappings[k] = row[v[0]]
+          header_mappings[k] = row[v[0]].try(:send, v[1]) if v[1].present?
         end
         assocs = attributes.dup
         auto_gen_uid_attributes = attributes.dup
