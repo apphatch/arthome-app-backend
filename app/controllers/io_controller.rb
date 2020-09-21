@@ -18,7 +18,7 @@ class IoController < ApplicationController
           output: "export/#{k.to_s}-export.xls",
           yearweek: params[:yearweek]
         }
-        exporter = @current_app.get(v).new options
+        exporter = service(v).new options
         exporter.export
         f = File.open "export/#{k.to_s}-export.xls", 'rb'
         enc = Base64.encode64 f.read
@@ -43,9 +43,15 @@ class IoController < ApplicationController
     define_method "import_osa_#{k.to_s}".to_sym do
       begin
         # assume only 1 file
+<<<<<<< HEAD
         f = params[:files].first
         importer = @current_app.get(v).new(file: f)
         importer.import
+=======
+        f = params[:files]
+        importer = service(v).new(files: f)
+        Resque.enqueue(ImportJob, importer)
+>>>>>>> 2272638b0f5b306eb766d335c2b415d7926af402
         head 201
       rescue
         head 500
@@ -55,5 +61,11 @@ class IoController < ApplicationController
 
   def permitted_params
     return params.permit(:yearweek, :date_from, :date_to)
+  end
+
+  private
+
+  def service object_klass
+    @service ||= @current_app.get(object_klass)
   end
 end
