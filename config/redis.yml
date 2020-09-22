@@ -1,0 +1,21 @@
+default: &default
+  host: <%= ENV["REDIS_HOST"] %>
+  port: <%= ENV["REDIS_PORT"] %>
+  connect_timeout: <%= ENV["REDIS_CONNECT_TIMEOUT"] %>
+  read_timeout: <%= ENV["REDIS_READ_TIMEOUT"] %>
+  write_timeout: <%= ENV["REDIS_WRITE_TIMEOUT"] %>
+  password: <%= ENV["REDIS_PASSWORD"] %>
+
+development:
+  <<: *default
+  reconnect_attempts: 0
+
+test:
+  <<: *default
+  reconnect_attempts: 0
+
+staging:
+  <<: *default
+
+production:
+  <<: *default

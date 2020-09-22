@@ -21,7 +21,9 @@ gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.0'
 # Use resque for jobs
-gem 'resque'
+gem 'resque', '~> 2.0'
+# Light weight job scheduling on top of Resque
+gem 'resque-scheduler', '~> 4.4'
 # Use Active Model has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 # Use Passenger for server
@@ -48,6 +50,7 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   # Pretty printing
   gem 'awesome_print'
+  gem 'dotenv-rails', '~> 2.7', '>= 2.7.6'
 end
 
 group :development do
