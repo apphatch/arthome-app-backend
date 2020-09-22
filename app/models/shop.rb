@@ -40,11 +40,16 @@ class Shop < ApplicationRecord
   end
 
   def completed? app, user
-    checklists = Checklist.index_for app
-    checklists.each do |c|
-      next if c.user != user
-      return false unless c.completed?
+    begin
+      checklists = Checklist.index_for app
+      checklists.each do |c|
+        next if c.user != user
+        return false unless c.completed?
+      end
+      return true
+    rescue
+      #HACK
+      return false
     end
-    return true
   end
 end
