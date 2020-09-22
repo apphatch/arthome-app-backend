@@ -41,7 +41,10 @@ class Shop < ApplicationRecord
 
   def completed? app, user
     checklists = Checklist.index_for app
-    checklists = checklists.filter{|c| c.user == user}
-    return checklists.collect{|c| c.completed?}.all?
+    checklists.each do |c|
+      next if c.user != user
+      return false unless c.completed?
+    end
+    return true
   end
 end
