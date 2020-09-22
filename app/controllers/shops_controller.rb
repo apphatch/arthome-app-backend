@@ -97,19 +97,6 @@ class ShopsController < ApplicationController
     send_data enc, type: :xls, filename: 'shop-import-template.xls'
   end
 
-  #TODO move into io controller
-  def import_osa
-    begin
-      # assume only 1 file
-      f = params[:files].first
-      importer = @current_app.get(:master_importer).new(file: f.path())
-      importer.import
-      head 201
-    rescue
-      head 500
-    end
-  end
-
   def permitted_params
     return params.permit(
       :photo, :note, :time, :photo_name, :incomplete,
