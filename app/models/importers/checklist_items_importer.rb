@@ -25,6 +25,7 @@ module Importers
 
       super do |attributes, assocs, row|
         assocs[:shop] = assocs[:shop].to_i.to_s
+        attributes[:date] = DateTime.parse attributes[:date] if attributes[:date].present?
         checklist_ref = [
           attributes[:checklist_type],
           attributes[:yearweek],
