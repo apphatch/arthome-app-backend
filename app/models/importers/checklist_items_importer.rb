@@ -24,6 +24,7 @@ module Importers
       associate :stock, ['ULV code', 'Rental ID', 'Category'], as: :string
 
       super do |attributes, assocs, row|
+        assocs[:shop] = assocs[:shop].to_i.to_s
         checklist_ref = [
           attributes[:checklist_type],
           attributes[:yearweek],
