@@ -37,7 +37,6 @@ Rails.application.routes.draw do
     end
 
     member do
-      post :update_checklist_items
       get  :show_incomplete_items
       get :search_checklist_items
     end
@@ -48,6 +47,7 @@ Rails.application.routes.draw do
       get  :index_by_checklist
       post :import
       get  :import_template
+      post :bulk_update
     end
 
     member do

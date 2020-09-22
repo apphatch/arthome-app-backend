@@ -35,8 +35,9 @@ class ChecklistItemsController < ApplicationController
     end
   end
 
-  def update_many
-    #TODO move from checklist controller
+  def bulk_update
+    ChecklistItem.bulk_update params[:checklist_items]
+    head 201
   end
 
   def destroy

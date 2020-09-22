@@ -60,14 +60,6 @@ class ChecklistsController < ApplicationController
     end
   end
 
-  #TODO: move to checklist_item controller
-  def update_checklist_items
-    find_record do |checklist|
-      checklist.update_checklist_items params
-      render json: checklist, serializer: ChecklistSerializer
-    end
-  end
-
   def destroy
     find_record do |checklist|
       checklist.deleted!
