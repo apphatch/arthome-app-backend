@@ -46,18 +46,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def import
-    begin
-      # assume only 1 file
-      f = params[:files].first
-      importer = @current_app.get(:user_importer).new(file: f.path())
-      importer.import
-      head 201
-    rescue
-      head 500
-    end
-  end
-
   def import_template
     data = @current_app.get(:user_importer).template
     f = File.open 'export/import-template.xls', 'rb'

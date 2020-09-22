@@ -32,7 +32,6 @@ Rails.application.routes.draw do
       get  :index_by_user
       get  :index_by_shop
       get  :index_by_user_shop
-      post :import
       get  :import_template
     end
 
@@ -45,7 +44,6 @@ Rails.application.routes.draw do
   resources :checklist_items do
     collection do
       get  :index_by_checklist
-      post :import
       get  :import_template
       post :bulk_update
     end
@@ -67,8 +65,6 @@ Rails.application.routes.draw do
       get  :index_by_user
       get  :search
       get  :import_template
-      post :import_osa
-      get  :export_osa
     end
 
     member do
@@ -82,7 +78,6 @@ Rails.application.routes.draw do
     collection do
       get  :index_by_shop
       get  :search
-      post :import
       get  :import_template
     end
   end
