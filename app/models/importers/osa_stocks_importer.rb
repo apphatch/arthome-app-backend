@@ -8,12 +8,12 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['ULV code', 'Rental ID', 'Category']
-      index :sku, ['ULV code', 'Rental ID'], {allow_dup: true}
-      index :name, ['VN Descriptions', 'Rental ID', 'Category'], {allow_dup: true}
+      index :importing_id, ['ULV code', 'Rental ID', 'Category'], as: :string
+      index :sku, ['ULV code', 'Rental ID'], allow_dup: true
+      index :name, ['VN Descriptions', 'Rental ID', 'Category'], allow_dup: true, as: :string
       index :barcode, ['barcode', 'Barcode']
       index :role, ['role']
-      associate :shops, ['Outlet']
+      associate :shops, ['Outlet'], as: :string
 
       index :category, ['Category', 'Rental Type']
       index :sub_category, ['Sub Category']
