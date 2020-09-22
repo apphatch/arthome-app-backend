@@ -101,13 +101,13 @@ module Importers
           header_mappings[k] = row[v[0]].try(:send, v[1]) if v[1].present?
         end
         assocs = attributes.dup
-        auto_gen_uid_attributes = attributes.dup
 
         # prepare and yield data for manipulation before import
         attr_assocs = [attributes, assocs]
         attr_assocs = yield(attributes, assocs, row) if block_given?
         raise Exception.new 'importer must return [attributes, assocs]' if attr_assocs.length != 2
         attributes, assocs = attr_assocs
+        auto_gen_uid_attributes = attributes.dup
 
         # clean data
         attributes = attributes.reject{ |k, v|
