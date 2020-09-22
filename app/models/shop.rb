@@ -39,17 +39,22 @@ class Shop < ApplicationRecord
     return self.checkin_checkouts.active.where user: nil
   end
 
-  def completed? app, user
-    begin
-      checklists = Checklist.index_for app
-      checklists.each do |c|
-        next if c.user != user
-        return false unless c.completed?
+  def completed?
+    return self.completed
+  end
+
+  def completed! app, user
+    checklists = Checklist.index_for app
+
+    checklists.each do |c|
+      next if c.user != user
+      unless c.completed?
+        self.update completed: false
+        return false
       end
-      return true
-    rescue
-      #HACK
-      return false
     end
+
+    self.update completed: true
+    return true
   end
 end

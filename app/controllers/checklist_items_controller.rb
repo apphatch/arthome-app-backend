@@ -30,6 +30,7 @@ class ChecklistItemsController < ApplicationController
     find_record do |checklist_item|
       checklist_item.update_attributes(data: JSON.parse(params[:data]))
       checklist_item.checklist.completed!
+      checklist_item.checklist.shop.completed!
       render json: checklist_item, serializer: ChecklistItemSerializer
     end
   end
