@@ -3,6 +3,11 @@ class ShopSerializer < ActiveModel::Serializer
     :full_address, :city, :district, :completed
 
   def completed
-    object.completed? @instance_options[:app], @instance_options[:user]
+    #HACK
+    begin
+      return object.completed? @instance_options[:app], @instance_options[:user]
+    rescue
+      return false
+    end
   end
 end
