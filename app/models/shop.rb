@@ -39,9 +39,9 @@ class Shop < ApplicationRecord
     return self.checkin_checkouts.active.where user: nil
   end
 
-  def completed? user
-    checklists = self.checklists.where user: user
-    checklists = checklists.undated + checklists.dated.today
+  def completed? app, user
+    checklists = Checklist.index_for app
+    checklists = checklists.filter{|c| c.user == user}
     return checklists.collect{|c| c.completed?}.all?
   end
 end

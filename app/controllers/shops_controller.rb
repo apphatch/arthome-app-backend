@@ -1,12 +1,12 @@
 require 'base64'
 class ShopsController < ApplicationController
   def index
-    render json: Shop.active.order(:name), each_serializer: ShopSerializer, user: current_user
+    render json: Shop.active.order(:name), each_serializer: ShopSerializer, **serializer_options
   end
 
   def index_by_user
     if current_user.present?
-      render json: current_user.shops.active.sort_by(&:name), each_serializer: ShopSerializer, user: current_user
+      render json: current_user.shops.active.sort_by(&:name), each_serializer: ShopSerializer, **serializer_options
     else
       head 400
     end
@@ -14,26 +14,26 @@ class ShopsController < ApplicationController
 
   def show
     find_record do |shop|
-      render json: shop, serializer: ShopSerializer, user: current_user
+      render json: shop, serializer: ShopSerializer, **serializer_options
     end
   end
 
   def create
     shop = Shop.create permitted_params
-    render json: shop, serializer: ShopSerializer, user: current_user
+    render json: shop, serializer: ShopSerializer, **serializer_options
   end
 
   def update
     find_record do |shop|
       shop.update permitted_params
-      render json: shop, serializer: ShopSerializer, user: current_user
+      render json: shop, serializer: ShopSerializer, **serializer_options
     end
   end
 
   def destroy
     find_record do |shop|
       shop.deleted!
-      render json: shop, serializer: ShopSerializer, user: current_user
+      render json: shop, serializer: ShopSerializer, **serializer_options
     end
   end
 
@@ -83,7 +83,7 @@ class ShopsController < ApplicationController
       shops = current_user.shops.active.where(
         "#{attr} ILIKE :term", term: "%#{params[:search_term]}%"
       )
-      render json: shops.order(:name), each_serializer: ShopSerializer, user: current_user and return if shops.present?
+      render json: shops.order(:name), each_serializer: ShopSerializer, **serializer_options and return if shops.present?
     end
 
     render json: []
@@ -115,6 +115,13 @@ class ShopsController < ApplicationController
       :photo, :note, :time, :photo_name, :incomplete,
       :photos => []
     )
+  end
+
+  def serializer_options
+    return {
+      app: @current_app.name,
+      user: current_user
+    }
   end
 
   def find_record
