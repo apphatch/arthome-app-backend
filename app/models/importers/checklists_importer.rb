@@ -22,6 +22,7 @@ module Importers
         attributes[:date] = DateTime.parse attributes[:date] if attributes[:date].present?
         assocs[:user] = User.find_by_importing_id assocs[:user]
         assocs[:shop] = Shop.find_by_importing_id assocs[:shop].to_i.to_s
+        attributes[:shop]  = assocs[:shop].to_i.to_s #to use for uid autogen
 
         [attributes, assocs]
       end
