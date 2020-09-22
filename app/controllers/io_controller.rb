@@ -18,7 +18,7 @@ class IoController < ApplicationController
           output: "export/#{k.to_s}-export.xls",
           yearweek: params[:yearweek]
         }
-        exporter = service(v).new options
+        exporter = @current_app.get(v).new options
         exporter.export
         f = File.open "export/#{k.to_s}-export.xls", 'rb'
         enc = Base64.encode64 f.read
@@ -44,7 +44,7 @@ class IoController < ApplicationController
       begin
         # assume only 1 file
         f = params[:files]
-        importer = service(v).new(files: f)
+        importer = @current_app.get(v).new(files: f)
         Resque.enqueue(ImportJob, importer)
         head 201
       rescue
