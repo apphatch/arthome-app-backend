@@ -7,7 +7,7 @@ module Importers
 
     def import
       is_uid :importing_id
-      auto_gen_uid_with [
+      auto_gen_uid_with_attributes [
         :checklist_type,
         :yearweek, :date, :user,
         :shop, :stock
@@ -19,25 +19,25 @@ module Importers
       index :yearweek, ['YearWeek'], as: :string
       index :date, ['Date'], as: :string
       index :photo_ref, ['Photo ID']
-      associate :user, ['OSA Code'], as: :string
-      associate :shop, ['Outlet', 'Outlet Name'], as: :string
+      index :shop, ['Outlet', 'Outlet Name'], as: :string
+      index :user, ['OSA Code'], as: :string
       associate :stock, ['ULV code', 'Rental ID', 'Category'], as: :string
 
       super do |attributes, assocs, row|
-        assocs[:shop] = assocs[:shop].to_i.to_s
-        attributes[:date] = DateTime.parse attributes[:date] if attributes[:date].present?
+        date = DateTime.parse attributes[:date] if attributes[:date].present?
+        attributes.delete :date #prevent no method error, only used to construct checklist ref
+
         checklist_ref = [
-          attributes[:checklist_type],
+          attributes[:checklist_type].downcase,
           attributes[:yearweek],
-          attributes[:date],
-          assocs[:user],
-          assocs[:shop]
+          date,
+          attributes[:user],
+          attributes[:shop].to_i.to_s
         ].join()
 
         assocs[:checklist] = Checklist.find_by_reference checklist_ref
         assocs[:stock] = Stock.find_by_importing_id assocs[:stock]
         assocs.delete :checklist_type #prevent no method error
-        attributes.delete :date #prevent no method error, only used to construct checklist ref
 
         [attributes, assocs]
       end

@@ -7,7 +7,7 @@ module Importers
 
     def import
       is_uid :reference
-      auto_gen_uid_with [:all]
+      auto_gen_uid_with_attributes [:all]
 
       index :checklist_type, ['Type']
       index :yearweek, ['YearWeek'], as: :string

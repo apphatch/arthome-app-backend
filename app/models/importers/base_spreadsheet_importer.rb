@@ -39,7 +39,7 @@ module Importers
       @uid_attr = model_attr
     end
 
-    def auto_gen_uid_with model_attrs_to_use=[:all]
+    def auto_gen_uid_with_attributes model_attrs_to_use=[:all]
       @auto_gen_uid = true
       @model_attrs_to_use = model_attrs_to_use
     end
