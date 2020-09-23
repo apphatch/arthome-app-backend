@@ -3,7 +3,8 @@ class CheckinCheckoutSerializer < ActiveModel::Serializer
     :user_checkout, :shop_checkouts, :shop_checkout_photos
 
   has_one :user
-  has_one :shop
+  #TODO fix this so it takes a proper serializer
+  has_one :shop, serializer: nil
   has_many :photos, each_serializer: PhotoSerializer
   has_many :shop_checkout_photos, each_serializer: PhotoSerializer
   has_many :checkouts, each_serializer: CheckinCheckoutSerializer

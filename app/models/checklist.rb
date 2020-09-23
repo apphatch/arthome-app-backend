@@ -55,7 +55,8 @@ class Checklist < ApplicationRecord
     super.downcase
   end
 
-  #TODO: move or deprecate
+  #TODO: remove, already in checklist_item model as bulk_update
+  #check that checklist_item model is implemented correctly (JSON.parse?)
   def update_checklist_items params
     data = JSON.parse(params['checklist_items'])
 

@@ -39,22 +39,14 @@ class Shop < ApplicationRecord
     return self.checkin_checkouts.active.where user: nil
   end
 
-  def completed?
-    return self.completed
-  end
-
-  def completed! app, user
-    checklists = Checklist.index_for app
+  def completed? current_app, current_user
+    #TODO: need to create a table or something for this
+    checklists = Checklist.index_for current_app.name
 
     checklists.each do |c|
-      next if c.user != user
-      unless c.completed?
-        self.update completed: false
-        return false
-      end
+      next if c.user != current_user
+      return false unless c.completed?
     end
-
-    self.update completed: true
     return true
   end
 end
