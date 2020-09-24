@@ -19,7 +19,7 @@ module Importers
       @prefix = ''
 
       #dealing with actiondispatch uploaded files and normal file paths
-      f = params[:file].path() || "import/#{params[:file_name]}"
+      f = params[:file].try(:path) || "import/#{params[:file_name]}"
       begin
         klass = Roo::Excel
         klass = Roo::Excelx if f.match(/\.xlsx/)
