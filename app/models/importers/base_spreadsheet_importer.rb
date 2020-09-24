@@ -123,17 +123,18 @@ module Importers
         # perform import
         attributes[@uid_attr] = auto_gen_uid(auto_gen_uid_attributes, @model_attrs_to_use) if @auto_gen_uid
 
-        # find or create object
+        # find or create object instance
         raise Exception.new 'uid not indexed' if attributes[@uid_attr].nil?
         obj = @model_class.send "find_by_#{@uid_attr}".to_sym, attributes[@uid_attr]
         next if (obj.present? && @skip_if_record_exists)
         obj = @model_class.new attributes if obj.nil?
 
         # fill object data
-        obj.assign_attributes(attributes)
+        obj.assign_attributes attributes
         assocs.each do |k, v|
           next if v.nil?
           begin
+            # check if k is an association, if not rescue and assign attribute
             assoc = obj.send k
             assoc.push(v) unless assoc.include?(v)
           rescue
