@@ -7,8 +7,9 @@ module Importers
 
     def import
       is_uid :importing_id
+      auto_gen_uid_with_attributes [:shop_number, :name], prefix: 'qc-'
 
-      index :importing_id, ['No.'], as: :string
+      index_temp :shop_number, ['No.'], as: :string
       index :name, ['Store Name']
       index :shop_type, ['Shop_RoleShop']
       index :full_address, ['Store Address']
