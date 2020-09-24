@@ -93,7 +93,7 @@ module Importers
       @spreadsheet.each do |row|
         next if row == data_headers
 
-        # get data from file header mappings
+        # get and typecast data from file header mappings
         header_mappings = @header_mappings.dup
         attributes = header_mappings.each do |k, v|
           # v = [value, typecast method]
@@ -109,28 +109,23 @@ module Importers
         attributes, assocs = attr_assocs
         auto_gen_uid_attributes = attributes.dup
 
-        # clean data
-        attributes = attributes.reject{ |k, v|
+        # sanitize data
+        attributes = attributes.reject do |k, v|
           (
             @model_class_instance.attributes.keys + @bypass_filter_attrs
           ).exclude? k.to_s
-        }
-        assocs = assocs.reject{ |k, v|
-          !@model_class_instance.public_methods.include?(k.to_sym) ||
+        end
+        assocs = assocs.reject do |k, v|
+          @model_class_instance.public_methods.exclude?(k.to_sym) ||
             attributes.keys.include?(k.to_sym)
-        }
-
-        # perform import
-        if @auto_gen_uid
-          uid = auto_gen_uid(auto_gen_uid_attributes, @model_attrs_to_use)
-        else
-          uid = attributes[@uid_attr]
-          raise Exception.new 'uid not indexed' if uid.nil?
         end
 
+        # perform import
+        attributes[@uid_attr] = auto_gen_uid(auto_gen_uid_attributes, @model_attrs_to_use) if @auto_gen_uid
+
         # find or create object
-        attributes[@uid_attr] = uid
-        obj = @model_class.send "find_by_#{@uid_attr}".to_sym, uid
+        raise Exception.new 'uid not indexed' if attributes[@uid_attr].nil?
+        obj = @model_class.send "find_by_#{@uid_attr}".to_sym, attributes[@uid_attr]
         next if (obj.present? && @skip_if_record_exists)
         obj = @model_class.new attributes if obj.nil?
 
