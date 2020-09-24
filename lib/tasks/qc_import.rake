@@ -16,7 +16,7 @@ namespace :qc_import do
   end
 
   task :checklists, [:file] => [:environment] do |t, args|
-    importer = Importers::ChecklistsImporter.new file_name: args[:file]
+    importer = Importers::QcChecklistsImporter.new file_name: args[:file]
     importer.import
   end
 
