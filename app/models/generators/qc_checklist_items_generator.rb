@@ -1,8 +1,7 @@
 module Generators
-  class QcChecklistGenerator < BaseGenerator
+  class QcChecklistItemsGenerator < BaseGenerator
     def initialize params={}
-      @user = params[:user]
-      @shops = params[:shops]
+      @checklists = params[:checklists]
       super params
     end
 
@@ -28,17 +27,11 @@ module Generators
     end
 
     def generate
-      t = DateTime.now
-      @shops.each do |shop|
-        checklist = shop.checklists.create(
-          reference: "autogen-#{t.month}#{t.year}",
-          user: @user,
-          checklist_type: 'qc',
-          yearweek: "#{t.year}#{t.month}"
-        )
-        generate_hpc(checklist) if shop.shop_type.downcase == 'hpc'
-        generate_ic(checklist) if shop.shop_type.downcase == 'ic'
-        generate_hpcic(checklist) if shop.shop_type.downcase == 'hpcic'
+      @checklists.each do |checklist|
+        next if checklist.checklist_items.present?
+        generate_hpc(checklist) if checklist.shop.shop_type.downcase == 'hpc'
+        generate_ic(checklist) if checklist.shop.shop_type.downcase == 'ic'
+        generate_hpcic(checklist) if checklist.shop.shop_type.downcase == 'hpcic'
       end
     end
 
