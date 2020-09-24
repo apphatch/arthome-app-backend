@@ -1,6 +1,6 @@
 class CheckinCheckoutSerializer < ActiveModel::Serializer
   attributes :id, :time, :note, :is_checkin,
-    :user_checkout, :shop_checkouts, :shop_checkout_photos
+    :user_checkout, :shop_checkouts, :shop_checkout_photos, :created_at
 
   has_one :user
   #TODO fix this so it takes a proper serializer
