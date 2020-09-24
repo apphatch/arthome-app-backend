@@ -16,6 +16,7 @@ module Importers
       @auto_gen_uid = false
       @model_attrs_to_use = []
       @bypass_filter_attrs = []
+      @prefix = ''
 
       #dealing with actiondispatch uploaded files and normal file paths
       f = params[:file].path() || "import/#{params[:file_name]}"
@@ -39,9 +40,10 @@ module Importers
       @uid_attr = model_attr
     end
 
-    def auto_gen_uid_with_attributes model_attrs_to_use=[:all]
+    def auto_gen_uid_with_attributes model_attrs_to_use=[:all], params={prefix: ''}
       @auto_gen_uid = true
       @model_attrs_to_use = model_attrs_to_use
+      @prefix = params[:prefix]
     end
 
     def index model_attr, allowed_data_headers, params={allow_dup: false, as: nil}
@@ -66,6 +68,12 @@ module Importers
       return @header_mappings
     end
 
+    def index_temp model_attr, allowed_data_headers, params={allow_dup: false, as: :none}
+      #alias of index, conveys intent that this attr will not be used to
+      # construct the actual object
+      index model_attr, allowed_data_headers, params
+    end
+
     def associate model_attr, allowed_data_headers, params={allow_dup: false, as: :none}
       #alias of index, improves readability
       index model_attr, allowed_data_headers, params
@@ -82,7 +90,7 @@ module Importers
       unless model_attrs_to_use == [:all]
         model_attrs = model_attrs.select{|k, v| model_attrs_to_use.include? k}
       end
-      return model_attrs.collect{|k, v| v.to_s}.join()
+      return @prefix + model_attrs.collect{|k, v| v.to_s}.join()
     end
 
     def import
