@@ -25,7 +25,6 @@ module Importers
 
       super do |attributes, assocs, row|
         date = DateTime.parse attributes[:date] if attributes[:date].present?
-        attributes.delete :date #prevent no method error, only used to construct checklist ref
 
         checklist_ref = [
           attributes[:checklist_type].downcase,
