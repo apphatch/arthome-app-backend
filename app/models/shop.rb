@@ -44,7 +44,8 @@ class Shop < ApplicationRecord
     checklists = Checklist.index_for current_app.name
 
     checklists.each do |c|
-      next if c.user != current_user
+      next unless c.user == current_user
+      next unless c.shop == self
       return false unless c.completed?
     end
     return true
