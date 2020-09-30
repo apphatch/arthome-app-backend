@@ -1,4 +1,4 @@
-module AttributeAliases::RentalStock
+module AttributeAliasable::RentalStock
   extend ActiveSupport::Concern
 
   def rental_type

@@ -1,4 +1,4 @@
-module AttributeAliases::QcStock
+module AttributeAliasable::QcStock
   extend ActiveSupport::Concern
 
   def role_shop

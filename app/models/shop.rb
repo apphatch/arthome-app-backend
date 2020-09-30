@@ -1,4 +1,6 @@
 class Shop < ApplicationRecord
+  include AttributeAliasable::QcShop
+
   has_many :checklists
   has_and_belongs_to_many :users
   has_and_belongs_to_many :stocks

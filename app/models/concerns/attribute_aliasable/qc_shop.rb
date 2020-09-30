@@ -1,4 +1,4 @@
-module AttributeAliases::QcShop
+module AttributeAliasable::QcShop
   extend ActiveSupport::Concern
 
   def npp

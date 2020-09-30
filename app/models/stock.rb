@@ -1,6 +1,6 @@
 class Stock < ApplicationRecord
-  include AttributeAliases::RentalStock
-  include AttributeAliases::QcStock
+  include AttributeAliasable::RentalStock
+  include AttributeAliasable::QcStock
 
   has_and_belongs_to_many :shops
   has_many :checklist_items
