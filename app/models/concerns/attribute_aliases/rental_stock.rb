@@ -1,7 +1,7 @@
 module AttributeAliases::RentalStock
+  extend ActiveSupport::Concern
+
   def rental_type
-    #change back to category
-    #self.category
-    self.sub_category
+    self.category
   end
 end
