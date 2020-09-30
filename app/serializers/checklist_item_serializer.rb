@@ -4,7 +4,9 @@ class ChecklistItemSerializer < ActiveModel::Serializer
     :rental_type, :photo, :role
 
   def stock_name
-    object.stock.try(:name)
+    #TODO: refac this
+    return object.stock.try(:sub_category) if object.checklist_type == 'sos'
+    return object.stock.try(:name)
   end
 
   def barcode

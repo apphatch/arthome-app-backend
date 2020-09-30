@@ -2,7 +2,6 @@ require 'json'
 
 class ChecklistItem < ApplicationRecord
   include Rails.application.routes.url_helpers
-  include AttributeAliases::SosChecklistItem
 
   belongs_to :checklist
   belongs_to :stock
