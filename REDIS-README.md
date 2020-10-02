@@ -1,4 +1,4 @@
-Setup Notes
+Redis Setup Notes
 ========================
 
 [![Redis][redis-image]][redis-link]
