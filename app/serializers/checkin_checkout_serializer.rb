@@ -16,14 +16,15 @@ class CheckinCheckoutSerializer < ActiveModel::Serializer
   def user_checkout
     cico = CheckinCheckout.new.attributes
     if object.user_checkout.present?
-      photo = object.user_checkout.photos.first
-      photo = PhotoSerializer.new(photo).serializable_hash if photo.present?
-      cico = object.user_checkout.serializable_hash.merge(photo: photo)
+      photos = object.user_checkout.photos.collect do |p|
+        PhotoSerializer.new(p).serializable_hash if p.present?
+      end
+      cico = object.user_checkout.serializable_hash.merge(photos: photos)
     end
   end
 
-  def user_checkout_photo
-    object.user_checkout.photos.first
+  def user_checkout_photos
+    object.user_checkout.photos
   end
 
   def shop_checkouts
