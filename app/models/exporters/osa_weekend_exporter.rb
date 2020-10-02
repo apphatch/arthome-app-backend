@@ -1,6 +1,6 @@
 module Exporters
   class OsaWeekendExporter < BaseExporter
-    include Filters::Dateable
+    include Filterable::ByDate
 
     def initialize params={}
       super params

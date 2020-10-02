@@ -42,7 +42,6 @@ class Shop < ApplicationRecord
   end
 
   def completed? current_app, current_user
-    #TODO: need to create a table or something for this
     checklists = Checklist.index_for current_app.name
 
     checklists.each do |c|

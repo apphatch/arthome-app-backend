@@ -1,8 +1,7 @@
-module Filters::Dateable
+module Filterable::ByDate
   # filters default to true unless parameters given
   # this is so they easily chain with && in exporters
-  # as the filter is simply bypassed if not enough
-  # information is given
+  # as the filter can simply be bypassed
 
   def date_filter obj, params
     if params[:date_from].present? && params[:date_to].present?
