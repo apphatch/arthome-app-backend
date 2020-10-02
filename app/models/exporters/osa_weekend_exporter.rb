@@ -1,5 +1,7 @@
 module Exporters
   class OsaWeekendExporter < BaseExporter
+    include Filters::Dateable
+
     def initialize params={}
       super params
     end
@@ -9,9 +11,10 @@ module Exporters
         'Outlet', 'Outlet Name', 'Barcode', 'VN Descriptions',
         'ULV code', 'Category', 'Result'
       ]
+
       set_data Mappers::OsaWeekendExportMapper.map ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'osa weekend' &&
-        c.checklist.yearweek == @params[:yearweek].to_s
+          date_filter(c, @params) && yearweek_filter(c, @params)
       }
 
       super

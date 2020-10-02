@@ -16,7 +16,9 @@ class IoController < ApplicationController
       begin
         options = {
           output: "export/#{k.to_s}-export.xls",
-          yearweek: params[:yearweek]
+          yearweek: params[:yearweek],
+          date_from: params[:date_from],
+          date_to: params[:date_to],
         }
         exporter = @current_app.get(v).new options
         exporter.export

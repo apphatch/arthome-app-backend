@@ -1,5 +1,7 @@
 module Exporters
   class PromotionsExporter < BaseExporter
+    include Filters::Dateable
+
     def initialize params={}
       super params
     end
@@ -12,7 +14,7 @@ module Exporters
       ]
       set_data Mappers::PromotionsExportMapper.map ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'promotion' &&
-        c.checklist.yearweek == @params[:yearweek].to_s
+          date_filter(c, @params) && yearweek_filter(c, @params)
       }
 
       super
