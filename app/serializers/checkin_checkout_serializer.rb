@@ -21,10 +21,7 @@ class CheckinCheckoutSerializer < ActiveModel::Serializer
       end
       cico = object.user_checkout.serializable_hash.merge(photos: photos)
     end
-  end
-
-  def user_checkout_photos
-    object.user_checkout.photos
+    return cico
   end
 
   def shop_checkouts
