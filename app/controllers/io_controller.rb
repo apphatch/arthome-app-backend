@@ -45,9 +45,9 @@ class IoController < ApplicationController
     define_method "import_osa_#{k.to_s}".to_sym do
       begin
         # assume only 1 file
-        f = params[:files].first
-        importer = @current_app.get(v).new(file: f)
-        importer.import
+        f = params[:files]
+        importer = @current_app.get(v).new(files: f)
+        Resque.enqueue(ImportJob, importer)
         head 201
       rescue
         head 500
@@ -57,5 +57,11 @@ class IoController < ApplicationController
 
   def permitted_params
     return params.permit(:yearweek, :date_from, :date_to)
+  end
+
+  private
+
+  def service object_klass
+    @service ||= @current_app.get(object_klass)
   end
 end
