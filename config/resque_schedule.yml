@@ -4,3 +4,10 @@ sleep:
   args:
   queue: high
   description: Runs the perform method in Sleeper
+import:
+  every: 30s
+  class: ImportJob
+  args:
+  queue: high
+  description: Runs the perform method in ImportJob
+

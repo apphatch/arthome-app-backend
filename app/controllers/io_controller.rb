@@ -44,10 +44,18 @@ class IoController < ApplicationController
   @importers.each do |k, v|
     define_method "import_osa_#{k.to_s}".to_sym do
       begin
-        # assume only 1 file
-        f = params[:files]
-        importer = @current_app.get(v).new(files: f)
-        Resque.enqueue(ImportJob, importer)
+        importer_klass = @current_app.get(v)
+        params[:files].each do |f|
+
+          #TODO: resque still doesn't work correctly
+          #req = WorkerRequest.create(
+          #  worker_class: importer_klass.to_s,
+          #  file: f
+          #)
+          #Resque.enqueue(ImportJob, req.id)
+          importer = importer_klass.new file: f
+          importer.import
+        end
         head 201
       rescue
         head 500

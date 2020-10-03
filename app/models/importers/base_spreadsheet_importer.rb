@@ -18,16 +18,30 @@ module Importers
       @bypass_filter_attrs = []
       @prefix = ''
 
-      #dealing with actiondispatch uploaded files and normal file paths
-      f = params[:file].try(:path) || "import/#{params[:file_name]}"
+      #dealing with actiondispatch uploaded files, absolute and relative file paths, and lastly try file object
+      f = params[:file].try(:path) || params[:file_path] || "import/#{params[:file_name]}"
+
       begin
-        klass = Roo::Excel
+        klass = Roo::Excel if f.match(/\.xls/)
         klass = Roo::Excelx if f.match(/\.xlsx/)
         @spreadsheet = klass.new f
       rescue
-        raise Exception.new 'file not found'
+        f = File.open f
       end
 
+      begin
+        @spreadsheet ||= Roo::Spreadsheet.open f, extension: :xlsx
+      rescue => e
+        Rails.logger.warn e
+      end
+
+      begin
+        @spreadsheet ||= Roo::Spreadsheet.open f, extension: :xls
+      rescue => e
+        Rails.logger.warn e
+      end
+
+      raise Exception.new 'file not found' if @spreadsheet.nil?
       raise Exception.new 'must define @model_class' if @model_class.nil?
       @model_class_instance = @model_class.new
     end
@@ -94,9 +108,14 @@ module Importers
     end
 
     def import
-      # default import behaviour
-      # find and update or create
+      perform :import
+    end
 
+    def update
+      perform :update
+    end
+
+    def perform mode=:import
       raise Exception.new 'uid not found. use is_uid to declare uid model attribute.' if @uid_attr.nil?
       @spreadsheet.each do |row|
         next if row == data_headers
@@ -135,6 +154,7 @@ module Importers
         raise Exception.new 'uid not indexed' if attributes[@uid_attr].nil?
         obj = @model_class.send "find_by_#{@uid_attr}".to_sym, attributes[@uid_attr]
         next if (obj.present? && @skip_if_record_exists)
+        next if (mode == :update && obj.nil?)
         obj = @model_class.new attributes if obj.nil?
 
         # fill object data
@@ -151,11 +171,6 @@ module Importers
         end
         obj.save!
       end
-    end
-
-    def update
-      # default update behaviour
-      # only update, no create
     end
 
     def self.template headers
