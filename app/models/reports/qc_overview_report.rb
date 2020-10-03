@@ -1,8 +1,14 @@
 module Reports
   class QcOverviewReport < BaseReport
     def generate
-      checklists = Checklist.where checklist_type: 'qc'
-      return Mappers::QcOverviewReportMapper.map checklists
+      set_headers [
+        'Tên nhân viên', 'Tên cửa hàng', 'Địa chỉ', 'HPC', 'IC',
+        'HPC thực', 'IC thực', 'Xanh', 'Vàng', 'Đỏ'
+      ]
+
+      set_data Mappers::QcOverviewReportMapper.map Checklist.where(checklist_type: 'qc')
+
+      super
     end
   end
 end
