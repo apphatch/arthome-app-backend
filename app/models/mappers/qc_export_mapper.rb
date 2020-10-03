@@ -19,6 +19,7 @@ module Mappers
         stock.try(:name),
         stock.try(:sku),
       ]
+      return [common + ['']*6] if checklist_item.data.empty?
       return checklist_item.data["records"].collect do |entry|
         data = entry.data
         common + [
