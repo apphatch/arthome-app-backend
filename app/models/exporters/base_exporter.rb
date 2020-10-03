@@ -23,7 +23,7 @@ module Exporters
     def flatten_and_apply method, data, curr_level=0, curr_index=0
       if curr_level < @max_flatten_level
         data.each do |d|
-          curr_index = flatten_and_apply method, data, curr_level + 1, curr_index
+          curr_index = flatten_and_apply method, d, curr_level + 1, curr_index
         end
       else
         method.call data, curr_index
