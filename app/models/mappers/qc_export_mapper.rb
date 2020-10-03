@@ -22,7 +22,7 @@ module Mappers
       return [common + ['']*6] if checklist_item.data.empty?
       return checklist_item.data["records"].collect do |entry|
         common + [
-          entry["HSD"].empty? ? entry["NSX"] : entry["HSD"],
+          entry["HSD"].nil? ? entry["NSX"] : entry["HSD"],
           entry["Lỗi"],
           entry["Mức cảnh báo"] == "Xanh" ? 1 : 0,
           entry["Mức cảnh báo"] == "Vàng" ? 1 : 0,

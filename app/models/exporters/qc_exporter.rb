@@ -8,9 +8,9 @@ module Exporters
 
     def export
       @headers = [
-        'Time', 'Store Type (MT/DT/CVS)', 'NPP', 'Tên Cửa Hàng', 'Địa Chỉ', 'Audit',
-        'U/C', 'Package', 'Category', 'Product Group', 'SKU Name', 'SKU', 'NSX or HSD',
-        'Lỗi', 'Green', 'Yellow', 'Red', 'Image'
+        'Time', 'Store Type (MT/DT/CVS)', 'City', 'NPP', 'Tên Cửa Hàng',
+        'Địa Chỉ', 'Audit', 'U/C', 'Package', 'Category', 'Product Group',
+        'SKU Name', 'SKU', 'NSX or HSD', 'Lỗi', 'Green', 'Yellow', 'Red', 'Image'
       ]
       @data = Mappers::QcExportMapper.map ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'qc' &&
