@@ -82,6 +82,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :reports do
+    collection do
+      get :qc_summary
+      get :qc_detail
+    end
+  end
+
   resources :io do
     collection do
       exporters = {
