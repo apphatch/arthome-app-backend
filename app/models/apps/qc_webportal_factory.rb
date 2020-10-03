@@ -8,6 +8,7 @@ module Apps
       use Importers::ChecklistItemsImporter, as: :checklist_item_importer
 
       use Reports::QcOverviewReport, as: :summary_report
+      use Reports::QcDetailReport, as: :detail_report
     end
   end
 end
