@@ -6,8 +6,6 @@ class Shop < ApplicationRecord
   has_and_belongs_to_many :stocks
   has_many :checkin_checkouts
 
-  has_many :photos, as: :dbfiles
-
   serialize :custom_attributes, Hash
 
   def checkout user, params
