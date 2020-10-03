@@ -66,10 +66,4 @@ class IoController < ApplicationController
   def permitted_params
     return params.permit(:yearweek, :date_from, :date_to)
   end
-
-  private
-
-  def service object_klass
-    @service ||= @current_app.get(object_klass)
-  end
 end
