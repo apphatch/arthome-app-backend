@@ -6,6 +6,8 @@ module Apps
       use Importers::QcShopsImporter, as: :shop_importer
       use Importers::ChecklistsImporter, as: :checklist_importer
       use Importers::ChecklistItemsImporter, as: :checklist_item_importer
+
+      use Reports::QcOverviewReport, as: :summary_report
     end
   end
 end
