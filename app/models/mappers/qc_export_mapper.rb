@@ -21,14 +21,13 @@ module Mappers
       ]
       return [common + ['']*6] if checklist_item.data.empty?
       return checklist_item.data["records"].collect do |entry|
-        data = entry.data
         common + [
-          data["HSD"].empty? ? data["NSX"] : data["HSD"],
-          data["Lỗi"],
-          data["Mức cảnh báo"] == "Xanh" ? 1 : 0,
-          data["Mức cảnh báo"] == "Vàng" ? 1 : 0,
-          data["Mức cảnh báo"] == "Đỏ" ? 1 : 0,
-          data["photo"].present? ? data["photo"]["uri"] : "",
+          entry["HSD"].empty? ? entry["NSX"] : entry["HSD"],
+          entry["Lỗi"],
+          entry["Mức cảnh báo"] == "Xanh" ? 1 : 0,
+          entry["Mức cảnh báo"] == "Vàng" ? 1 : 0,
+          entry["Mức cảnh báo"] == "Đỏ" ? 1 : 0,
+          entry["photo"].present? ? entry["photo"]["uri"] : "",
         ]
       end
     end
