@@ -108,11 +108,15 @@ module Importers
     end
 
     def import
-      perform :import
+      perform :import do |attributes, assocs, row|
+        yield(attributes, assocs, row) if block_given?
+      end
     end
 
     def update
-      perform :update
+      perform :update do |attributes, assocs, row|
+        yield(attributes, assocs, row) if block_given?
+      end
     end
 
     def perform mode=:import
