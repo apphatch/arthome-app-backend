@@ -27,6 +27,8 @@
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+# Ignore database config file
+/config/database.*
 
 /public/packs
 /public/packs-test
@@ -50,4 +52,3 @@ ansible/
 # Ignore excel files
 *.xlsx
 *.xls
-
