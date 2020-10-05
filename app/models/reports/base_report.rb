@@ -14,7 +14,7 @@ module Reports
     end
 
     def generate
-      return @headers + @data
+      return [@headers] + @data
     end
   end
 end
