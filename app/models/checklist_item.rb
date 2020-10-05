@@ -6,6 +6,8 @@ class ChecklistItem < ApplicationRecord
   belongs_to :checklist
   belongs_to :stock
 
+  has_many :photos, as: :dbfile
+
   serialize :data, Hash
 
   scope :incompleted, -> { where(data: nil) }

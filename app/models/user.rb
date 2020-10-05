@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :checklists
   has_and_belongs_to_many :shops
   has_many :checkin_checkouts
-  has_many :photos, as: :dbfiles
+  has_many :photos, as: :dbfile
 
   has_secure_password
 
