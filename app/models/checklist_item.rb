@@ -31,7 +31,11 @@ class ChecklistItem < ApplicationRecord
     self.checklist.try(:checklist_type)
   end
 
-  def photo_with_path path
+  def photo
+    return self.photos.find_by_name self.photo_ref
+  end
+
+  def photo_with_path path=nil
     return self.photos.find{|p| p.image_path == path}
   end
 
