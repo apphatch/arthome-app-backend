@@ -15,7 +15,7 @@ module Mappers
         common + [
           entry["Mức cảnh báo"],
           entry["Lỗi"],
-          entry["photo"].present? ? entry["photo"]["uri"] : "",
+          checklist_item.photo_with_path(entry["photo_uri"]).try(:image_path)
         ]
       end
     end
