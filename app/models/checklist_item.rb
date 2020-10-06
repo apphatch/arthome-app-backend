@@ -31,20 +31,11 @@ class ChecklistItem < ApplicationRecord
     self.checklist.try(:checklist_type)
   end
 
-  def photo
-    p = Photo.where(dbfile: nil).find_by_name self.photo_ref
-    if p.present? && p.image.attached?
-      return rails_blob_path(
-        p.image,
-        disposition: "preview",
-        only_path: true
-      )
-    end
-    return nil
+  def photo_with_path path
+    return self.photos.find{|p| p.image_path == path}
   end
 
   def completed?
     return self.data.present?
   end
-
 end

@@ -15,6 +15,9 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :photos, only: [:create] do
+  end
+
   resources :users do
     collection do
       get  :import_template
