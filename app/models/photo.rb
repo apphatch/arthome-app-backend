@@ -1,5 +1,6 @@
 class Photo < ApplicationRecord
-  Rails.application.routes.url_helpers
+  include Rails.application.routes.url_helpers
+
   belongs_to :dbfile, polymorphic: true, optional: true
   has_one_attached :image
 
