@@ -1,6 +1,7 @@
 module Mappers
   class NpdExportMapper < BaseMapper
     def self.apply_each checklist_item
+      return nil if checklist_item.data.empty?
       shop = checklist_item.checklist.try(:shop)
       stock = checklist_item.stock
       return [
@@ -14,6 +15,7 @@ module Mappers
         checklist_item.data[:available],
         checklist_item.data[:void],
         checklist_item.data[:note],
+        checklist_item.updated_at
       ]
     end
   end

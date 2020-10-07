@@ -14,7 +14,7 @@ module Exporters
       set_data Mappers::SosExportMapper.map ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'sos' &&
           date_filter(c, @params) && yearweek_filter(c, @params)
-      }
+      }.compact
 
       super
     end

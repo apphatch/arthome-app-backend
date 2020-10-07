@@ -15,7 +15,7 @@ module Exporters
       set_data Mappers::PromotionsExportMapper.map ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'promotion' &&
           date_filter(c, @params) && yearweek_filter(c, @params)
-      }
+      }.compact
 
       super
     end

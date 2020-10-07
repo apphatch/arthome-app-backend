@@ -1,6 +1,7 @@
 module Mappers
   class PromotionsExportMapper < BaseMapper
     def self.apply_each checklist_item
+      return nil if checklist_item.data.empty?
       shop = checklist_item.checklist.try(:shop)
       stock = checklist_item.stock
       return [
@@ -16,6 +17,7 @@ module Mappers
         checklist_item.data["Void"],
         checklist_item.data["Promotion"],
         checklist_item.data["Note"],
+        checklist_item.updated_at
       ]
     end
   end
