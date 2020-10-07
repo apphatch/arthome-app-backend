@@ -5,7 +5,9 @@ module Reports
         'Nhân viên', 'Cửa hàng', 'Địa chỉ', 'SKU' ,'Cảnh báo', 'Lỗi', 'Hình ảnh'
       ]
 
-      set_data Mappers::QcDetailReportMapper.map Checklist.where(checklist_type: 'qc')
+      checklists = Checklist.where(checklist_type: 'qc')
+      checklist_items = checklists.present? ? checklists.collect{|c| c.checklist_items}.flatten : []
+      set_data Mappers::QcDetailReportMapper.map checklist_items
 
       data = []
       @data.each do |entry|
