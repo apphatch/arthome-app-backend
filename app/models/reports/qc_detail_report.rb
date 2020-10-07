@@ -14,7 +14,7 @@ module Reports
         data += entry
       end
 
-      return @headers + data
+      return [@headers] + data
     end
   end
 end
