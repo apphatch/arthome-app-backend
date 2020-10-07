@@ -12,7 +12,8 @@ module Mappers
         stock.try(:sku),
         stock.try(:category),
         checklist_item.data["Result"],
-        checklist_item.updated_at
+        checklist_item.updated_at,
+        checklist_item.data[:error]
       ]
     end
   end

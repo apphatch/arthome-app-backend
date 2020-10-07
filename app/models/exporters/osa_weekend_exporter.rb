@@ -9,13 +9,13 @@ module Exporters
     def export
       set_headers [
         'Outlet', 'Outlet Name', 'Barcode', 'VN Descriptions',
-        'ULV code', 'Category', 'Result'
+        'ULV code', 'Category', 'Result', 'Updated At', 'Error'
       ]
 
-      set_data Mappers::OsaWeekendExportMapper.map ChecklistItem.active.filter{ |c|
+      set_data Mappers::OsaWeekendExportMapper.map(ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'osa weekend' &&
           date_filter(c, @params) && yearweek_filter(c, @params)
-      }.compact
+      }).compact
 
       super
     end

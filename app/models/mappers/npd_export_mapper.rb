@@ -12,10 +12,11 @@ module Mappers
         stock.try(:name),
         stock.try(:barcode),
         checklist_item.quantity,
-        checklist_item.data[:available],
-        checklist_item.data[:void],
-        checklist_item.data[:note],
-        checklist_item.updated_at
+        checklist_item.data["Available"],
+        checklist_item.data["Void"],
+        checklist_item.data["Note"],
+        checklist_item.updated_at,
+        chekclist_item.data[:error]
       ]
     end
   end

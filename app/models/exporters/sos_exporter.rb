@@ -9,12 +9,12 @@ module Exporters
     def export
       set_headers [
         'Outlet', 'Outlet Name', 'Category', 'Sub category',
-        'Length of Unilever', 'Length of Competitor'
+        'Length of Unilever', 'Length of Competitor', 'Updated At', 'Error'
       ]
-      set_data Mappers::SosExportMapper.map ChecklistItem.active.filter{ |c|
+      set_data Mappers::SosExportMapper.map(ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'sos' &&
           date_filter(c, @params) && yearweek_filter(c, @params)
-      }.compact
+      }).compact
 
       super
     end

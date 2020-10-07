@@ -17,7 +17,8 @@ module Mappers
         checklist_item.data["Void"],
         checklist_item.data["Promotion"],
         checklist_item.data["Note"],
-        checklist_item.updated_at
+        checklist_item.updated_at,
+        checklist_item.data[:error]
       ]
     end
   end

@@ -10,12 +10,13 @@ module Exporters
       set_headers [
         'Outlet', 'Outlet Name', 'Barcode', 'VN Descriptions',
         'ULV code', 'Sub category', 'Mechanic',
-        'Stock', 'Available', 'Void', 'Promotion', 'Note'
+        'Stock', 'Available', 'Void', 'Promotion', 'Note',
+        'Updated At', 'Error'
       ]
-      set_data Mappers::PromotionsExportMapper.map ChecklistItem.active.filter{ |c|
+      set_data Mappers::PromotionsExportMapper.map(ChecklistItem.active.filter{ |c|
         c.checklist.checklist_type == 'promotion' &&
           date_filter(c, @params) && yearweek_filter(c, @params)
-      }.compact
+      }).compact
 
       super
     end
