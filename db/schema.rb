@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_03_023307) do
+ActiveRecord::Schema.define(version: 2020_10_08_162701) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_023307) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "checkin_id"
+    t.string "app"
     t.index ["shop_id"], name: "index_checkin_checkouts_on_shop_id"
     t.index ["user_id"], name: "index_checkin_checkouts_on_user_id"
   end
@@ -61,6 +62,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_023307) do
     t.float "quantity"
     t.string "mechanic"
     t.string "photo_ref"
+    t.string "app"
     t.index ["checklist_id"], name: "index_checklist_items_on_checklist_id"
     t.index ["stock_id"], name: "index_checklist_items_on_stock_id"
   end
@@ -76,6 +78,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_023307) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "yearweek"
     t.datetime "date"
+    t.string "app"
     t.index ["shop_id"], name: "index_checklists_on_shop_id"
     t.index ["user_id"], name: "index_checklists_on_user_id"
   end
@@ -96,6 +99,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_023307) do
     t.boolean "deleted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "app"
     t.index ["dbfile_type", "dbfile_id"], name: "index_photos_on_dbfile_type_and_dbfile_id"
   end
 
@@ -110,6 +114,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_023307) do
     t.string "city"
     t.string "district"
     t.json "custom_attributes"
+    t.string "app"
   end
 
   create_table "shops_stocks", id: false, force: :cascade do |t|
@@ -136,6 +141,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_023307) do
     t.string "barcode"
     t.json "custom_attributes"
     t.string "role", default: "stock"
+    t.string "app"
   end
 
   create_table "users", force: :cascade do |t|
@@ -150,6 +156,7 @@ ActiveRecord::Schema.define(version: 2020_10_03_023307) do
     t.boolean "locked", default: false
     t.string "jwt"
     t.integer "failed_login_attempts", default: 0
+    t.string "app"
   end
 
   create_table "worker_requests", force: :cascade do |t|
