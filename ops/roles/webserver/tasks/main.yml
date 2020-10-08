@@ -1,0 +1,13 @@
+- name: create deploy directory
+  file: path={{ deploy_directory }} state=directory owner={{ deploy_user }} group={{ webserver_user }} mode=0775
+
+- name: update apt cache
+  apt: update_cache=yes
+
+- name: install base libraries
+  apt: name={{ item }} state=present
+  with_items:
+    - libxslt-dev
+    - libxml2-dev	
+    - libmysqlclient-dev
+    - imagemagick

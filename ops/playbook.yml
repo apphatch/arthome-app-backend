@@ -1,0 +1,24 @@
+---
+- name: provision
+  hosts: all
+  remote_user: root
+  roles:
+    - user
+    - rvm_io.ruby
+    - s3cmd
+    - nodejs
+    - mysql
+    - nginx-passenger
+    - role: ssl
+      when: use_ssl
+      domainsets:
+        - domains:
+          - "{{ webserver_name }}"
+    - webserver
+
+- name: deploy
+  hosts: all
+  remote_user: "{{ deploy_user }}"
+  gather_facts: no
+  roles:
+    - { role: deploy, tags: ['deploy'] }

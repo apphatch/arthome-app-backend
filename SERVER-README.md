@@ -1,8 +1,9 @@
 # Install server Ubuntu 18.04 with Passenger + Nginx
 
-## Update apt
+## Update apt and get some libraries
 ```
 sudo apt-get update
+sudo apt-get install python
 ```
 
 ## Get rvm

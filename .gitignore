@@ -48,6 +48,7 @@ dumb.rdb
 
 # Ignore ansible
 ansible/
+ops/config.yml
 
 # Ignore excel files
 *.xlsx

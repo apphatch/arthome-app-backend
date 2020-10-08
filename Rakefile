@@ -4,3 +4,11 @@
 require_relative 'config/application'
 
 Rails.application.load_tasks
+
+task :provision do
+  sh "ansible-playbook -i ./ops/config.yml ./ops/playbook.yml"
+end
+
+task :deploy do
+  sh "ansible-playbook -i ./ops/config.yml ./ops/playbook.yml --tags 'deploy'"
+end
