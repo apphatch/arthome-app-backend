@@ -110,12 +110,14 @@ module Importers
     def import
       perform :import do |attributes, assocs, row|
         yield(attributes, assocs, row) if block_given?
+        [attributes, assocs]
       end
     end
 
     def update
       perform :update do |attributes, assocs, row|
         yield(attributes, assocs, row) if block_given?
+        [attributes, assocs]
       end
     end
 
