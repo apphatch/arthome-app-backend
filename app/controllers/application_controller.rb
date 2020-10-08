@@ -51,6 +51,8 @@ class ApplicationController < ActionController::Base
 
   def verified_request?
     super || valid_authenticity_token?(session, request.headers['X-CSRF-Token'])
+    #this is not used until session are implemented - jwt will suffice for now
+    return true
   end
 
 end
