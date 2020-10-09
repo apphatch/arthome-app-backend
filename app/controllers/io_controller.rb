@@ -15,6 +15,7 @@ class IoController < ApplicationController
     define_method "export_osa_#{k.to_s}".to_sym do
       begin
         options = {
+          app: @current_app.get(:app),
           output: "export/#{k.to_s}-export.xls",
           yearweek: params[:yearweek],
           date_from: params[:date_from],
@@ -53,7 +54,10 @@ class IoController < ApplicationController
           #  file: f
           #)
           #Resque.enqueue(ImportJob, req.id)
-          importer = importer_klass.new file: f
+          importer = importer_klass.new(
+            file: f,
+            app: @current_app.get(:app)
+          )
           importer.import
         end
         head 201
