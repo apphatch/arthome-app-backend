@@ -1,4 +1,4 @@
-module Apps
+module AppRouters
   class QcMobileFactory < BaseFactory
     def declare
     end

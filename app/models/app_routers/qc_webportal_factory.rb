@@ -1,4 +1,4 @@
-module Apps
+module AppRouters
   class QcWebportalFactory < BaseFactory
     def declare
       use Importers::QcUsersImporter, as: :user_importer

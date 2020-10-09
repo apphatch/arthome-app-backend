@@ -1,4 +1,4 @@
-module Apps
+module AppRouters
   class BaseFactory
     attr_accessor :name
 
@@ -16,10 +16,10 @@ module Apps
 
     def self.make app
       apps = {
-        'osa' => ::Apps::OsaMobileFactory,
-        'qc' => ::Apps::QcMobileFactory,
-        'osa-webportal' => ::Apps::OsaWebportalFactory,
-        'qc-webportal' => ::Apps::QcWebportalFactory,
+        'osa' => ::AppRouters::OsaMobileFactory,
+        'qc' => ::AppRouters::QcMobileFactory,
+        'osa-webportal' => ::AppRouters::OsaWebportalFactory,
+        'qc-webportal' => ::AppRouters::QcWebportalFactory,
       }
       app_obj = apps[app] || self
       app_obj = app_obj.new

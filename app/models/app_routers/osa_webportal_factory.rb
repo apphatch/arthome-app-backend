@@ -1,4 +1,4 @@
-module Apps
+module AppRouters
   class OsaWebportalFactory < BaseFactory
     def declare
       use Importers::OsaUsersImporter, as: :user_importer
