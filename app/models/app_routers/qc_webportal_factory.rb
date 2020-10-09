@@ -1,6 +1,7 @@
 module AppRouters
   class QcWebportalFactory < BaseFactory
     def declare
+      use 'qc', as: :app
       use Importers::QcUsersImporter, as: :user_importer
       use Importers::QcStocksImporter, as: :stock_importer
       use Importers::QcShopsImporter, as: :shop_importer
