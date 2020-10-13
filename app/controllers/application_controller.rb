@@ -1,4 +1,7 @@
 class ApplicationController < ActionController::Base
+  include Permissible
+  #disallow roles; return if performed?
+
   before_action :set_current_app
   before_action :check_user_is_logged_in
   before_action :set_csrf_token_for_api
