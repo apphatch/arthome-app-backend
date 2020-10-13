@@ -17,6 +17,7 @@ module Importers
       @model_attrs_to_use = []
       @bypass_filter_attrs = []
       @prefix = ''
+      @app = params[:app]
 
       #dealing with actiondispatch uploaded files, absolute and relative file paths, and lastly try file object
       f = params[:file].try(:path) || params[:file_path] || "import/#{params[:file_name]}"
@@ -175,6 +176,7 @@ module Importers
             obj.send "#{k}=", v
           end
         end
+        obj.app = @app
         obj.save!
       end
     end

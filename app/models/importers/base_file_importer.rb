@@ -2,6 +2,7 @@ module Importers
   class BaseFileImporter
     def initialize params={}
       @model_class = params[:model_class]
+      @app = params[:app]
 
       @uid_attr = nil
     end

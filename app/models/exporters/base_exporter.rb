@@ -4,6 +4,7 @@ module Exporters
   class BaseExporter
     def initialize params={}
       @output_file = params[:output]
+      @app = params[:app]
       @params = params
       @max_flatten_level = 1
     end
