@@ -21,7 +21,7 @@ gem install bundler:2.1.4
 
 ## Setup PostgreSQL 10.4
 ```
-sudo apt install postgresl postgresql-contrib
+sudo apt install postgresql postgresql-contrib
 sudo apt-get install libpq-dev
 ```
 
@@ -31,7 +31,12 @@ bundle install
 ```
 
 ## Setup DB
-change pg_hba.conf to authenticate md5 (usually in /etc/postgresql/10/main/)
+change pg_hba.conf to authenticate md5 (usually in /etc/postgresql/10/main/pg_hba.conf)
+then restart postgres with
+```
+sudo service postgresql stop
+sudo service postgresql start
+```
 
 login as postgres
 ```
@@ -43,7 +48,8 @@ create user (match rails database.yml)
 CREATE USER username WITH PASSWORD 'password';
 ALTER ROLE username WITH CREATEDB REPLICATION LOGIN;
 ```
-create rails db
+copy secret key base, then create rails db (may need to change permission of
+entire folder)
 ```
 RAILS_ENV=production rake db:create db:migrate
 ```
