@@ -4,9 +4,10 @@ class ApplicationController < ActionController::Base
 
   #we're using apis only for now so this isn't necessary
   skip_before_action :verify_authenticity_token
+  #protect_from_forgery with: :exception
+
   before_action :set_current_app
   before_action :check_user_is_logged_in
-  protect_from_forgery with: :exception
 
   def auth_info
     if request.headers['Authorization'].present?
