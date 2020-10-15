@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   resources :users do
     collection do
       get  :import_template
-      get  :export_oos
     end
 
     member do
