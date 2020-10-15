@@ -41,7 +41,7 @@ class Shop < ApplicationRecord
 
   def completed? current_app, current_user
     #HACK
-    if current_app == 'osa'
+    if current_app.name == 'osa'
       checklists = self.checklists.active.osa.incompleted
       #HACK
       #checklists = checklists.undated + checklists.dated.today
@@ -50,7 +50,7 @@ class Shop < ApplicationRecord
       weekly = checklists.this_week.where.not checklist_type: ['npd', 'promotion']
       checklists = daily + weekly
     end
-    checklists = self.checklists.active.qc.incompleted if current_app == 'qc'
+    checklists = self.checklists.active.qc.incompleted if current_app.name == 'qc'
 
     checklists.each do |c|
       next unless c.user == current_user
