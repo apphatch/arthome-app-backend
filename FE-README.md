@@ -32,7 +32,7 @@ export PATH="$PATH:$(yarn global bin)"
 ```
 yarn global add serve
 ```
-- run server
+- run server (default listen on 3100)
 ```
-serve -s build -l 8080 -C
+serve -s build -l 3100 -C
 ```
