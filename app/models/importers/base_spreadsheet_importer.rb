@@ -177,7 +177,11 @@ module Importers
           end
         end
         obj.app = @app
-        obj.save!
+        begin
+          obj.save!
+        rescue => e
+          Rails.logger.warn e
+        end
       end
     end
 
