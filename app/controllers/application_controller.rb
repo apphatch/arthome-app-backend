@@ -1,6 +1,7 @@
 class ApplicationController < ActionController::Base
   include Permissible
-  #disallow roles; return if performed?
+  #disallow sym_roles; return if performed?
+  #allow sym_roles; return if performed?
 
   #we're using apis only for now so this isn't necessary
   skip_before_action :verify_authenticity_token
