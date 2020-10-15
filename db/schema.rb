@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_08_162701) do
+ActiveRecord::Schema.define(version: 2020_10_15_081819) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,7 @@ ActiveRecord::Schema.define(version: 2020_10_08_162701) do
     t.string "yearweek"
     t.datetime "date"
     t.string "app"
+    t.index ["date"], name: "index_checklists_on_date"
     t.index ["shop_id"], name: "index_checklists_on_shop_id"
     t.index ["user_id"], name: "index_checklists_on_user_id"
   end

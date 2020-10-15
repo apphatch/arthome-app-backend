@@ -29,6 +29,7 @@ class ApplicationController < ActionController::Base
   def set_current_app
     head 404 and return unless request.headers['App'].present?
     @current_app = AppRouters::BaseFactory.make request.headers['App'].downcase
+    params[:app] = @current_app.get(:app)
   end
 
   def check_user_is_logged_in
