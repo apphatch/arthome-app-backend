@@ -4,7 +4,7 @@ module Importers
   class OsaPhotosImporter < BaseFileImporter
     def initialize params={}
       @model_class = Photo
-      @app = 'osa'
+      @app_group = 'osa'
       @files = params[:files]
 
       super params

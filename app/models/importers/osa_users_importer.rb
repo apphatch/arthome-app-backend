@@ -4,7 +4,7 @@ module Importers
   class OsaUsersImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = User
-      @app = 'osa'
+      @app_group = 'osa'
       super params
     end
 

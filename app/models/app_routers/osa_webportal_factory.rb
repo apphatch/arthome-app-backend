@@ -1,7 +1,8 @@
 module AppRouters
   class OsaWebportalFactory < BaseFactory
     def declare
-      use 'osa', as: :app
+      use 'osa-webportal', as: :app
+      use 'osa', as: :app_group
       use Importers::OsaUsersImporter, as: :user_importer
       use Importers::OsaStocksImporter, as: :stock_importer
       use Importers::OsaShopsImporter, as: :shop_importer

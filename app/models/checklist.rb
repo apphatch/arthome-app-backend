@@ -32,7 +32,7 @@ class Checklist < ApplicationRecord
 
   def self.index_for app
     raise Exception.new 'must provide app header' if app.nil?
-    if app == 'osa'
+    if app.name == 'osa-mobile'
       checklists = self.active.osa.incompleted
       #HACK
       #checklists = checklists.undated + checklists.dated.today
@@ -41,7 +41,7 @@ class Checklist < ApplicationRecord
       weekly = checklists.this_week.where.not checklist_type: ['npd', 'promotion']
       checklists = daily + weekly
     end
-    checklists = self.active.qc.incompleted if app == 'qc'
+    checklists = self.active.qc.incompleted if app.name == 'qc-mobile'
     return checklists.compact
   end
 

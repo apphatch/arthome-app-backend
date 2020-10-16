@@ -31,7 +31,7 @@ class ChecklistsController < ApplicationController
     shop = current_user.shops.active.find_by_id params[:shop_id]
     head 401 and return unless shop.present?
 
-    checklists = current_user.checklists.active.index_for @current_app.name
+    checklists = current_user.checklists.active.index_for @current_app
     checklists = checklists.select{|c| c.shop == shop}.compact if checklists.present?
     render json: checklists, each_serializer: ChecklistSerializer
   end

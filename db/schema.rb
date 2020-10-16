@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "checkin_id"
-    t.string "app"
+    t.string "app_group"
     t.index ["shop_id"], name: "index_checkin_checkouts_on_shop_id"
     t.index ["user_id"], name: "index_checkin_checkouts_on_user_id"
   end
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.float "quantity"
     t.string "mechanic"
     t.string "photo_ref"
-    t.string "app"
+    t.string "app_group"
     t.index ["checklist_id"], name: "index_checklist_items_on_checklist_id"
     t.index ["stock_id"], name: "index_checklist_items_on_stock_id"
   end
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "yearweek"
     t.datetime "date"
-    t.string "app"
+    t.string "app_group"
     t.index ["date"], name: "index_checklists_on_date"
     t.index ["shop_id"], name: "index_checklists_on_shop_id"
     t.index ["user_id"], name: "index_checklists_on_user_id"
@@ -100,7 +100,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.boolean "deleted", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "app"
+    t.string "app_group"
     t.index ["dbfile_type", "dbfile_id"], name: "index_photos_on_dbfile_type_and_dbfile_id"
   end
 
@@ -115,7 +115,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.string "city"
     t.string "district"
     t.json "custom_attributes"
-    t.string "app"
+    t.string "app_group"
   end
 
   create_table "shops_stocks", id: false, force: :cascade do |t|
@@ -142,7 +142,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.string "barcode"
     t.json "custom_attributes"
     t.string "role", default: "stock"
-    t.string "app"
+    t.string "app_group"
   end
 
   create_table "users", force: :cascade do |t|
@@ -157,7 +157,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.boolean "locked", default: false
     t.string "jwt"
     t.integer "failed_login_attempts", default: 0
-    t.string "app"
+    t.string "app_group"
   end
 
   create_table "worker_requests", force: :cascade do |t|

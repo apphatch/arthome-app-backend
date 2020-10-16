@@ -5,6 +5,7 @@ module AppRouters
     def initialize
       @object_mappings = {
         app: nil,
+        app_group: nil,
         user_importer: Importers::BaseImporter,
         shop_importer: Importers::BaseImporter,
         stock_importer: Importers::BaseImporter,

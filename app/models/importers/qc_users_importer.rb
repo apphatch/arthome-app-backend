@@ -4,7 +4,7 @@ module Importers
   class QcUsersImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = User
-      @app = 'qc'
+      @app_group = 'qc'
       super params
     end
 

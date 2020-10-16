@@ -1,7 +1,7 @@
 class ApplicationRecord < ActiveRecord::Base
   self.abstract_class = true
 
-  validates :app, presence: true
+  validates :app_group, presence: true
   scope :active, -> { where(deleted: false) }
 
   def deleted!

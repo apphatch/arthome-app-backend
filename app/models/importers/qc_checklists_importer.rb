@@ -2,7 +2,7 @@ module Importers
   class QcChecklistsImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = Checklist
-      @app = 'qc'
+      @app_group = 'qc'
       super params
     end
 

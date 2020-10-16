@@ -2,7 +2,7 @@ module Importers
   class OsaStocksImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = Stock
-      @app = 'osa'
+      @app_group = 'osa'
       super params
     end
 

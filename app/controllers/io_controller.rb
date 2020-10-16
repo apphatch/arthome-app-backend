@@ -16,6 +16,7 @@ class IoController < ApplicationController
       begin
         options = {
           app: @current_app.get(:app),
+          app_group: @current_app.get(:app_group),
           output: "export/#{k.to_s}-export.xls",
           yearweek: params[:yearweek],
           date_from: params[:date_from],
@@ -56,7 +57,8 @@ class IoController < ApplicationController
           #Resque.enqueue(ImportJob, req.id)
           importer = importer_klass.new(
             file: f,
-            app: @current_app.get(:app)
+            app: @current_app.get(:app),
+            app_group: @current_app.get(:app_group)
           )
           importer.import
         end
