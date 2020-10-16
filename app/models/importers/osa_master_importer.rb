@@ -11,7 +11,7 @@ module Importers
       importer.import
       importer = Importers::OsaStocksImporter.new file: @file, app_group: @app_group
       importer.import
-      importer = Importers::ChecklistsImporter.new file: @file, app_group: @app_group
+      importer = Importers::OsaChecklistsImporter.new file: @file, app_group: @app_group
       importer.import
       importer = Importers::ChecklistItemsImporter.new file: @file, app_group: @app_group
       importer.import
