@@ -2,8 +2,8 @@ module Importers
   class OsaMasterImporter
     def initialize params={}
       @params = params
+      @app = 'osa'
       @file = params[:file]
-      @app = params[:app]
     end
 
     def import

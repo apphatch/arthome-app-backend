@@ -9,15 +9,15 @@ module Importers
       # 3. call super for default behaviour
       # 4. super accepts a block with attributes, associations and row data
 
-      @header_mappings = {}
-      @uid_attr =nil
-      @spreadsheet = nil
-      @skip_if_record_exists = false
-      @auto_gen_uid = false
-      @model_attrs_to_use = []
-      @bypass_filter_attrs = []
-      @prefix = ''
-      @app = params[:app]
+      @header_mappings ||= {}
+      @uid_attr ||= nil
+      @spreadsheet ||= nil
+      @skip_if_record_exists ||= false
+      @auto_gen_uid ||= false
+      @model_attrs_to_use ||= []
+      @bypass_filter_attrs ||= []
+      @prefix ||= ''
+      @app ||= params[:app]
 
       #dealing with actiondispatch uploaded files, absolute and relative file paths, and lastly try file object
       f = params[:file].try(:path) || params[:file_path] || "import/#{params[:file_name]}"

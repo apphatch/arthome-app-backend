@@ -2,6 +2,7 @@ module Importers
   class QcStocksImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = Stock
+      @app = 'qc'
       super params
     end
 

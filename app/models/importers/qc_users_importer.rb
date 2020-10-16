@@ -4,6 +4,7 @@ module Importers
   class QcUsersImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = User
+      @app = 'qc'
       super params
     end
 
