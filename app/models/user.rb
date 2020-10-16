@@ -10,16 +10,6 @@ class User < ApplicationRecord
 
   scope :active, -> { where(deleted: false, locked: false) }
 
-  def self.import_template
-    headers = ['importing_id', 'name', 'username', 'password']
-    book = Spreadsheet::Workbook.new
-    sheet = book.create_worksheet
-    sheet.row(0).concat(headers)
-    data = StringIO.new("")
-    book.write data
-    return data
-  end
-
   def active_shops
     incompleted_checklists = self.checklists.active.incompleted
     return incompleted_checklists.collect{|c| c.shop}.compact.uniq
