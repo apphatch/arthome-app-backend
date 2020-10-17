@@ -6,8 +6,8 @@ module Mappers
         checklist.try(:user).try(:name),
         checklist.try(:shop).try(:name),
         checklist.try(:shop).try(:full_address),
-        Stock.where(role: 'hpc').length,
-        Stock.where(role: 'ic').length,
+        252,
+        36
       ] + stats
     end
   end
