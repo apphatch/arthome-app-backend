@@ -18,8 +18,8 @@ module AppRouters
 
     def self.make app
       apps = {
-        'osa' => ::AppRouters::OsaMobileFactory,
-        'qc' => ::AppRouters::QcMobileFactory,
+        'osa-mobile' => ::AppRouters::OsaMobileFactory,
+        'qc-mobile' => ::AppRouters::QcMobileFactory,
         'osa-webportal' => ::AppRouters::OsaWebportalFactory,
         'qc-webportal' => ::AppRouters::QcWebportalFactory,
       }
