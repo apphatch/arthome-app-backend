@@ -99,7 +99,8 @@ class ShopsController < ApplicationController
 
   def permitted_params
     return params.permit(
-      :photo, :note, :time, :photo_name, :incomplete,
+      :app, :app_group, :photo, :note,
+      :time, :photo_name, :incomplete,
       :photos => []
     )
   end

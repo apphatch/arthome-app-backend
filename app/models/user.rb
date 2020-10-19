@@ -28,13 +28,15 @@ class User < ApplicationRecord
         shop: shop,
         time: params[:time],
         note: params[:note],
-        is_checkin: true
+        is_checkin: true,
+        app_group: params[:app_group]
       )
 
       record.photos.create(
         image: params[:photo],
         time: params[:time],
         name: params[:photo_name],
+        app_group: params[:app_group]
       )
       record.save
       return record
@@ -59,12 +61,14 @@ class User < ApplicationRecord
         time: params[:time],
         note: params[:note],
         is_checkin: false,
-        checkin: last_record
+        checkin: last_record,
+        app_group: params[:app_group]
       )
       record.photos.create(
         image: params[:photo],
         time: params[:time],
-        name: params[:photo_name]
+        name: params[:photo_name],
+        app_group: params[:app_group]
       )
       record.save
       #HACK: refac later
