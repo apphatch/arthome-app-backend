@@ -17,7 +17,8 @@ class Shop < ApplicationRecord
         time: params[:time],
         note: params[:note],
         is_checkin: false,
-        checkin: last_record
+        checkin: last_record,
+        app_group: params[:app_group]
       )
       record.save validate: false
 
@@ -25,7 +26,8 @@ class Shop < ApplicationRecord
         record.photos.create(
           image: photo,
           time: params[:time],
-          name: "shop_checkout_#{params[:time].to_s}"
+          name: "shop_checkout_#{params[:time].to_s}",
+          app_group: params[:app_group]
         )
       end
       return record
