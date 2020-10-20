@@ -31,7 +31,8 @@ class Shop < ApplicationRecord
         )
       end
       return record
-    rescue
+    rescue => e
+      Rails.logger.warn e
       return record
       #return nil
     end
