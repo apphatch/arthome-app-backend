@@ -14,15 +14,13 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create params.permit(
-      :username, :name, :password, :importing_id, :app_group
-    )
+    user = User.create user_params
     render json: user
   end
 
   def update
     find_record do |user|
-      user.update permitted_params
+      user.update user_params
       render json: user
     end
   end
@@ -57,6 +55,10 @@ class UsersController < ApplicationController
 
   def permitted_params
     return params.permit(:username, :name, :password, :importing_id, :app, :app_group)
+  end
+
+  def user_params
+    return params.permit(:username, :name, :password, :importing_id, :app_group)
   end
 
   def find_record
