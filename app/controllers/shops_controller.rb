@@ -19,13 +19,13 @@ class ShopsController < ApplicationController
   end
 
   def create
-    shop = Shop.create permitted_params
+    shop = Shop.create shop_params
     render json: shop, serializer: ShopSerializer, **serializer_options
   end
 
   def update
     find_record do |shop|
-      shop.update permitted_params
+      shop.update shop_params
       render json: shop, serializer: ShopSerializer, **serializer_options
     end
   end
@@ -102,6 +102,13 @@ class ShopsController < ApplicationController
       :app, :app_group, :photo, :note,
       :time, :photo_name, :incomplete,
       :photos => []
+    )
+  end
+
+  def shop_params
+    return params.permit(
+      :app_group, :name, :importing_id, :full_address,
+      :shop_type
     )
   end
 
