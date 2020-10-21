@@ -1,5 +1,9 @@
 module Reports
   class QcOverviewReport < BaseReport
+    def initialize params={}
+      super params
+    end
+
     def generate
       set_headers [
         'Tên nhân viên', 'Tên cửa hàng', 'Địa chỉ', 'HPC', 'IC',
