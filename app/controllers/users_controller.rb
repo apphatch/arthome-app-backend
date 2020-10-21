@@ -14,7 +14,9 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.create permitted_params
+    user = User.create params.permit(
+      :username, :name, :password, :importing_id, :app_group
+    )
     render json: user
   end
 
@@ -54,7 +56,7 @@ class UsersController < ApplicationController
   end
 
   def permitted_params
-    return params.permit(:username, :name, :password, :importing_id)
+    return params.permit(:username, :name, :password, :importing_id, :app, :app_group)
   end
 
   def find_record
