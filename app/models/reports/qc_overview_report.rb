@@ -10,7 +10,8 @@ module Reports
         'HPC thực', 'IC thực', 'Xanh', 'Vàng', 'Đỏ'
       ]
 
-      set_data Mappers::QcOverviewReportMapper.map Checklist.where(checklist_type: 'qc')
+      checklists = Checklist.where checklist_type: 'qc', date: @date_from..@date_to
+      set_data Mappers::QcOverviewReportMapper.map checklists
 
       super
     end

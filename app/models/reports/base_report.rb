@@ -3,6 +3,8 @@ module Reports
     def initialize params={}
       @headers = []
       @data = []
+      @date_from = DateTime.parse(params[:date_from] || '01-01-1900') #almost guaranteed safe
+      @date_to = DateTime.parse(params[:date_to]) if params[:date_to].present?
     end
 
     def set_headers headers
