@@ -5,6 +5,7 @@ module Mappers
       user = checklist_item.checklist.try(:user)
       stock = checklist_item.stock
       common = [
+        checklist_item.updated_at.strftime('%d/%m/%Y'),
         user.try(:name),
         shop.try(:name),
         shop.try(:full_address),

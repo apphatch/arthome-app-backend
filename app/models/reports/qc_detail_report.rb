@@ -6,7 +6,7 @@ module Reports
 
     def generate
       set_headers [
-        'Nhân viên', 'Cửa hàng', 'Địa chỉ', 'SKU' ,'Mức cảnh báo', 'Lỗi', 'Hình ảnh'
+        'Ngày', 'Nhân viên', 'Cửa hàng', 'Địa chỉ', 'SKU' ,'Mức cảnh báo', 'Lỗi', 'Hình ảnh'
       ]
 
       checklists = Checklist.where checklist_type: 'qc', date: @date_from..@date_to
