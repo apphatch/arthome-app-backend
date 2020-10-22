@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_current_app
   before_action :check_user_is_logged_in
-  before_action :clean_params
 
   def auth_info
     if request.headers['Authorization'].present?
@@ -52,9 +51,5 @@ class ApplicationController < ActionController::Base
     user.update jwt: token
     response.headers['Authorization'] = token
     return token
-  end
-
-  def clean_params
-    params = params.each{|k, v| params[k] = nil if v == 'undefined'}
   end
 end
