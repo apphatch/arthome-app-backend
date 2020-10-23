@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
   def create
     photo = Photo.create(
-      image: params[:photo_uri],
+      image: params[:photo],
       time: params[:time],
       name: params[:name],
       app_group: params[:app_group]
