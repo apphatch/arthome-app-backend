@@ -18,7 +18,8 @@ class ChecklistItemSerializer < ActiveModel::Serializer
   end
 
   def sub_category
-    object.stock.try(:sub_category)
+    return object.stock.try(:category) if object.checklist_type == 'sos'
+    return object.stock.try(:sub_category)
   end
 
   def rental_type
