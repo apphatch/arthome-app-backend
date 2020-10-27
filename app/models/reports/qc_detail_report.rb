@@ -9,11 +9,12 @@ module Reports
         'Ngày', 'Nhân viên', 'Cửa hàng', 'Địa chỉ', 'SKU' ,'Mức cảnh báo', 'Lỗi', 'Hình ảnh'
       ]
 
-      checklists = Checklist.where(checklist_type: 'qc', updated_at: @date_from..@date_to)
-
-      checklist_items = checklists.present? ? checklists.collect{ |c|
-        c.checklist_items unless c.checklist_items.data == {}
-      }.flatten : []
+      checklist_items = ChecklistItem.collect{|c| c if (
+          c.checklist_type == 'qc' &&
+          c.data != {} &&
+          c.updated_at.between?(@date_from, @date_to)
+        )
+      }
       set_data Mappers::QcDetailReportMapper.map checklist_items
 
       data = []
