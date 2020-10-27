@@ -10,7 +10,7 @@ module Reports
         'HPC thực', 'IC thực', 'Xanh', 'Vàng', 'Đỏ'
       ]
 
-      checklists = Checklist.where(checklist_type: 'qc', updated_at: @date_from..@date_to).where.not(data: {})
+      checklists = Checklist.where(checklist_type: 'qc', updated_at: @date_from..@date_to)
       set_data Mappers::QcOverviewReportMapper.map checklists
 
       super
