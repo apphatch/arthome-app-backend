@@ -13,7 +13,7 @@ module Reports
           c.data != {} &&
           c.updated_at.between?(@date_from, @date_to)
         )
-      }
+      }.compact
       set_data Mappers::QcDetailReportMapper.map checklist_items
 
       data = []
