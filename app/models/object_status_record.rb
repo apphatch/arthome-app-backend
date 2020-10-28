@@ -1,9 +1,7 @@
 class ObjectStatusRecord < ApplicationRecord
-  belongs_to :object_status, polymorphic: true, optional: true
+  belongs_to :subject, polymorphic: true, optional: true
 
   serialize :data, Hash
-
-  attr_accessor :name, :object_type
 
   def count key, data
     self.data[key.to_sym] = data.length
