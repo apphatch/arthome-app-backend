@@ -159,7 +159,7 @@ module Importers
 
         # find or create object instance
         raise Exception.new 'uid not indexed' if attributes[@uid_attr].nil?
-        obj = @model_class.send "find_by_#{@uid_attr}".to_sym, attributes[@uid_attr]
+        obj = @model_class.active.send "find_by_#{@uid_attr}".to_sym, attributes[@uid_attr]
         next if (obj.present? && @skip_if_record_exists)
         next if (mode == :update && obj.nil?)
         obj = @model_class.new attributes if obj.nil?
