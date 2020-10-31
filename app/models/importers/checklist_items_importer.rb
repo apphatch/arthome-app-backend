@@ -39,7 +39,7 @@ module Importers
         ].join()
 
         assocs[:checklist] = Checklist.find_by_reference checklist_ref
-        if attributes[:checklist_type] == 'sos'
+        if attributes[:checklist_type].downcase == 'sos'
           stock_importing_id = attributes[:stock_cat] + attributes[:stock_sub_cat]
         else
           stock_importing_id = assocs[:stock]
