@@ -21,9 +21,9 @@ module Importers
         attributes[:checklist_type] = 'qc'
         attributes[:date] = DateTime.parse attributes[:date] if attributes[:date].present?
 
-        assocs[:user] = User.find_by_importing_id assocs[:user]
+        assocs[:user] = User.active.find_by_importing_id assocs[:user]
         shop_id = "qc-" + attributes[:shop_number] + attributes[:shop_name]
-        assocs[:shop] = Shop.find_by_importing_id shop_id
+        assocs[:shop] = Shop.active.find_by_importing_id shop_id
 
 
         [attributes, assocs]

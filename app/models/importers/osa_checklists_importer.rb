@@ -21,8 +21,8 @@ module Importers
         attributes[:checklist_type] = attributes[:checklist_type].downcase
         attributes[:date] = DateTime.parse attributes[:date] if attributes[:date].present?
         attributes[:shop]  = assocs[:shop].to_i.to_s #to use for uid autogen
-        assocs[:user] = User.find_by_importing_id assocs[:user]
-        assocs[:shop] = Shop.find_by_importing_id assocs[:shop].to_i.to_s
+        assocs[:user] = User.active.find_by_importing_id assocs[:user]
+        assocs[:shop] = Shop.active.find_by_importing_id assocs[:shop].to_i.to_s
 
         [attributes, assocs]
       end

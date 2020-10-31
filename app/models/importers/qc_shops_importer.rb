@@ -21,7 +21,7 @@ module Importers
       associate :users, ['US_ID'], as: :string
 
       super do |attributes, assocs, row|
-        assocs[:users] = User.find_by_importing_id assocs[:users]
+        assocs[:users] = User.active.find_by_importing_id assocs[:users]
 
         attributes[:custom_attributes] = {
           distributor: attributes[:distributor],

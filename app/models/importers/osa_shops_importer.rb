@@ -20,7 +20,7 @@ module Importers
       super do |attributes, assocs, row|
         #get rid of annoying floats
         attributes[:importing_id] = attributes[:importing_id].to_i.to_s
-        assocs[:users] = User.find_by_importing_id assocs[:users]
+        assocs[:users] = User.active.find_by_importing_id assocs[:users]
 
         [attributes, assocs]
       end

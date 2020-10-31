@@ -26,7 +26,7 @@ module Importers
 
       super do |attributes, assocs, row|
         unless assocs[:shops].nil?
-          assocs[:shops] = Shop.find_by_importing_id assocs[:shops]
+          assocs[:shops] = Shop.active.find_by_importing_id assocs[:shops]
         end
         attributes[:role] = attributes[:role].try(:downcase)
         attributes[:custom_attributes] = {
