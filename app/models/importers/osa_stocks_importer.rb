@@ -23,8 +23,13 @@ module Importers
       index :group, ['SKU_Group']
       index :brand, ['Brand']
       index :packaging, ['SKU_Package']
+      index_temp :checklist_type, ['Type']
 
       super do |attributes, assocs, row|
+        if attributes[:checklist_type].downcase == 'sos'
+          atrributes[:importing_id] = attributes[:category] + attributes[:sub_category]
+        end
+
         unless assocs[:shops].nil?
           assocs[:shops] = Shop.find_by_importing_id assocs[:shops]
         end
