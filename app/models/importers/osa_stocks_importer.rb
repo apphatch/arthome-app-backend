@@ -27,7 +27,7 @@ module Importers
 
       super do |attributes, assocs, row|
         if attributes[:checklist_type].downcase == 'sos'
-          atrributes[:importing_id] = attributes[:category] + attributes[:sub_category]
+          attributes[:importing_id] = attributes[:category] + attributes[:sub_category]
         end
 
         unless assocs[:shops].nil?
