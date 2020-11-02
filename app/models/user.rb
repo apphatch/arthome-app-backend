@@ -72,7 +72,7 @@ class User < ApplicationRecord
       )
       record.save
       #HACK: refac later
-      if params[:incomplete]
+      if params[:incomplete] != 'false'
         checklists = self.checklists.where shop: shop
         checklists = checklists.undated + checklists.dated.today
         checklists.each do |c|
