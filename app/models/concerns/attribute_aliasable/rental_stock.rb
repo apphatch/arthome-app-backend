@@ -2,6 +2,6 @@ module AttributeAliasable::RentalStock
   extend ActiveSupport::Concern
 
   def rental_type
-    self.sub_category
+    self.category
   end
 end
