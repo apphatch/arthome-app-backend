@@ -9,7 +9,7 @@ module Mappers
         shop.try(:name),
         stock.try(:name),
         stock.try(:rental_type),
-        stock.try(:category),
+        stock.try(:sub_category),
         checklist_item.data["Available"],
         checklist_item.data["Inline"],
         checklist_item.data["Png"],
