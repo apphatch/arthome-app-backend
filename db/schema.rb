@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_15_081819) do
+ActiveRecord::Schema.define(version: 2020_11_03_063646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "checkin_id"
     t.string "app_group"
+    t.json "coords"
     t.index ["shop_id"], name: "index_checkin_checkouts_on_shop_id"
     t.index ["user_id"], name: "index_checkin_checkouts_on_user_id"
   end
@@ -79,6 +80,7 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.string "yearweek"
     t.datetime "date"
     t.string "app_group"
+    t.datetime "end_date"
     t.index ["date"], name: "index_checklists_on_date"
     t.index ["shop_id"], name: "index_checklists_on_shop_id"
     t.index ["user_id"], name: "index_checklists_on_user_id"
@@ -89,6 +91,16 @@ ActiveRecord::Schema.define(version: 2020_10_15_081819) do
     t.bigint "stock_id"
     t.index ["checklist_id"], name: "index_checklists_stocks_on_checklist_id"
     t.index ["stock_id"], name: "index_checklists_stocks_on_stock_id"
+  end
+
+  create_table "object_status_records", force: :cascade do |t|
+    t.string "subject_type"
+    t.bigint "subject_id"
+    t.json "data", default: {}
+    t.boolean "deleted", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["subject_type", "subject_id"], name: "index_object_status_on_type_and_id"
   end
 
   create_table "photos", force: :cascade do |t|

@@ -1,10 +1,12 @@
 class Shop < ApplicationRecord
   include AttributeAliasable::QcShop
 
+  has_one :object_status_record, as: :subject
+
   has_many :checklists
+  has_many :checkin_checkouts
   has_and_belongs_to_many :users
   has_and_belongs_to_many :stocks
-  has_many :checkin_checkouts
 
   serialize :custom_attributes, Hash
 
@@ -18,6 +20,7 @@ class Shop < ApplicationRecord
         note: params[:note],
         is_checkin: false,
         checkin: last_record,
+        coords: params[:coords],
         app_group: params[:app_group]
       )
       record.save validate: false
@@ -42,18 +45,23 @@ class Shop < ApplicationRecord
     return self.checkin_checkouts.active.where user: nil
   end
 
-  def completed? current_app, current_user
+  def completed? current_user
     #HACK
-    if current_app.get(:app_group) == 'osa'
+    status = self.object_status_record
+    return status.data[:incompleted_checklists_count] == 0 unless status.data[:incompleted_checklists_count].nil?
+
+    if self.app_group == 'osa'
       checklists = self.checklists.active.osa.incompleted
-      #HACK
-      #checklists = checklists.undated + checklists.dated.today
       checklists = checklists.dated
       daily = checklists.today.where checklist_type: ['npd', 'promotion']
       weekly = checklists.this_week.where.not checklist_type: ['npd', 'promotion']
       checklists = daily + weekly
     end
-    checklists = self.checklists.active.qc.incompleted if current_app.get(:app_group) == 'qc'
+    checklists = self.checklists.active.qc.incompleted if self.app_group == 'qc'
+
+    status.data[:incompleted_checklists_count] = checklists.collect do |c|
+      c if (c.user == current_user && c.completed?)
+    end
 
     checklists.each do |c|
       next unless c.user == current_user

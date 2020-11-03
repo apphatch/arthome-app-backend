@@ -28,6 +28,7 @@ class User < ApplicationRecord
         shop: shop,
         time: params[:time],
         note: params[:note],
+        coords: params[:coords],
         is_checkin: true,
         app_group: params[:app_group]
       )
@@ -60,6 +61,7 @@ class User < ApplicationRecord
         shop: shop,
         time: params[:time],
         note: params[:note],
+        coords: params[:coords],
         is_checkin: false,
         checkin: last_record,
         app_group: params[:app_group]
