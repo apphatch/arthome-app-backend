@@ -114,7 +114,6 @@ class ShopsController < ApplicationController
 
   def serializer_options
     return {
-      current_app: @current_app,
       current_user: @current_user
     }
   end

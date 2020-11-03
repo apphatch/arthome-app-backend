@@ -3,6 +3,6 @@ class ShopSerializer < ActiveModel::Serializer
     :full_address, :city, :district, :completed
 
   def completed
-    return object.completed? @instance_options[:current_app], @instance_options[:current_user]
+    return object.completed? @instance_options[:current_user]
   end
 end
