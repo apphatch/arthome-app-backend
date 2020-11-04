@@ -1,4 +1,3 @@
-require 'json'
 require 'base64'
 
 class ChecklistItemsController < ApplicationController
@@ -28,8 +27,7 @@ class ChecklistItemsController < ApplicationController
 
   def update
     find_record do |checklist_item|
-      checklist_item.update_attributes(data: JSON.parse(params[:data]))
-      checklist_item.checklist.completed!
+      checklist_item.update_data params[:data]
       render json: checklist_item, serializer: ChecklistItemSerializer
     end
   end
