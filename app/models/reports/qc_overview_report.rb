@@ -10,7 +10,7 @@ module Reports
         'HPC thực', 'IC thực', 'Xanh', 'Vàng', 'Đỏ'
       ]
 
-      checklists = Checklist.where(checklist_type: 'qc')
+      checklists = Checklist.active.where(checklist_type: 'qc')
       set_data Mappers::QcOverviewReportMapper.map checklists
 
       super
