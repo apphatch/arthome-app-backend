@@ -1,5 +1,6 @@
 class Shop < ApplicationRecord
   include AttributeAliasable::QcShop
+  include StatusCacheable
 
   has_one :object_status_record, as: :subject
 
@@ -46,9 +47,7 @@ class Shop < ApplicationRecord
   end
 
   def completed? current_user
-    #HACK
-    status = self.object_status_record
-    return status.data[:incompleted_checklists_count] == 0 unless status.data[:incompleted_checklists_count].nil?
+    return @status.data[:incompleted_checklists_count] == 0 unless status.data[:incompleted_checklists_count].nil?
 
     if self.app_group == 'osa'
       checklists = self.checklists.active.osa.incompleted
@@ -59,14 +58,9 @@ class Shop < ApplicationRecord
     end
     checklists = self.checklists.active.qc.incompleted if self.app_group == 'qc'
 
-    status.data[:incompleted_checklists_count] = checklists.collect do |c|
-      c if (c.user == current_user && c.completed?)
-    end
-
-    checklists.each do |c|
-      next unless c.user == current_user
-      return false unless c.completed?
-    end
-    return true
+    @status.data[:incompleted_checklists_count] = checklists.count{ |c|
+      c.user == current_user && c.completed?
+    }
+    return @status.data[:incompleted_checklists_count] == 0
   end
 end

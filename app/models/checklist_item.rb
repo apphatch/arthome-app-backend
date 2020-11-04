@@ -27,6 +27,16 @@ class ChecklistItem < ApplicationRecord
     )
   end
 
+  def update_data data
+    self.update data: JSON.parse(data)
+    self.checklist.completed!
+  end
+
+  def display_template
+    template = "ChecklistItemDisplayTemplate::#{self.checklist_type.capitalize}".constantize.new self.data
+    return template.generate
+  end
+
   def checklist_type
     self.checklist.try(:checklist_type)
   end

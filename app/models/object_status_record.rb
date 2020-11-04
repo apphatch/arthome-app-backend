@@ -7,6 +7,12 @@ class ObjectStatusRecord < ApplicationRecord
     self.data[key.to_sym] = data.length
   end
 
+  def decrement_1 key
+    if self.data[key.to_sym].present?
+      self.data[key.to_sym] -= 1
+    end
+  end
+
   def empty? key
     return self.data[key].empty? if self.data[key].respond_to?(:empty?)
     return self.data[key] == 0

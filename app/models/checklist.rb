@@ -6,19 +6,29 @@ class Checklist < ApplicationRecord
   has_many :checklist_items
   has_many :stocks, through: :checklist_items
 
+
+
+
   scope :incompleted, -> { where(completed: false) }
   scope :dated, -> { where.not(date: nil) }
-  scope :undated, -> { where(date: nil) }
+  scope :undated, -> { where(date: nil, end_date: nil) }
   scope :today, -> { where(
     date: DateTime.now.beginning_of_day..DateTime.now.end_of_day
   )}
   scope :this_week, -> { where(
     date: DateTime.now.beginning_of_week..DateTime.now.end_of_week
   )}
-  scope :osa, -> { where(
-    checklist_type: ['oos', 'sos', 'osa weekend', 'npd', 'rental', 'promotion']
-  ) }
-  scope :qc, -> { where(checklist_type: 'qc') }
+
+
+
+
+  #used here and shops only
+  scope :osa, -> { where( app_group: 'osa') }
+  scope :qc, -> { where( app_group: 'qc') }
+
+
+
+
 
   def self.create params
     unless params[:checklist_type].present?
@@ -34,8 +44,6 @@ class Checklist < ApplicationRecord
     raise Exception.new 'must provide app header' if app.nil?
     if app.name == 'osa-mobile'
       checklists = self.active.osa.incompleted
-      #HACK
-      #checklists = checklists.undated + checklists.dated.today
       checklists = checklists.dated
       daily = checklists.today.where checklist_type: ['npd', 'promotion']
       weekly = checklists.this_week.where.not checklist_type: ['npd', 'promotion']
@@ -72,6 +80,11 @@ class Checklist < ApplicationRecord
     self.update completed: true if self.checklist_items.active.collect{
       |item| item.completed?
     }.all?
+
+    if self.completed?
+      status = self.shop.try(:object_status_record)
+      status.decrement_1 :incompleted_checklists_count if status.present?
+    end
   end
 
   def completed?
