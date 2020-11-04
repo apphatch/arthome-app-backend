@@ -50,13 +50,13 @@ class Shop < ApplicationRecord
     return @status.data[:incompleted_checklists_count] == 0 unless status.data[:incompleted_checklists_count].nil?
 
     if self.app_group == 'osa'
-      checklists = self.checklists.active.osa.incompleted
+      checklists = self.checklists.active.incompleted.where(app_group: 'osa')
       checklists = checklists.dated
       daily = checklists.today.where checklist_type: ['npd', 'promotion']
       weekly = checklists.this_week.where.not checklist_type: ['npd', 'promotion']
       checklists = daily + weekly
     end
-    checklists = self.checklists.active.qc.incompleted if self.app_group == 'qc'
+    checklists = self.checklists.active.incompleted.where(app_group: 'qc') if self.app_group == 'qc'
 
     @status.data[:incompleted_checklists_count] = checklists.count{ |c|
       c.user == current_user && c.completed?

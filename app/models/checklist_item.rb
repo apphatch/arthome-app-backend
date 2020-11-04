@@ -32,6 +32,7 @@ class ChecklistItem < ApplicationRecord
     self.checklist.completed!
   end
 
+  #TODO: WIP
   def display_template
     template = "ChecklistItemDisplayTemplate::#{self.checklist_type.capitalize}".constantize.new self.data
     return template.generate

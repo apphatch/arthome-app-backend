@@ -6,9 +6,6 @@ class Checklist < ApplicationRecord
   has_many :checklist_items
   has_many :stocks, through: :checklist_items
 
-
-
-
   scope :incompleted, -> { where(completed: false) }
   scope :dated, -> { where.not(date: nil) }
   scope :undated, -> { where(date: nil, end_date: nil) }
@@ -18,15 +15,6 @@ class Checklist < ApplicationRecord
   scope :this_week, -> { where(
     date: DateTime.now.beginning_of_week..DateTime.now.end_of_week
   )}
-
-
-
-
-  #used here and shops only
-  scope :osa, -> { where( app_group: 'osa') }
-  scope :qc, -> { where( app_group: 'qc') }
-
-
 
 
 
@@ -43,13 +31,13 @@ class Checklist < ApplicationRecord
   def self.index_for app
     raise Exception.new 'must provide app header' if app.nil?
     if app.name == 'osa-mobile'
-      checklists = self.active.osa.incompleted
+      checklists = self.active.incompleted.where(app_group: 'osa')
       checklists = checklists.dated
       daily = checklists.today.where checklist_type: ['npd', 'promotion']
       weekly = checklists.this_week.where.not checklist_type: ['npd', 'promotion']
       checklists = daily + weekly
     end
-    checklists = self.active.qc.incompleted if app.name == 'qc-mobile'
+    checklists = self.active.incompleted.where(app_group: 'qc') if app.name == 'qc-mobile'
     return checklists.compact
   end
 
