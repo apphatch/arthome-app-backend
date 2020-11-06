@@ -7,16 +7,22 @@ class Checklist < ApplicationRecord
   has_many :stocks, through: :checklist_items
 
   scope :incompleted, -> { where(completed: false) }
-  scope :dated, -> { where.not(date: nil) }
-  scope :undated, -> { where(date: nil, end_date: nil) }
+
+  scope :date_ranged, -> { where.not(date: nil).where.not(end_date: nil) }
+  scope :not_date_ranged, -> { where.not(date: nil).where(end_date: nil) }
+  scope :undated, -> { where(date: nil) }
+
   scope :today, -> { where(
     date: DateTime.now.beginning_of_day..DateTime.now.end_of_day
   )}
   scope :this_week, -> { where(
-    date: DateTime.now.beginning_of_week..DateTime.now.end_of_week
+    date: DateTime.now.beginning_of_week..DateTime.now.end_of_week,
+    end_date: DateTime.now.beginning_of_week..DateTime.now.end_of_week
   )}
-
-
+  scope :this_month, -> { where(
+    date: DateTime.now.beginning_of_month..DateTime.now.end_of_month,
+    end_date: DateTime.now.beginning_of_month..DateTime.now.end_of_month
+  )}
 
   def self.create params
     unless params[:checklist_type].present?
@@ -30,14 +36,14 @@ class Checklist < ApplicationRecord
 
   def self.index_for app
     raise Exception.new 'must provide app header' if app.nil?
+
     if app.name == 'osa-mobile'
       checklists = self.active.incompleted.where(app_group: 'osa')
-      checklists = checklists.dated
-      daily = checklists.today.where checklist_type: ['npd', 'promotion']
-      weekly = checklists.this_week.where.not checklist_type: ['npd', 'promotion']
+      daily = checklists.not_date_ranged.today.where checklist_type: ['npd', 'promotion']
+      weekly = checklists.date_ranged.this_week.where.not checklist_type: ['npd', 'promotion']
       checklists = daily + weekly
     end
-    checklists = self.active.incompleted.where(app_group: 'qc') if app.name == 'qc-mobile'
+    checklists = self.active.incompleted.not_date_ranged.where(app_group: 'qc') if app.name == 'qc-mobile'
     return checklists.compact
   end
 
@@ -69,10 +75,11 @@ class Checklist < ApplicationRecord
       |item| item.completed?
     }.all?
 
-    if self.completed?
-      status = self.shop.try(:object_status_record)
-      status.decrement_1 :incompleted_checklists_count if status.present?
-    end
+    #temporarily disable this
+    #if self.completed?
+    #  status = self.shop.try(:object_status_record)
+    #  status.decrement_1 :incompleted_checklists_count if status.present?
+    #end
   end
 
   def completed?
