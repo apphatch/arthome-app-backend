@@ -1,6 +1,6 @@
 class Shop < ApplicationRecord
   include AttributeAliasable::QcShop
-  include StatusCacheable
+  #include StatusCacheable
 
   has_one :object_status_record, as: :subject
 
