@@ -8,11 +8,11 @@ module Mappers
         shop.try(:name),
         user.try(:importing_id),
         user.try(:name),
-        checkin_checkout.note,
-        checkin_checkout.created_at.strftime("%d/%m/%Y"),
-        checkin_checkout.created_at.strftime("%H:%M"),
-        checkin_checkout.coords,
-        checkin_checkout.checkin? ? 'y' : 'n'
+        (checkin_checkout.note unless checkin_checkout.note == 'undefined'),
+        checkin_checkout.created_at,
+        checkin_checkout.coords[:longitude],
+        checkin_checkout.coords[:latitude],
+        checkin_checkout.checkin? ? 'checkin' : 'checkout'
       ]
     end
   end

@@ -9,7 +9,7 @@ module Exporters
     def export
       set_headers [
         'Outlet', 'Outlet Name', 'User ID', 'User Name',
-        'Note', 'Date', 'Time', 'Coords', 'Is checkin?'
+        'Note', 'Date', 'Long', 'Lat', 'Checkin/checkout'
       ]
       set_data Mappers::OsaCheckinCheckoutExportMapper.map(CheckinCheckout.active.filter{ |c|
         c.app_group == 'osa' &&

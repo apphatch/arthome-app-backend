@@ -8,7 +8,7 @@ class CheckinCheckout < ApplicationRecord
   belongs_to :checkin, class_name: "CheckinCheckout",
     foreign_key: "checkin_id", optional: true
 
-  serialize :coords, Array
+  serialize :coords, Hash
 
   scope :user, -> { where.not(user: nil) }
   scope :shop, -> { where(user: nil) }
