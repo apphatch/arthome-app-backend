@@ -1,12 +1,16 @@
 require 'base64'
 class ShopsController < ApplicationController
   def index
-    render json: Shop.active.order(:name), each_serializer: ShopSerializer, **serializer_options
+    render json: Shop.active.where(
+      app_group: @current_app.get(:app_group)
+    ).order(:name), each_serializer: ShopSerializer, **serializer_options
   end
 
   def index_by_user
     if current_user.present?
-      render json: current_user.shops.active.sort_by(&:name), each_serializer: ShopSerializer, **serializer_options
+      render json: current_user.shops.active.where(
+        app_group: @current_app.get(:app_group)
+      ).sort_by(&:name), each_serializer: ShopSerializer, **serializer_options
     else
       head 400
     end
