@@ -17,6 +17,7 @@ module AppRouters
       use Exporters::PromotionsExporter, as: :promotions_exporter
       use Exporters::OsaWeekendExporter, as: :osa_weekend_exporter
       use Exporters::RentalExporter, as: :rental_exporter
+      use Exporters::OsaCheckinCheckoutExporter, as: :checkin_checkout_exporter
     end
   end
 end

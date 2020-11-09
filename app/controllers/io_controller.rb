@@ -9,6 +9,7 @@ class IoController < ApplicationController
     promotions: :promotions_exporter,
     weekend: :osa_weekend_exporter,
     rental: :rental_exporter,
+    checkin_checkout: :checkin_checkout_exporter,
   }
 
   @exporters.each do |k, v|
