@@ -45,6 +45,7 @@ yarn-debug.log*
 .DS_Store
 passenger.8080.pid.lock
 dumb.rdb
+tags
 
 # Ignore ansible
 ansible/
