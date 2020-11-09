@@ -11,9 +11,9 @@ module Exporters
         'Outlet', 'Outlet Name', 'Category', 'Sub category',
         'Length of Unilever', 'Length of Competitor', 'Updated At', 'Error'
       ]
-      set_data Mappers::SosExportMapper.map(ChecklistItem.active.filter{ |c|
+      set_data Mappers::SosExportMapper.map(ChecklistItem.active.includes(:checklist).filter{ |c|
         c.checklist.checklist_type == 'sos' &&
-          date_filter(c, @params) && yearweek_filter(c, @params)
+          date_filter(c.checklist, @params) && yearweek_filter(c.checklist, @params)
       }).compact
 
       super

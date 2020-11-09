@@ -12,9 +12,9 @@ module Exporters
         'Rental Type', 'Sub category',
         'Available', 'Inline', 'Png', 'Updated At', 'Error'
       ]
-      set_data Mappers::RentalExportMapper.map(ChecklistItem.active.filter{ |c|
+      set_data Mappers::RentalExportMapper.map(ChecklistItem.active.includes(:checklist).filter{ |c|
         c.checklist.checklist_type == 'rental' &&
-          date_filter(c, @params) && yearweek_filter(c, @params)
+          date_filter(c.checklist, @params) && yearweek_filter(c.checklist, @params)
       }).compact
 
       super

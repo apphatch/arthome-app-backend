@@ -12,9 +12,9 @@ module Exporters
         'ULV code', 'Category', 'Result', 'Updated At', 'Error'
       ]
 
-      set_data Mappers::OsaWeekendExportMapper.map(ChecklistItem.active.filter{ |c|
+      set_data Mappers::OsaWeekendExportMapper.map(ChecklistItem.active.includes(:checklist).filter{ |c|
         c.checklist.checklist_type == 'osa weekend' &&
-          date_filter(c, @params) && yearweek_filter(c, @params)
+          date_filter(c.checklist, @params) && yearweek_filter(c.checklist, @params)
       }).compact
 
       super

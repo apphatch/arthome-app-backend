@@ -12,9 +12,9 @@ module Exporters
         'Địa Chỉ', 'Audit', 'U/C', 'Package', 'Category', 'Product Group',
         'SKU Name', 'SKU', 'NSX or HSD', 'Lỗi', 'Green', 'Yellow', 'Red', 'Image'
       ]
-      set_data Mappers::QcExportMapper.map ChecklistItem.active.filter{ |c|
+      set_data Mappers::QcExportMapper.map ChecklistItem.active.includes(:checklist).filter{ |c|
         c.checklist.checklist_type == 'qc' &&
-          date_filter(c, @params)
+          date_filter(c.checklist, @params)
       }
       set_flatten_level 2
 
