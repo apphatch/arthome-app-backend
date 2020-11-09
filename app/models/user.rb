@@ -129,7 +129,7 @@ class User < ApplicationRecord
   end
 
   def clear_checklists!
-    self.checklists.each do |checklist|
+    self.checklists.find_each do |checklist|
       checklist.checklist_items.each do |item|
         next if item.data.nil?
         item.update data: nil
@@ -139,7 +139,7 @@ class User < ApplicationRecord
   end
 
   def clear_checkin_checkouts!
-    self.checkin_checkouts.each do |cico|
+    self.checkin_checkouts.find_each do |cico|
       cico.deleted!
     end
   end
