@@ -1,4 +1,4 @@
-class ShopSerializer < ActiveModel::Serializer
+class ShopSerializer < ApplicationSerializer
   attributes :id, :name, :importing_id, :shop_type,
     :full_address, :city, :district, :completed
 

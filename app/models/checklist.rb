@@ -13,15 +13,15 @@ class Checklist < ApplicationRecord
   scope :undated, -> { where(date: nil) }
 
   scope :today, -> { where(
-    date: DateTime.now.beginning_of_day..DateTime.now.end_of_day
+    date: current_time.beginning_of_day..current_time.end_of_day
   )}
   scope :this_week, -> { where(
-    date: DateTime.now.beginning_of_week..DateTime.now.end_of_week,
-    end_date: DateTime.now.beginning_of_week..DateTime.now.end_of_week
+    date: current_time.beginning_of_week..current_time.end_of_week,
+    end_date: current_time.beginning_of_week..current_time.end_of_week
   )}
   scope :this_month, -> { where(
-    date: DateTime.now.beginning_of_month..DateTime.now.end_of_month,
-    end_date: DateTime.now.beginning_of_month..DateTime.now.end_of_month
+    date: current_time.beginning_of_month..current_time.end_of_month,
+    end_date: current_time.beginning_of_month..current_time.end_of_month
   )}
 
   def self.create params

@@ -1,4 +1,4 @@
-class ChecklistItemSerializer < ActiveModel::Serializer
+class ChecklistItemSerializer < ApplicationSerializer
   attributes :id, :data, :stock_name,
     :category, :sub_category, :mechanic, :quantity, :barcode,
     :rental_type, :photo, :role

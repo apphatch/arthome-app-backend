@@ -1,4 +1,4 @@
-class ChecklistSerializer < ActiveModel::Serializer
+class ChecklistSerializer < ApplicationSerializer
   attributes :id, :reference, :template, :checklist_type
 
   has_many :checklist_items, each_serializer: ChecklistItemSerializer

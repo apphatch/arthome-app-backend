@@ -1,4 +1,4 @@
-class PhotoSerializer < ActiveModel::Serializer
+class PhotoSerializer < ApplicationSerializer
   attributes :id, :time, :name, :image
 
   def image
