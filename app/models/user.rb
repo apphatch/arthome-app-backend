@@ -73,10 +73,12 @@ class User < ApplicationRecord
         app_group: params[:app_group]
       )
       record.save
-      #HACK: refac later
+      #HACK: refac later as this pertains to osa project only
       if params[:incomplete] != 'false'
-        checklists = self.checklists.where shop: shop
-        checklists = checklists.undated + checklists.dated.today
+        checklists = self.checklists.active.where(
+          shop: shop
+        ).not_date_ranged.today.includes(:checklist_items)
+
         checklists.each do |c|
           c.checklist_items.each do |ci|
             ci.update data: {error: "cửa hàng đóng cửa"}
