@@ -53,12 +53,12 @@
         ]
     },
     "HSD": {
-        "type": "date",
+        "type": "input",
         "value": [],
         "required": false
     },
     "NSX": {
-        "type": "date",
+        "type": "input",
         "value": [],
         "required": false
     },
