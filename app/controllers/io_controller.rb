@@ -28,7 +28,8 @@ class IoController < ApplicationController
         f = File.open "export/#{k.to_s}-export.xls", 'rb'
         enc = Base64.encode64 f.read
         send_data enc, type: :xls, filename: "#{k.to_s}-export.xls"
-      rescue
+      rescue => e
+        Rails.logger.warn e
         head 500
       end
     end
@@ -64,7 +65,8 @@ class IoController < ApplicationController
           importer.import
         end
         head 201
-      rescue
+      rescue => e
+        Rails.logger.warn e
         head 500
       end
     end
