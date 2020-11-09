@@ -37,14 +37,9 @@ class Checklist < ApplicationRecord
   def self.index_for app
     raise Exception.new 'must provide app header' if app.nil?
 
-    if app.name == 'osa-mobile'
-      checklists = self.active.incompleted.where(app_group: 'osa')
-      daily = checklists.not_date_ranged.today.where checklist_type: ['npd', 'promotion']
-      weekly = checklists.date_ranged.this_week.where.not checklist_type: ['npd', 'promotion']
-      checklists = daily + weekly
-    end
+    checklists = self.active.incompleted.not_date_ranged.where(app_group: 'osa').today if app.name == 'osa-mobile'
     checklists = self.active.incompleted.not_date_ranged.where(app_group: 'qc') if app.name == 'qc-mobile'
-    return checklists.compact
+    return checklists
   end
 
   def template
