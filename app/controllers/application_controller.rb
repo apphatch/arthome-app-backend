@@ -31,7 +31,6 @@ class ApplicationController < ActionController::Base
     @current_app = AppRouters::BaseFactory.make request.headers['App'].downcase
     params[:app] = @current_app.get(:app)
     params[:app_group] = @current_app.get(:app_group)
-    IoController.generate_api @current_app
   end
 
   def check_user_is_logged_in

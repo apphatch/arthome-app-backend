@@ -91,36 +91,6 @@ Rails.application.routes.draw do
     end
   end
 
-  get 'io/:endpoint', to: "io##{endpoint}", as: :export_route
-
-  resources :io do
-    collection do
-      #exporters = [
-        #'oos_export',
-        #'sos_export',
-        #'npd_export',
-        #'promotion_export',
-        #'osa_weekend_export',
-        #'rental_export',
-        #'checkin_checkout_export',
-        #'qc_export'
-      #]
-      #exporters.each do |v|
-        #get v
-      #end
-
-      importers = [
-        'user_import',
-        'shop_import',
-        'stock_import',
-        'checklist_import',
-        'checklist_item_import',
-        'master_import',
-        'photo_import',
-      ]
-      importers.each do |v|
-        post v
-      end
-    end
-  end
+  get 'io/:export_endpoint', to: "io#export"
+  post 'io/:import_endpoint', to: "io#import"
 end
