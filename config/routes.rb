@@ -101,6 +101,7 @@ Rails.application.routes.draw do
         'osa_weekend_export',
         'rental_export',
         'checkin_checkout_export',
+        'qc_export'
       ]
       exporters.each do |v|
         get v

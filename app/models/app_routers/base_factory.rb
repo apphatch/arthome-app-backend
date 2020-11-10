@@ -32,6 +32,7 @@ module AppRouters
 
     def declare
       #do not raise exception, by default use self if no definitions given
+      raise Exception 'you must declare mappings for each app'
     end
 
     def use klass, options
