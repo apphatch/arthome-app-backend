@@ -23,6 +23,10 @@ class Checklist < ApplicationRecord
     date: current_time.beginning_of_month..current_time.end_of_month,
     end_date: current_time.beginning_of_month..current_time.end_of_month
   )}
+  scope :this_month, -> { where(
+    date: current_time.beginning_of_month..current_time.end_of_month,
+    end_date: current_time.beginning_of_month..current_time.end_of_month
+  )}
 
   def self.create params
     unless params[:checklist_type].present?
@@ -38,7 +42,7 @@ class Checklist < ApplicationRecord
     raise Exception.new 'must provide app header' if app.nil?
 
     checklists = self.active.where(app_group: 'osa').not_date_ranged.today.incompleted if app.name == 'osa-mobile'
-    checklists = self.active.where(app_group: 'qc').date_ranged.this_week.incompleted if app.name == 'qc-mobile'
+    checklists = self.active.where(app_group: 'qc').date_ranged.this_month.incompleted if app.name == 'qc-mobile'
     return checklists
   end
 
