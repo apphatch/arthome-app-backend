@@ -53,17 +53,13 @@ class Shop < ApplicationRecord
     #temporarily disable caching as it needs more thought
     #return @status.data[:incompleted_checklists_count] == 0 unless status.data[:incompleted_checklists_count].nil?
 
-    checklists = self.checklists.active.incompleted.not_date_ranged.where(app_group: 'osa').today if self.app_group == 'osa'
-    checklists = self.checklists.active.incompleted.not_date_ranged.where(app_group: 'qc') if self.app_group == 'qc'
+    checklists = self.checklists.active.where(app_group: 'osa', user: current_user).not_date_ranged.today.incompleted if self.app_group == 'osa'
+    checklists = self.checklists.active.where(app_group: 'qc', user: current_user).date_ranged.this_week.incompleted if self.app_group == 'qc'
 
     #@status.data[:incompleted_checklists_count] = checklists.count{ |c|
     #  c.user == current_user && c.completed?
     #}
-    checklists.each do |c|
-      next if c.user != current_user
-      return false unless c.completed?
-    end
-    return true
+    return checklists.empty?
     #return @status.data[:incompleted_checklists_count] == 0
   end
 end
