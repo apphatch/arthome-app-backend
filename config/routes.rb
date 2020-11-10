@@ -91,21 +91,23 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'io/:endpoint', to: "io##{endpoint}", as: :export_route
+
   resources :io do
     collection do
-      exporters = [
-        'oos_export',
-        'sos_export',
-        'npd_export',
-        'promotion_export',
-        'osa_weekend_export',
-        'rental_export',
-        'checkin_checkout_export',
-        'qc_export'
-      ]
-      exporters.each do |v|
-        get v
-      end
+      #exporters = [
+        #'oos_export',
+        #'sos_export',
+        #'npd_export',
+        #'promotion_export',
+        #'osa_weekend_export',
+        #'rental_export',
+        #'checkin_checkout_export',
+        #'qc_export'
+      #]
+      #exporters.each do |v|
+        #get v
+      #end
 
       importers = [
         'user_import',

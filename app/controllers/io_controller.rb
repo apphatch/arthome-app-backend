@@ -4,7 +4,9 @@ class IoController < ApplicationController
   @current_app.object_mappings.each do |k, _|
     obj_name = k.to_s
     next unless obj_name.match(/exporter$/) #enforce xxx_exporter endpoint
-    define_method "#{obj_name.gsub('exporter', 'export')}".to_sym do
+    endpoint = obj_name.gsub('exporter', 'export')
+    export_route endpoint: endpoint
+    define_method "#{endpoint}".to_sym do
       begin
         export_file = "export/#{obj_name}-results.xls"
         options = {
