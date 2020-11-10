@@ -21,7 +21,10 @@ class Shop < ApplicationRecord
         note: params[:note],
         is_checkin: false,
         checkin: last_record,
-        coords: params[:coords],
+        coords: {
+          longitude: params[:longitude],
+          latitude: params[:latitude],
+        },
         app_group: params[:app_group]
       )
       record.save validate: false
