@@ -1,6 +1,6 @@
 module AppRouters
   class BaseFactory
-    attr_accessor :name
+    attr_accessor :name, :object_mappings
 
     def initialize
       @object_mappings = {
@@ -30,12 +30,12 @@ module AppRouters
       return app_obj
     end
 
-    def use klass, options
-      @object_mappings[options[:as]] = klass
-    end
-
     def declare
       #do not raise exception, by default use self if no definitions given
+    end
+
+    def use klass, options
+      @object_mappings[options[:as]] = klass
     end
 
     def get object_klass

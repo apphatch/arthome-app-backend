@@ -93,30 +93,30 @@ Rails.application.routes.draw do
 
   resources :io do
     collection do
-      exporters = {
-        oos: :oos_exporter,
-        sos: :sos_exporter,
-        npd: :npd_exporter,
-        promotions: :promotions_exporter,
-        weekend: :osa_weekend_exporter,
-        rental: :rental_exporter,
-        checkin_checkout: :checkin_checkout_exporter,
-      }
-      exporters.each do |k, v|
-        get "export_osa_#{k.to_s}"
+      exporters = [
+        'oos_export',
+        'sos_export',
+        'npd_export',
+        'promotion_export',
+        'osa_weekend_export',
+        'rental_export',
+        'checkin_checkout_export',
+      ]
+      exporters.each do |v|
+        get v
       end
 
-      importers = {
-        users: :user_importer,
-        shops: :shop_importer,
-        stocks: :stock_importer,
-        checklists: :checklist_importer,
-        checklist_items: :checklist_item_importer,
-        full: :master_importer,
-        photos: :photo_importer
-      }
-      importers.each do |k, v|
-        post "import_osa_#{k.to_s}"
+      importers = [
+        'user_import',
+        'shop_import',
+        'stock_import',
+        'checklist_import',
+        'checklist_item_import',
+        'master_import',
+        'photo_import',
+      ]
+      importers.each do |v|
+        post v
       end
     end
   end
