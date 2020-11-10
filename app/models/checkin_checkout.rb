@@ -13,6 +13,14 @@ class CheckinCheckout < ApplicationRecord
   scope :user, -> { where.not(user: nil) }
   scope :shop, -> { where(user: nil) }
 
+  def longitude
+    return self.coords[:longitude]
+  end
+
+  def latitude
+    return self.coords[:latitude]
+  end
+
   def checkin?
     return self.is_checkin
   end

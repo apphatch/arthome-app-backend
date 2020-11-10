@@ -1,7 +1,7 @@
 class CheckinCheckoutSerializer < ApplicationSerializer
   attributes :id, :time, :note, :is_checkin,
     :user_checkout, :shop_checkouts, :shop_checkout_photos,
-    :created_at
+    :created_at, :longitude, :latitude
 
   has_one :user
   #TODO fix this so it takes a proper serializer
