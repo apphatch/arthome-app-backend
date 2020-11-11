@@ -30,6 +30,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'passenger'
 # Use jwt for authentication
 gem 'jwt'
+# Use Amazon s3
+gem 'aws-sdk-s3', require: false
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
