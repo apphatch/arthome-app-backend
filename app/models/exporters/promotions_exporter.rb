@@ -7,8 +7,8 @@ module Exporters
     end
 
     def export
-      @params[:date_from] = DateTime.now.beginning_of_day if @params[:date_from].nil?
-      @params[:date_to] = DateTime.now.end_of_day if @params[:date_to].nil?
+      @params[:date_from] = DateTime.now.beginning_of_day if @params[:date_from] == 'undefined'
+      @params[:date_to] = DateTime.now.end_of_day if @params[:date_to] == 'undefined'
 
       set_headers [
         'Outlet', 'Outlet Name', 'Barcode', 'VN Descriptions',
