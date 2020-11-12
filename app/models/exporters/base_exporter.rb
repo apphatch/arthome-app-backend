@@ -1,11 +1,13 @@
 require 'spreadsheet'
 
 module Exporters
+  include HashNormalizable
+
   class BaseExporter
     def initialize params={}
+      @params = normalize params
       @output_file = params[:output]
       @app = params[:app]
-      @params = params
       @max_flatten_level = 1
     end
 

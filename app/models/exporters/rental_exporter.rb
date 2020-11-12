@@ -7,8 +7,8 @@ module Exporters
     end
 
     def export
-      @params[:date_from] = DateTime.now.beginning_of_day if @params[:date_from] == 'undefined'
-      @params[:date_to] = DateTime.now.end_of_day if @params[:date_to] == 'undefined'
+      @params[:date_from] = DateTime.now.beginning_of_day unless @params[:date_from].present?
+      @params[:date_to] = DateTime.now.end_of_day unless @params[:date_to].present?
 
       set_headers [
         'Outlet', 'Outlet Name', 'Rental ID',
