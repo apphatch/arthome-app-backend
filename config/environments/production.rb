@@ -74,8 +74,9 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # Limit logs to 20Mb, cycling between 2 files
-  config.logger = ActiveSupport::Logger.new(config.log_file, 2, 20*1024*1024)
+  # TODO: Limit logs to 20Mb, cycling between 2 files
+  #config.logger = ActiveSupport::Logger.new(config.log_file, 2, 20*1024*1024)
+
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
