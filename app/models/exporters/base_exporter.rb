@@ -1,9 +1,10 @@
 require 'spreadsheet'
 
 module Exporters
-  include HashNormalizable
 
   class BaseExporter
+    include HashNormalizable
+
     def initialize params={}
       @params = normalize params
       @output_file = params[:output]
