@@ -7,7 +7,6 @@ module Exporters
     end
 
     def export
-      #may need to add timezone support
       @params[:date_from] = DateTime.now.beginning_of_week if @params[:date_from].nil?
       @params[:date_to] = DateTime.now.end_of_week if @params[:date_to].nil?
 
