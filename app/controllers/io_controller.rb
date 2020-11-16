@@ -1,13 +1,15 @@
 require 'base64'
 
 class IoController < ApplicationController
+  include Nameable
+
   def export
     begin
-      export_file = "export/#{params[:export_endpoint]}-results.xls"
+      file_name = "export/" << generate_salted_name([params[:export_endpoint], 'results'], '.xls')
       options = {
         app: @current_app.get(:app),
         app_group: @current_app.get(:app_group),
-        output: export_file,
+        output: file_name,
         yearweek: params[:yearweek],
         date_from: params[:date_from],
         date_to: params[:date_to],
@@ -17,9 +19,9 @@ class IoController < ApplicationController
       exporter = @current_app.get(exporter_name.to_sym).new options
       exporter.export
 
-      f = File.open export_file, 'rb'
+      f = File.open file_name, 'rb'
       enc = Base64.encode64 f.read
-      send_data enc, type: :xls, filename: export_file
+      send_data enc, type: :xls, filename: file_name
 
     rescue => e
       Rails.logger.warn e
