@@ -17,7 +17,11 @@ class IoController < ApplicationController
 
       exporter_name = params[:export_endpoint].to_s + 'er'
       exporter = @current_app.get(exporter_name.to_sym).new options
-      exporter.export
+      photo_urls = exporter.export #assignment to work for photo exports only at the moment
+
+      if params[:export_endpoint] == 'photo_export'
+        render json: photo_urls and return
+      end
 
       f = File.open file_name, 'rb'
       enc = Base64.encode64 f.read
