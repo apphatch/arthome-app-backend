@@ -18,7 +18,7 @@ module AppRouters
       use Exporters::OsaWeekendExporter, as: :osa_weekend_exporter
       use Exporters::RentalExporter, as: :rental_exporter
       use Exporters::OsaCheckinCheckoutExporter, as: :checkin_checkout_exporter
-      use Exporters::OsaOsaPhotosExporter, as: :photo_exporter
+      use Exporters::OsaPhotosExporter, as: :photo_exporter
     end
   end
 end
