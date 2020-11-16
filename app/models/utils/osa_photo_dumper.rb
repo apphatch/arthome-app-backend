@@ -6,7 +6,7 @@ module Utils
     def self.dump_to_disk photos
       puts 'dumping photos...'
       root = './photo_dump'
-      raise Exception "#{root} doesn't exist" unless Dir.exist?(root)
+      Dir.mkdir(root, 777) unless Dir.exist?(root)
 
       photos.find_each do |photo|
         checkin_checkout = photo.dbfile
