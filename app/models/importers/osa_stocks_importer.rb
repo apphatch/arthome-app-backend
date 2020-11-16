@@ -47,17 +47,17 @@ module Importers
       end
     end
 
-    def self.template
+    def self.template file
       super [
         'ULV Code', 'VN Descriptions', 'barcode', 'role', 'Outlet',
         'Category', 'Sub Category', 'Division'
-      ]
+      ], file
     end
 
-    def self.template_rental
+    def self.template_rental file
       super [
         'Outlet', 'Outlet Name', 'Rental ID', 'Sub Category', 'Rental Type'
-      ]
+      ], file
     end
   end
 end

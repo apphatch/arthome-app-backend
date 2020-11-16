@@ -26,11 +26,11 @@ module Importers
       end
     end
 
-    def self.template
+    def self.template file
       super [
         'Outlet', 'Outlet Name', 'Outlet classification',
         'Outlet Address', 'City', 'District', 'OSA Code'
-      ]
+      ], file
     end
   end
 end

@@ -55,6 +55,25 @@ class IoController < ApplicationController
     end
   end
 
+  def import_template
+    begin
+      template_file = generate_name([params[:import_template_endpoint], 'template'], '.xls')
+
+      importer_name = params[:import_template_endpoint].to_s + 'er'
+      importer_klass = @current_app.get(importer_name.to_sym)
+      # REFAC this when possible
+      importer_klass.template template_file
+      importer_klass.template_rental template_file if params[:rental]
+
+      f = File.open template_file, 'rb'
+      enc = Base64.encode64 f.read
+      send_data enc, type: :xls, filename: template_file
+    rescue => e
+      Rails.logger.warn e
+      head 500
+    end
+  end
+
   def permitted_params
     return params.permit(:yearweek, :date_from, :date_to)
   end

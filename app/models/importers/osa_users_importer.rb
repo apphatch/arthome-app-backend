@@ -22,11 +22,11 @@ module Importers
       super
     end
 
-    def self.template
+    def self.template file
       super [
         'importing_id', 'username', 'password',
         'name', 'role'
-      ]
+      ], file
     end
   end
 end

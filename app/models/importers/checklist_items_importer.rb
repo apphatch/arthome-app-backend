@@ -45,12 +45,12 @@ module Importers
       end
     end
 
-    def self.template
+    def self.template file
       super [
         'Type', 'YearWeek', 'Date', 'OSA Code', 'Outlet',
         'ULV code', 'VN Descriptions', 'Category', 'Brand',
         'Barcode', 'Stock'
-      ]
+      ], file
     end
   end
 end

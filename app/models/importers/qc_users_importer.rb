@@ -20,11 +20,11 @@ module Importers
       super
     end
 
-    def self.template
+    def self.template file
       super [
         'US_ID', 'US_Username', 'password',
         'US_Name', 'role'
-      ]
+      ], file
     end
   end
 end

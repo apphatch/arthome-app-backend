@@ -186,11 +186,12 @@ module Importers
       end
     end
 
-    def self.template headers
+    def self.template headers, file=nil
+      raise Exception 'provide a file path' if file.nil?
       book = Spreadsheet::Workbook.new
       sheet = book.create_worksheet
       sheet.row(0).concat(headers)
-      book.write 'export/import-template.xls'
+      book.write "export/" << file
     end
   end
 end
