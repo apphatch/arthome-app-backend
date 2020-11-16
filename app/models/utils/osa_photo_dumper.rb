@@ -20,7 +20,8 @@ module Utils
         Dir.mkdir(File.join(root, time_repr), 777) unless Dir.exist?(File.join(root, time_repr))
         Dir.mkdir(File.join(root, time_repr, shop_repr), 777) unless Dir.exist?(File.join(root, time_repr, shop_repr))
 
-        f = File.open File.join(root, time_repr, shop_repr), 'wb'
+        file_name = ["id#{photo.id.to_s}", shop_repr, time_repr].join('-') << '.jpg'
+        f = File.open File.join(root, time_repr, shop_repr, file_name), 'wb'
         f.write photo.image.download
         f.close()
       end
