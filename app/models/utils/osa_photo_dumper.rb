@@ -17,8 +17,8 @@ module Utils
         ].join('-')
 
         #time/shop structure
-        Dir.mkdir(File.join(root, time_repr), 000) unless Dir.exist?(File.join(root, time_repr))
-        Dir.mkdir(File.join(root, time_repr, shop_repr), 000) unless Dir.exist?(File.join(root, time_repr, shop_repr))
+        Dir.mkdir(File.join(root, time_repr), 777) unless Dir.exist?(File.join(root, time_repr))
+        Dir.mkdir(File.join(root, time_repr, shop_repr), 777) unless Dir.exist?(File.join(root, time_repr, shop_repr))
 
         f = File.open File.join(root, time_repr, shop_repr), 'wb'
         f.write photo.image.download
