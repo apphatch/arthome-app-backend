@@ -22,7 +22,7 @@ module Utils
         else
           new_cl.update! attributes
         end
-        self.clone_checklist_items cl, new_cl
+        self.clone_checklist_items_from cl, to: new_cl
       end
     end
 
