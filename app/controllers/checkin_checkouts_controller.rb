@@ -1,7 +1,8 @@
 class CheckinCheckoutsController < ApplicationController
   def index
     @records = CheckinCheckout.user.active
-    @records = @records.filter{|c| c.checkin?} if @current_app.name == 'osa-webportal'
+    #TODO: refac this into model, it has no business being here
+    @records = @records.this_month.filter{|c| c.checkin?} if @current_app.name == 'osa-webportal'
     render json: @records, each_serializer: CheckinCheckoutSerializer
   end
 
