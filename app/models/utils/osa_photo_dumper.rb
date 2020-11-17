@@ -4,7 +4,7 @@ module Utils
     end
 
     def self.dump_to_disk photos
-      puts 'dumping photos...'
+      puts 'dumping photos, this may take a while...'
       root = './photo_dump'
       Dir.mkdir(root, 777) unless Dir.exist?(root)
 
