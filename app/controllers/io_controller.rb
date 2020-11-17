@@ -5,7 +5,7 @@ class IoController < ApplicationController
 
   def export
     begin
-      file_name = "export/" << generate_salted_name([params[:export_endpoint], 'results'], '.xls')
+      file_name = "export/" << generate_salted_name([params[:export_endpoint], 'results'], extension: '.xls')
       options = {
         app: @current_app.get(:app),
         app_group: @current_app.get(:app_group),
@@ -61,7 +61,7 @@ class IoController < ApplicationController
 
   def import_template
     begin
-      template_file = generate_name([params[:import_template_endpoint], 'template'], '.xls')
+      template_file = generate_name [params[:import_template_endpoint], 'template'], extension: '.xls'
 
       importer_name = params[:import_template_endpoint].to_s + 'er'
       importer_klass = @current_app.get(importer_name.to_sym)
