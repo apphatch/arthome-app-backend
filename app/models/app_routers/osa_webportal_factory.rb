@@ -19,6 +19,8 @@ module AppRouters
       use Exporters::RentalExporter, as: :rental_exporter
       use Exporters::OsaCheckinCheckoutExporter, as: :checkin_checkout_exporter
       use Exporters::OsaPhotoExporter, as: :photo_exporter
+
+      use Locality::VnLocality, as: :locale
     end
   end
 end
