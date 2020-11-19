@@ -193,5 +193,9 @@ module Importers
       sheet.row(0).concat(headers)
       book.write "export/" << file
     end
+
+    def inspect
+      return @header_mappings
+    end
   end
 end

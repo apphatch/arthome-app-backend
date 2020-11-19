@@ -18,5 +18,13 @@ module Reports
     def generate
       return [@headers] + @data
     end
+
+    def inspect
+      return {
+        headers: @headers,
+        date_from: @date_from,
+        date_to: @date_to
+      }
+    end
   end
 end

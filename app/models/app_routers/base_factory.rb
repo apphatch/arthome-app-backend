@@ -6,6 +6,7 @@ module AppRouters
       @object_mappings = {
         app: nil,
         app_group: nil,
+        locale: Locality::BaseLocality,
         user_importer: Importers::BaseImporter,
         shop_importer: Importers::BaseImporter,
         stock_importer: Importers::BaseImporter,
@@ -41,6 +42,10 @@ module AppRouters
 
     def get object_klass
       return @object_mappings[object_klass]
+    end
+
+    def inspect
+      return @object_mappings
     end
   end
 end

@@ -4,8 +4,10 @@ module Locality
 
     def initialize params={}
       @definition = {
-        locale: 'VN',
-        full_locale: 'Vietnam'
+        code: 'VN',
+        name: 'Vietnam',
+        currency: 'VND',
+        currency_factor: 1000,
       }
     end
 
@@ -19,6 +21,10 @@ module Locality
 
     def get object_symbol
       return @definition[object_symbol]
+    end
+
+    def inspect
+      return @definition
     end
   end
 end
