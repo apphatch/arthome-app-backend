@@ -11,7 +11,7 @@ module Mappers
         stock.try(:sub_category),
         checklist_item.data["Length of Unilever"],
         checklist_item.data["Length of Competitor"],
-        checklist_item.updated_at,
+        checklist_item.updated_at.in_time_zone('Bangkok'),
         checklist_item.data[:error]
       ]
     end

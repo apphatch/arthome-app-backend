@@ -9,7 +9,7 @@ module Mappers
         user.try(:importing_id),
         user.try(:name),
         (checkin_checkout.note unless checkin_checkout.note == 'undefined'),
-        checkin_checkout.created_at,
+        checkin_checkout.created_at.in_time_zone('Bangkok'), #TODO: refac use locality
         checkin_checkout.coords[:longitude],
         checkin_checkout.coords[:latitude],
         checkin_checkout.checkin? ? 'checkin' : 'checkout'
