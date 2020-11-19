@@ -23,10 +23,6 @@ class Checklist < ApplicationRecord
     date: current_time.beginning_of_month..current_time.end_of_month,
     end_date: current_time.beginning_of_month..current_time.end_of_month
   )}
-  scope :this_month, -> { where(
-    date: current_time.beginning_of_month..current_time.end_of_month,
-    end_date: current_time.beginning_of_month..current_time.end_of_month
-  )}
 
   def self.create params
     unless params[:checklist_type].present?
