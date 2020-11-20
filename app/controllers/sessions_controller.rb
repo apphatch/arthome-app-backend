@@ -1,4 +1,5 @@
 class SessionsController < ApplicationController
+  skip_before_action :set_default_params, only: [:create, :destroy]
   skip_before_action :check_user_is_logged_in, only: [:create, :destroy]
 
   def new
@@ -21,11 +22,6 @@ class SessionsController < ApplicationController
       user.update failed_login_attempts: user.failed_login_attempts + 1
       head 401
     end
-  end
-
-  def keep_alive
-    #do nothing
-    head 200
   end
 
   def destroy

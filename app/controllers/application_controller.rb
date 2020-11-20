@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   skip_before_action :verify_authenticity_token
   #protect_from_forgery with: :exception
 
-  before_action :set_current_app
+  before_action :set_default_params
   before_action :check_user_is_logged_in
 
   def auth_info
@@ -26,11 +26,13 @@ class ApplicationController < ActionController::Base
     return @current_user
   end
 
-  def set_current_app
+  def set_default_params
     head 404 and return unless request.headers['App'].present?
     @current_app = AppRouters::BaseFactory.make request.headers['App'].downcase
+
     params[:app] = @current_app.get(:app)
     params[:app_group] = @current_app.get(:app_group)
+    params[:locale] = Locality::BaseLocality.make @current_user.locale
   end
 
   def check_user_is_logged_in
