@@ -17,7 +17,9 @@ module Mappers
         checklist_item.data["Void"],
         checklist_item.data["Promotion"],
         checklist_item.data["Note"],
-        checklist_item.updated_at.in_time_zone('Bangkok'),
+        @locale.adjust_for_timezone(
+          checklist_item.updated_at
+        ),
         checklist_item.data[:error]
       ]
     end

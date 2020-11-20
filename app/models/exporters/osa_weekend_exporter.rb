@@ -15,7 +15,8 @@ module Exporters
         'ULV code', 'Category', 'Result', 'Updated At', 'Error'
       ]
 
-      set_data Mappers::OsaWeekendExportMapper.map(ChecklistItem.active.includes(:checklist).filter{ |c|
+      mapper = Mappers::OsaWeekendExportMapper.new locale: @locale
+      set_data mapper.map(ChecklistItem.active.includes(:checklist).filter{ |c|
         c.checklist.checklist_type == 'osa weekend' &&
           date_filter(c.checklist, @params) && yearweek_filter(c.checklist, @params)
       }).compact

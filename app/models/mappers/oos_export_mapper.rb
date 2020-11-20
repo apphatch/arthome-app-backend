@@ -1,6 +1,6 @@
 module Mappers
   class OosExportMapper < BaseMapper
-    def self.apply_each checklist_item
+    def apply_each checklist_item
       return nil if checklist_item.data.empty?
       shop = checklist_item.checklist.try(:shop)
       stock = checklist_item.stock
@@ -15,7 +15,9 @@ module Mappers
         checklist_item.data["Available"],
         checklist_item.data["Void"],
         checklist_item.data["Note"],
-        checklist_item.updated_at.in_time_zone('Bangkok'),
+        @locale.adjust_for_timezone(
+          checklist_item.updated_at
+        ),
         checklist_item.data[:error]
       ]
     end

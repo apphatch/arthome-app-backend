@@ -8,6 +8,13 @@ module Locality
         name: 'Vietnam',
         currency: 'VND',
         currency_factor: 1000,
+        timezone: 'Bangkok'
+      }
+    end
+
+    def self.localities
+      return {
+        vn: Locality::VnLocality
       }
     end
 
@@ -25,6 +32,16 @@ module Locality
 
     def inspect
       return @definition
+    end
+
+    def self.make code='vn', params={}
+      locality = self.localities[code.downcase.to_sym] || self.localities[:vn]
+      return locality.new params
+    end
+
+    def adjust_for_timezone time
+      raise Exception 'only accepts DateTime' unless time.instance_of?(DateTime)
+      return time.in_time_zone(@definition[:timezone])
     end
   end
 end

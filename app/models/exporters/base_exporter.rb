@@ -7,8 +7,8 @@ module Exporters
 
     def initialize params={}
       @params = normalize params
-      @output_file = params[:output]
-      @app = params[:app]
+      @output_file = @params[:output]
+      @locale = @params[:locale]
       @max_flatten_level = 1
     end
 

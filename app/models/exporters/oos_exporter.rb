@@ -15,7 +15,9 @@ module Exporters
         'ULV Code', 'VN Descriptions', 'Barcode',
         'Stock', 'Available', 'Void', 'Note', 'Updated At', 'Error'
       ]
-      set_data Mappers::OosExportMapper.map(ChecklistItem.active.includes(:checklist).filter{ |c|
+
+      mapper = Mappers::OosExportMapper.new locale: @locale
+      set_data mapper.map(ChecklistItem.active.includes(:checklist).filter{ |c|
         c.checklist.checklist_type == 'oos' &&
           date_filter(c.checklist, @params) && yearweek_filter(c.checklist, @params)
       }).compact

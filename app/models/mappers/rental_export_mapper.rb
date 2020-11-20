@@ -13,7 +13,9 @@ module Mappers
         checklist_item.data["Available"],
         checklist_item.data["Inline"],
         checklist_item.data["Png"],
-        checklist_item.updated_at.in_time_zone('Bangkok'),
+        @locale.adjust_for_timezone(
+          checklist_item.updated_at
+        ),
         checklist_item.data[:error]
       ]
     end

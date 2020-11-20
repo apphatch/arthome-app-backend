@@ -14,7 +14,9 @@ module Exporters
         'Outlet', 'Outlet Name', 'User ID', 'User Name',
         'Note', 'Date', 'Long', 'Lat', 'Checkin/checkout'
       ]
-      set_data Mappers::OsaCheckinCheckoutExportMapper.map(CheckinCheckout.active.user.filter{ |c|
+
+      mapper = Mappers::OsaCheckinCheckoutExportMapper.new locale: @locale
+      set_data mapper.map(CheckinCheckout.active.user.filter{ |c|
         c.app_group == 'osa' &&
           created_at_filter(c, @params)
       }).compact

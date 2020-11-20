@@ -5,7 +5,9 @@ module Mappers
       user = checklist_item.checklist.try(:user)
       stock = checklist_item.stock
       common = [
-        checklist_item.created_at,
+        @locale.adjust_for_timezone(
+          checklist_item.created_at,
+        ),
         shop.try(:store_type),
         shop.try(:city),
         shop.try(:npp),

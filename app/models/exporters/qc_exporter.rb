@@ -12,7 +12,9 @@ module Exporters
         'Địa Chỉ', 'Audit', 'U/C', 'Package', 'Category', 'Product Group',
         'SKU Name', 'SKU', 'NSX or HSD', 'Lỗi', 'Green', 'Yellow', 'Red', 'Image'
       ]
-      set_data Mappers::QcExportMapper.map ChecklistItem.active.includes(:checklist).filter{ |c|
+
+      mapper = Mappers::QcExportMapper.new locale: @locale
+      set_data mapper.map ChecklistItem.active.includes(:checklist).filter{ |c|
         c.checklist.checklist_type == 'qc' &&
           date_filter(c.checklist, @params)
       }

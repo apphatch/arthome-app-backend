@@ -6,17 +6,8 @@ class IoController < ApplicationController
   def export
     begin
       file_name = "export/" << generate_salted_name([params[:export_endpoint], 'results'], extension: '.xls')
-      options = {
-        app: @current_app.get(:app),
-        app_group: @current_app.get(:app_group),
-        output: file_name,
-        yearweek: params[:yearweek],
-        date_from: params[:date_from],
-        date_to: params[:date_to],
-      }
-
       exporter_name = params[:export_endpoint].to_s + 'er'
-      exporter = @current_app.get(exporter_name.to_sym).new options
+      exporter = @current_app.get(exporter_name.to_sym).new params.merge(output: file_name)
       photo_urls = exporter.export #assignment to work for photo exports only at the moment
 
       if params[:export_endpoint] == 'photo_export'
