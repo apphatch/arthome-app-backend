@@ -14,4 +14,8 @@ class Photo < ApplicationRecord
     end
     return nil
   end
+
+  def purge_image
+    self.image.purge if self.image.attached?
+  end
 end
