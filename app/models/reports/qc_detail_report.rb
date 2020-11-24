@@ -14,7 +14,9 @@ module Reports
           c.updated_at.between?(@date_from, @date_to)
         )
       }.compact
-      set_data Mappers::QcDetailReportMapper.map checklist_items
+
+      mapper = Mappers::QcDetailReportMapper.new locale: @locale
+      set_data mapper.map checklist_items
 
       data = []
       @data.each do |entry|

@@ -11,7 +11,9 @@ module Reports
       ]
 
       checklists = Checklist.active.where(checklist_type: 'qc')
-      set_data Mappers::QcOverviewReportMapper.map checklists
+
+      mapper = Mappers::QcOverviewReportMapper.new locale: @locale
+      set_data mapper.map checklists
 
       super
     end
