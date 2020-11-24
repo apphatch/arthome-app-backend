@@ -52,7 +52,7 @@ class IoController < ApplicationController
 
   def import_template
     begin
-      template_file = generate_name [params[:import_template_endpoint], 'template'], extension: '.xls'
+      template_file = "import/" << generate_name([params[:import_template_endpoint], 'template'], extension: '.xls')
 
       importer_name = params[:import_template_endpoint].to_s + 'er'
       importer_klass = @current_app.get(importer_name.to_sym)

@@ -92,6 +92,6 @@ Rails.application.routes.draw do
   end
 
   get 'io/:export_endpoint', to: "io#export"
+  get 'io/:import_template_endpoint/template', to: "io#import_template"
   post 'io/:import_endpoint', to: "io#import"
-  post 'io/:import_template_endpoint', to: "io#import_template"
 end

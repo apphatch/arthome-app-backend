@@ -191,7 +191,7 @@ module Importers
       book = Spreadsheet::Workbook.new
       sheet = book.create_worksheet
       sheet.row(0).concat(headers)
-      book.write "export/" << file
+      book.write file
     end
 
     def inspect
