@@ -83,13 +83,6 @@ class ChecklistsController < ApplicationController
     end
   end
 
-  def import_template
-    data = @current_app.get(:checklist_importer).template
-    f = File.open 'export/import-template.xls', 'rb'
-    enc = Base64.encode64 f.read
-    send_data enc, type: :xls, filename: 'checklist-import-template.xls'
-  end
-
   def permitted_params
     if ![
         params[:user_id], params[:shop_id]

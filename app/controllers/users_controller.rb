@@ -46,13 +46,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def import_template
-    data = @current_app.get(:user_importer).template
-    f = File.open 'export/import-template.xls', 'rb'
-    enc = Base64.encode64 f.read
-    send_data enc, type: :xls, filename: 'user-import-template.xls'
-  end
-
   def permitted_params
     return params.permit(:username, :name, :password, :importing_id, :app, :app_group)
   end

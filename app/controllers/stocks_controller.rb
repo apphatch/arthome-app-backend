@@ -48,14 +48,6 @@ class StocksController < ApplicationController
     head 404
   end
 
-  def import_template
-    data = @current_app.get(:stock_importer).template
-    data = @current_app.get(:stock_importer).template_rental if params[:rental]
-    f = File.open 'export/import-template.xls', 'rb'
-    enc = Base64.encode64 f.read
-    send_data enc, type: :xls, filename: 'stock-import-template.xls'
-  end
-
   def permitted_params
     return params.permit(:files)
   end

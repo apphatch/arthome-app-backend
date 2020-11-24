@@ -93,14 +93,6 @@ class ShopsController < ApplicationController
     render json: []
   end
 
-  #TODO move into io controller
-  def import_template
-    data = @current_app.get(:shop_importer).template
-    f = File.open 'export/import-template.xls', 'rb'
-    enc = Base64.encode64 f.read
-    send_data enc, type: :xls, filename: 'shop-import-template.xls'
-  end
-
   def permitted_params
     return params.permit(
       :app, :app_group, :photo, :note, :time, :photo_name,
