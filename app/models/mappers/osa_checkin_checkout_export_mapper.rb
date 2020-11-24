@@ -1,6 +1,6 @@
 module Mappers
   class OsaCheckinCheckoutExportMapper < BaseMapper
-    def self.apply_each checkin_checkout
+    def apply_each checkin_checkout
       shop = checkin_checkout.shop
       user = checkin_checkout.user
       return [

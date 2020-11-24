@@ -1,6 +1,6 @@
 module Mappers
   class QcDetailReportMapper < BaseMapper
-    def self.apply_each checklist_item
+    def apply_each checklist_item
       shop = checklist_item.checklist.try(:shop)
       user = checklist_item.checklist.try(:user)
       stock = checklist_item.stock

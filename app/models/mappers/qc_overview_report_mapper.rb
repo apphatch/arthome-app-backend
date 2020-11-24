@@ -1,6 +1,6 @@
 module Mappers
   class QcOverviewReportMapper < BaseMapper
-    def self.apply_each checklist
+    def apply_each checklist
       stats = Reducers::QcOverviewReportReducer.reduce checklist.checklist_items
       return [
         checklist.try(:user).try(:name),
