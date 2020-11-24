@@ -40,8 +40,7 @@ module Locality
     end
 
     def adjust_for_timezone time
-      raise Exception 'only accepts DateTime' unless time.instance_of?(DateTime)
-      return time.in_time_zone(@definition[:timezone])
+      return time.to_datetime.in_time_zone(@definition[:timezone])
     end
   end
 end
