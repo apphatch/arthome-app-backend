@@ -8,7 +8,7 @@ module Utils
       root = './photo_dump'
       Dir.mkdir(root, 777) unless Dir.exist?(root)
 
-      photos.find_each do |photo|
+      photos.each do |photo|
         checkin_checkout = photo.dbfile
         time_repr = checkin_checkout.created_at.strftime('%Y-%m-%d')
         shop_repr = [
