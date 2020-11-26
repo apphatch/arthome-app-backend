@@ -7,6 +7,9 @@ module Exporters
     end
 
     def export
+      @params[:date_from] = DateTime.now.beginning_of_day unless @params[:date_from].present?
+      @params[:date_to] = DateTime.now.end_of_day unless @params[:date_to].present?
+
       set_headers [
         'Time', 'Store Type (MT/DT/CVS)', 'City', 'NPP', 'Tên Cửa Hàng',
         'Địa Chỉ', 'Audit', 'U/C', 'Package', 'Category', 'Product Group',

@@ -30,7 +30,7 @@ module Mappers
           entry["Mức cảnh báo"] == "Vàng" ? 1 : 0,
           entry["Mức cảnh báo"] == "Đỏ" ? 1 : 0,
           #HACK, fix asap
-          "http://13.250.20.221#{entry["photo_uri"]}"
+          (entry["photo_uri"].try(:empty?) ? "" : "http://13.250.20.221#{entry["photo_uri"]}")
         ]
       end
     end
