@@ -14,7 +14,7 @@ module Mappers
         checklist_item.data["Result"],
         @locale.adjust_for_timezone(
           checklist_item.updated_at
-        ),
+        ).strftime('%d%m%Y'),
         checklist_item.data[:error]
       ]
     end
