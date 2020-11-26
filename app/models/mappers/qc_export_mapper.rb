@@ -29,7 +29,8 @@ module Mappers
           entry["Mức cảnh báo"] == "Xanh" ? 1 : 0,
           entry["Mức cảnh báo"] == "Vàng" ? 1 : 0,
           entry["Mức cảnh báo"] == "Đỏ" ? 1 : 0,
-          checklist_item.photo_with_path(entry["photo_uri"]).try(:image_path)
+          #HACK, fix asap
+          "http://13.250.20.221#{entry["photo_uri"]}"
         ]
       end
     end
