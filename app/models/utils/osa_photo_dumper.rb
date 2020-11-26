@@ -9,6 +9,7 @@ module Utils
       Dir.mkdir(root, 777) unless Dir.exist?(root)
 
       photos.each do |photo|
+        next unless photo.image.attached?
         checkin_checkout = photo.dbfile
         time_repr = checkin_checkout.created_at.strftime('%Y-%m-%d')
         shop_repr = [
