@@ -19,7 +19,16 @@ module Importers
 
       super do |attributes, assocs, row|
         attributes[:checklist_type] = 'qc'
-        attributes[:date] = DateTime.parse attributes[:date] if attributes[:date].present?
+        if attributes[:date].present?
+          begin
+            date = DateTime.parse attributes[:date]
+            attributes[:date] = date.beginning_of_month
+            attributes[:end_date] = date.end_of_month
+          rescue => e
+            Rails.logger.warn "Something wrong with date parse"
+            Rails.logger.warn e
+          end
+        end
 
         assocs[:user] = User.active.find_by_importing_id assocs[:user]
         shop_id = "qc-" + attributes[:shop_number] + attributes[:shop_name]
