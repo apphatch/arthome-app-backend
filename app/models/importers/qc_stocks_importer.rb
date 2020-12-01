@@ -9,20 +9,18 @@ module Importers
     def import
       is_uid :importing_id
 
-      index :importing_id, ['SKU_Name'], as: :string
+      index :importing_id, ['ID'], as: :string
       index :sku, ['SKU_SKU']
-      index :name, ['SKU_Name'], allow_dup: true
+      index :name, ['SKU_Name'], as: :string, allow_dup: true
       index :barcode, ['SKU_Barcode']
       index :role, ['SKU_RoleShop']
       associate :shops, ['Shop_ID'], as: :string
 
-      index :category, ['SKU_Category']
-      index :sub_category, ['Sub Category']
-      index :division, ['Division']
-      index :short_division, ['Short Division']
+      index :category, ['SKU_Categogy']
       index :group, ['SKU_Group']
-      index :brand, ['Brand']
       index :packaging, ['SKU_Package']
+      index :uom, ['SKU_Role']
+      index :uc, ['SKU_UC']
 
       super do |attributes, assocs, row|
         unless assocs[:shops].nil?
@@ -31,12 +29,10 @@ module Importers
         attributes[:role] = attributes[:role].try(:downcase)
         attributes[:custom_attributes] = {
           category: attributes[:category],
-          sub_category: attributes[:sub_category],
-          division: attributes[:division],
-          short_division: attributes[:short_division],
           group: attributes[:group],
-          brand: attributes[:brand],
-          packaging: attributes[:packaging]
+          packaging: attributes[:packaging],
+          uom: attributes[:uom],
+          uc: attributes[:uc]
         }
         [attributes, assocs]
       end
