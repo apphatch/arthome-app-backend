@@ -14,6 +14,12 @@ class UsersController < ApplicationController
   end
 
   def create
+    user = User.active.where(
+      app_group: @current_app.get(:app_group),
+      username: params[:username]
+    )
+    render json: {error: 'username taken'} and return if user.present?
+
     user = User.create user_params
     render json: user
   end
@@ -55,7 +61,7 @@ class UsersController < ApplicationController
   end
 
   def find_record
-    user = User.find_by_id params[:id]
+    user = User.active.find_by_id params[:id]
     if user.present?
       yield user
     else
