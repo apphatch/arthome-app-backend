@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
 
   def create
     # LOGIN
-    user = User.find_by_username params[:username]
+    user = User.active.find_by_username params[:username]
     head 404 unless user.present?
     head 401 unless user.failed_login_attempts < 5
 
