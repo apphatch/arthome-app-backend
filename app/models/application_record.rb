@@ -14,8 +14,13 @@ class ApplicationRecord < ActiveRecord::Base
     self.save validate: false
   end
 
-  def self.project *attrs
-    return self.all.collect{|record| record.send(attrs.first)} if attrs.length == 1
-    return self.all.collect{|record| record.attributes.select{|k, v| k.to_sym.in?(attrs)}}
+  def self.project *attrs, take: nil
+    if attrs.length == 1
+      projection = self.all.collect{|record| record.send(attrs.first)}
+    else
+      projection = self.all.collect{|record| record.attributes.select{|k, v| k.to_sym.in?(attrs)}}
+    end
+    projection = projection.slice(0, take) if take.present?
+    return projection
   end
 end
