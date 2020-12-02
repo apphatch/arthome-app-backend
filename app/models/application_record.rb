@@ -13,4 +13,9 @@ class ApplicationRecord < ActiveRecord::Base
     self.deleted = true
     self.save validate: false
   end
+
+  def self.project *attrs
+    return self.all.collect{|record| record.send(attrs.first)} if attrs.length == 1
+    return self.all.collect{|record| record.attributes.select{|k, v| k.to_sym.in?(attrs)}}
+  end
 end
