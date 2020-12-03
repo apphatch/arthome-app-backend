@@ -10,6 +10,9 @@ class CheckinCheckout < ApplicationRecord
 
   serialize :coords, Hash
 
+  scope :this_week, -> { where(
+    created_at: current_time.beginning_of_week..current_time.end_of_week
+  )}
   scope :month_to_date, -> { where(
     created_at: (current_time-1.month)..current_time
   )}

@@ -2,7 +2,7 @@ class CheckinCheckoutsController < ApplicationController
   def index
     @records = CheckinCheckout.user.active
     #TODO: refac this into model, it has no business being here
-    @records = @records.month_to_date.filter{|c| c.checkin?} if @current_app.name == 'osa-webportal'
+    @records = @records.this_week.filter{|c| c.checkin?} if @current_app.name == 'osa-webportal'
     render json: @records, each_serializer: CheckinCheckoutSerializer
   end
 
