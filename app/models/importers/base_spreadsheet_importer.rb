@@ -139,28 +139,25 @@ module Importers
       end
     end
 
+    def fetch_values attr_idx_mapping, row
+      attr_value_mapping = {}
+      attr_idx_mapping.each do |k, v|
+        attr_value_mapping[k] = row[v[0]]
+        attr_value_mapping[k] = row[v[0]].try(:send, v[1]) if v[1].present?
+      end
+
+      return attr_value_mapping
+    end
+
     def perform mode=:import
       raise Exception.new 'uid not found. use is_uid to declare uid model attribute.' if @uid_attr.nil?
       @spreadsheet.each do |row|
         next if row == data_headers
 
         # convert indices to actual data
-        attributes, temp_attributes, assocs = {}, {}, {}
-        @attribute_idx.each do |k, v|
-          # v = [value, typecast method]
-          attributes[k] = row[v[0]]
-          attributes[k] = row[v[0]].try(:send, v[1]) if v[1].present?
-        end
-        @temp_attribute_idx.each do |k, v|
-          # v = [value, typecast method]
-          temp_attributes[k] = row[v[0]]
-          temp_attributes[k] = row[v[0]].try(:send, v[1]) if v[1].present?
-        end
-        @assoc_idx.each do |k, v|
-          # v = [value, typecast method]
-          assocs[k] = row[v[0]]
-          assocs[k] = row[v[0]].try(:send, v[1]) if v[1].present?
-        end
+        attributes = fetch_values @attribute_idx, row
+        temp_attributes = fetch_values @temp_attribute_idx, row
+        assocs = fetch_values @assoc_idx, row
 
         # prepare and yield data for manipulation before import
         attr_assocs = [attributes, temp_attributes, assocs]
