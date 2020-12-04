@@ -1,5 +1,5 @@
 class ChecklistSerializer < ApplicationSerializer
-  attributes :id, :reference, :template, :checklist_type
+  attributes :id, :reference, :template, :checklist_type, :completed
 
   has_many :checklist_items, each_serializer: ChecklistItemSerializer
 
