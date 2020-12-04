@@ -3,8 +3,8 @@ class CheckinCheckoutsController < ApplicationController
     @records = CheckinCheckout.user.active
     #TODO: refac this into model, it has no business being here
     if @current_app.name == 'osa-webportal'
-      @records = @records.where("created_at >= ?", DateTime.parse(params[:date_from])) if params[:date_from].empty?
-      @records = @records.where("created_at <= ?", DateTime.parse(params[:date_to])) if params[:date_to].empty?
+      @records = @records.where("created_at >= ?", DateTime.parse(params[:date_from])) unless params[:date_from].empty?
+      @records = @records.where("created_at <= ?", DateTime.parse(params[:date_to])) unless params[:date_to].empty?
       @records = @records.today if (params[:date_from].empty? && params[:date_to].empty?)
       @records = @records.filter{|c| c.checkin?}
     end
