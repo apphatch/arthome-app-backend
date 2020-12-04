@@ -20,14 +20,14 @@ module Importers
       index :shop_type_2, ['Store Type (MT/DT/CVS)']
       associate :users, ['US_ID'], as: :string
 
-      super do |attributes, assocs, row|
+      super do |attributes, temp_attributes, assocs, row|
         assocs[:users] = User.active.find_by_importing_id assocs[:users]
 
         attributes[:custom_attributes] = {
           distributor: attributes[:distributor],
           shop_type_2: attributes[:shop_type_2]
         }
-        [attributes, assocs]
+        [attributes, temp_attributes, assocs]
       end
     end
   end

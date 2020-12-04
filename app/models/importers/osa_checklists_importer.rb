@@ -2,6 +2,7 @@ module Importers
   class OsaChecklistsImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = Checklist
+      @app_group = 'osa'
       super params
     end
 
@@ -12,19 +13,20 @@ module Importers
       index :checklist_type, ['Type']
       index :yearweek, ['YearWeek'], as: :string
       index :date, ['Date'], as: :string
+      index_temp :shop, ['Outlet', 'Outlet Name'], as: :string
+      index_temp :user, ['OSA Code'], as: :string
       associate :user, ['OSA Code'], as: :string
       associate :shop, ['Outlet', 'Outlet Name'], as: :string
 
       skip_if_record_exists
 
-      super do |attributes, assocs, row|
+      super do |attributes, temp_attributes, assocs, row|
         attributes[:checklist_type] = attributes[:checklist_type].downcase
         attributes[:date] = DateTime.parse attributes[:date] if attributes[:date].present?
-        attributes[:shop]  = assocs[:shop].to_i.to_s #to use for uid autogen
         assocs[:user] = User.active.find_by_importing_id assocs[:user]
         assocs[:shop] = Shop.active.find_by_importing_id assocs[:shop].to_i.to_s
 
-        [attributes, assocs]
+        [attributes, temp_attributes, assocs]
       end
     end
 

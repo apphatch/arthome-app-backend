@@ -1,7 +1,8 @@
 module Importers
-  class ChecklistItemsImporter < BaseSpreadsheetImporter
+  class OsaChecklistItemsImporter < BaseSpreadsheetImporter
     def initialize params={}
       @model_class = ChecklistItem
+      @app_group = 'osa'
       super params
     end
 
@@ -15,33 +16,34 @@ module Importers
 
       index :quantity, ['Stock'], as: :float
       index :mechanic, ['Mechanic']
-      index :checklist_type, ['Type']
-      index :yearweek, ['YearWeek'], as: :string
-      index :date, ['Date'], as: :string
       index :photo_ref, ['Photo ID']
-      index :shop, ['Outlet', 'Outlet Name'], as: :string
-      index :user, ['OSA Code'], as: :string
       associate :stock, ['ULV code', 'Rental ID', 'Category'], allow_dup: true, as: :string
-      index_temp :stock_sub_cat, ['Sub Category'], allow_dup: true, as: :string
 
-      super do |attributes, assocs, row|
-        date = DateTime.parse attributes[:date] if attributes[:date].present?
+      index_temp :stock_sub_cat, ['Sub Category'], allow_dup: true, as: :string
+      index_temp :checklist_type, ['Type']
+      index_temp :yearweek, ['YearWeek'], as: :string
+      index_temp :date, ['Date'], as: :string
+      index_temp :shop, ['Outlet', 'Outlet Name'], as: :string
+      index_temp :user, ['OSA Code'], as: :string
+
+      super do |attributes, temp_attributes, assocs, row|
+        date = DateTime.parse temp_attributes[:date] if temp_attributes[:date].present?
 
         checklist_ref = [
-          attributes[:checklist_type].downcase,
-          attributes[:yearweek],
+          temp_attributes[:shop].to_i.to_s,
+          temp_attributes[:user],
+          temp_attributes[:checklist_type].downcase,
+          temp_attributes[:yearweek],
           date,
-          attributes[:user],
-          attributes[:shop].to_i.to_s
         ].join()
 
         assocs[:checklist] = Checklist.find_by_reference checklist_ref
         stock_importing_id = assocs[:stock]
-        stock_importing_id += attributes[:stock_sub_cat] if attributes[:checklist_type].downcase == 'sos'
+        stock_importing_id += temp_attributes[:stock_sub_cat] if temp_attributes[:checklist_type].downcase == 'sos'
         assocs[:stock] = Stock.find_by_importing_id stock_importing_id
-        assocs.delete :checklist_type #prevent no method error
+        #assocs.delete :checklist_type #prevent no method error
 
-        [attributes, assocs]
+        [attributes, temp_attributes, assocs]
       end
     end
 

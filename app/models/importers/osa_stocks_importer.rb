@@ -25,8 +25,8 @@ module Importers
       index :packaging, ['SKU_Package']
       index_temp :checklist_type, ['Type']
 
-      super do |attributes, assocs, row|
-        if attributes[:checklist_type].downcase == 'sos'
+      super do |attributes, temp_attributes, assocs, row|
+        if temp_attributes[:checklist_type].downcase == 'sos'
           attributes[:importing_id] = attributes[:category] + attributes[:sub_category]
         end
 
@@ -43,7 +43,7 @@ module Importers
           brand: attributes[:brand],
           packaging: attributes[:packaging]
         }
-        [attributes, assocs]
+        [attributes, temp_attributes, assocs]
       end
     end
 

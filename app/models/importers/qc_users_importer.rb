@@ -13,7 +13,7 @@ module Importers
 
       index :importing_id, ['US_ID'], as: :string
       index :username, ['US_Username'], as: :string
-      index :password, ['password'], bypass_filter: true, as: :string
+      index :password, ['password'], as: :string
       index :name, ['US_Name']
       index :role, ['role']
 

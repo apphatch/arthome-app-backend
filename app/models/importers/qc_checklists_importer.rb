@@ -17,7 +17,7 @@ module Importers
 
       skip_if_record_exists
 
-      super do |attributes, assocs, row|
+      super do |attributes, temp_attributes, assocs, row|
         attributes[:checklist_type] = 'qc'
         if attributes[:date].present?
           begin
@@ -31,11 +31,11 @@ module Importers
         end
 
         assocs[:user] = User.active.find_by_importing_id assocs[:user]
-        shop_id = "qc-" + attributes[:shop_number] + attributes[:shop_name]
+        shop_id = "qc-" + temp_attributes[:shop_number] + temp_attributes[:shop_name]
         assocs[:shop] = Shop.active.find_by_importing_id shop_id
 
 
-        [attributes, assocs]
+        [attributes, temp_attributes, assocs]
       end
     end
 

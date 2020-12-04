@@ -16,9 +16,13 @@ module Importers
       @skip_if_record_exists ||= false
       @auto_gen_uid ||= false
       @model_attrs_to_use ||= []
-      @bypass_filter_attrs ||= []
       @prefix ||= ''
       @app_group ||= params[:app_group]
+
+      #for indexers
+      @attribute_idx ||= {}
+      @temp_attribute_idx ||= {}
+      @assoc_idx ||= {}
 
       #dealing with actiondispatch uploaded files, absolute and relative file paths, and lastly try file object
       f = params[:file].try(:path) || params[:file_path] || "import/#{params[:file_name]}"
@@ -62,7 +66,7 @@ module Importers
       @prefix = params[:prefix]
     end
 
-    def index model_attr, allowed_data_headers, params={allow_dup: false, as: nil}
+    def perform_index model_attr, allowed_data_headers, params={as: nil}
       idx = nil
       typecast_method = {
         string: :to_s,
@@ -74,25 +78,37 @@ module Importers
         idx = data_headers.find_index(data_header)
         next if idx.nil?
 
-        unless @header_mappings.values.include?(idx) && !params[:allow_dup]
-          @header_mappings = @header_mappings.merge(model_attr => [idx, typecast_method])
-          break
-        end
-        @bypass_filter_attrs += [model_attr] if params[:bypass_filter]
+        return {model_attr => [idx, typecast_method]}
       end
 
-      return @header_mappings
+      return {}
     end
 
-    def index_temp model_attr, allowed_data_headers, params={allow_dup: false, as: :none}
-      #alias of index, conveys intent that this attr will not be used to
-      # construct the actual object
-      index model_attr, allowed_data_headers, params
+    #--------------------------------------------------------------------------
+    #public declarative methods
+
+    def index model_attr, allowed_data_headers, params={as: :none}
+      # index model attributes
+      @attribute_idx ||= {}
+      @attribute_idx = @attribute_idx.merge(
+        perform_index model_attr, allowed_data_headers, params
+      )
     end
 
-    def associate model_attr, allowed_data_headers, params={allow_dup: false, as: :none}
-      #alias of index, improves readability
-      index model_attr, allowed_data_headers, params
+    def index_temp model_attr, allowed_data_headers, params={as: :none}
+      # index temporary attributes for later use
+      @temp_attribute_idx ||= {}
+      @temp_attribute_idx = @temp_attribute_idx.merge(
+        perform_index model_attr, allowed_data_headers, params
+      )
+    end
+
+    def associate model_attr, allowed_data_headers, params={as: :none}
+      # index model associations
+      @assoc_idx ||= {}
+      @assoc_idx = @assoc_idx.merge(
+        perform_index model_attr, allowed_data_headers, params
+      )
     end
 
     #--------------------------------------------------------------------------
@@ -110,16 +126,16 @@ module Importers
     end
 
     def import
-      perform :import do |attributes, assocs, row|
-        yield(attributes, assocs, row) if block_given?
-        [attributes, assocs]
+      perform :import do |attributes, temp_attributes, assocs, row|
+        yield(attributes, temp_attributes, assocs, row) if block_given?
+        [attributes, temp_attributes, assocs]
       end
     end
 
     def update
-      perform :update do |attributes, assocs, row|
-        yield(attributes, assocs, row) if block_given?
-        [attributes, assocs]
+      perform :update do |attributes, temp_attributes, assocs, row|
+        yield(attributes, temp_attributes, assocs, row) if block_given?
+        [attributes, temp_attributes, assocs]
       end
     end
 
@@ -128,35 +144,34 @@ module Importers
       @spreadsheet.each do |row|
         next if row == data_headers
 
-        # get and typecast data from file header mappings
-        header_mappings = @header_mappings.dup
-        attributes = header_mappings.each do |k, v|
+        # convert indices to actual data
+        attributes, temp_attributes, assocs = {}, {}, {}
+        @attribute_idx.each do |k, v|
           # v = [value, typecast method]
-          header_mappings[k] = row[v[0]]
-          header_mappings[k] = row[v[0]].try(:send, v[1]) if v[1].present?
+          attributes[k] = row[v[0]]
+          attributes[k] = row[v[0]].try(:send, v[1]) if v[1].present?
         end
-        assocs = attributes.dup
+        @temp_attribute_idx.each do |k, v|
+          # v = [value, typecast method]
+          temp_attributes[k] = row[v[0]]
+          temp_attributes[k] = row[v[0]].try(:send, v[1]) if v[1].present?
+        end
+        @assoc_idx.each do |k, v|
+          # v = [value, typecast method]
+          assocs[k] = row[v[0]]
+          assocs[k] = row[v[0]].try(:send, v[1]) if v[1].present?
+        end
 
         # prepare and yield data for manipulation before import
-        attr_assocs = [attributes, assocs]
-        attr_assocs = yield(attributes, assocs, row) if block_given?
-        raise Exception.new 'importer must return [attributes, assocs]' if attr_assocs.length != 2
-        attributes, assocs = attr_assocs
-        auto_gen_uid_attributes = attributes.dup
-
-        # sanitize data
-        attributes = attributes.reject do |k, v|
-          (
-            @model_class_instance.attributes.keys + @bypass_filter_attrs
-          ).exclude? k.to_s
-        end
-        assocs = assocs.reject do |k, v|
-          @model_class_instance.public_methods.exclude?(k.to_sym) ||
-            attributes.keys.include?(k.to_sym)
-        end
+        attr_assocs = [attributes, temp_attributes, assocs]
+        attr_assocs = yield(attributes, temp_attributes, assocs, row) if block_given?
+        raise Exception.new 'importer must return [attributes, temp_attributes, assocs]' if attr_assocs.length != 3
+        attributes, temp_attributes, assocs = attr_assocs
+        # temp_attributes used for uid autogen, then thrown away
+        temp_attributes = temp_attributes.merge attributes
 
         # perform import
-        attributes[@uid_attr] = auto_gen_uid(auto_gen_uid_attributes, @model_attrs_to_use) if @auto_gen_uid
+        attributes[@uid_attr] = auto_gen_uid(temp_attributes, @model_attrs_to_use) if @auto_gen_uid
 
         # find or create object instance
         raise Exception.new 'uid not indexed' if attributes[@uid_attr].nil?
@@ -181,6 +196,7 @@ module Importers
         begin
           obj.save!
         rescue => e
+          puts e
           Rails.logger.warn e
         end
       end
@@ -192,10 +208,6 @@ module Importers
       sheet = book.create_worksheet
       sheet.row(0).concat(headers)
       book.write file
-    end
-
-    def inspect
-      return @header_mappings
     end
   end
 end

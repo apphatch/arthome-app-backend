@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_11_03_063646) do
+ActiveRecord::Schema.define(version: 2020_11_19_145955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -170,6 +170,7 @@ ActiveRecord::Schema.define(version: 2020_11_03_063646) do
     t.string "jwt"
     t.integer "failed_login_attempts", default: 0
     t.string "app_group"
+    t.string "locale"
   end
 
   create_table "worker_requests", force: :cascade do |t|

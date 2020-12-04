@@ -16,12 +16,12 @@ namespace :osa_import do
   end
 
   task :checklists, [:file] => [:environment] do |t, args|
-    importer = Importers::ChecklistsImporter.new file_name: args[:file], app: 'osa'
+    importer = Importers::OsaChecklistsImporter.new file_name: args[:file], app: 'osa'
     importer.import
   end
 
   task :checklist_items, [:file] => [:environment] do |t, args|
-    importer = Importers::ChecklistItemsImporter.new file_name: args[:file], app: 'osa'
+    importer = Importers::OsaChecklistItemsImporter.new file_name: args[:file], app: 'osa'
     importer.import
   end
 end

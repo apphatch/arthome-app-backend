@@ -22,7 +22,7 @@ module Importers
       index :uom, ['SKU_Role']
       index :uc, ['SKU_UC']
 
-      super do |attributes, assocs, row|
+      super do |attributes, temp_attributes, assocs, row|
         unless assocs[:shops].nil?
           assocs[:shops] = Shop.active.find_by_importing_id assocs[:shops]
         end
@@ -34,7 +34,7 @@ module Importers
           uom: attributes[:uom],
           uc: attributes[:uc]
         }
-        [attributes, assocs]
+        [attributes, temp_attributes, assocs]
       end
     end
   end
