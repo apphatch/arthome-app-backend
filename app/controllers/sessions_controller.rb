@@ -16,7 +16,8 @@ class SessionsController < ApplicationController
       set_jwt_for_api user
       render json: {
         result: 'logged in', user_id: user.id,
-        last_checkin_checkout: user.last_checkin_checkout
+        last_checkin_checkout: user.last_checkin_checkout,
+        shop: user.last_checkin_checkout.shop
       } and return
     else
       user.update failed_login_attempts: user.failed_login_attempts + 1
