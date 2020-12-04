@@ -3,7 +3,8 @@
         "type": "number",
         "values": [],
         "default_value_use": "quantity",
-        "required": true
+        "required": true,
+        "allow_negative": false
     },
     "Void": {
         "type": "radio",
