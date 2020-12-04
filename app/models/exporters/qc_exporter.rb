@@ -13,7 +13,7 @@ module Exporters
       set_headers [
         'Time', 'Store Type (MT/DT/CVS)', 'City', 'NPP', 'Tên Cửa Hàng',
         'Địa Chỉ', 'Audit', 'U/C', 'Package', 'Category', 'Product Group',
-        'SKU Name', 'SKU', 'NSX or HSD', 'Lỗi', 'Green', 'Yellow', 'Red', 'Image'
+        'SKU Name', 'SKU', 'NSX or HSD', 'Số lô', 'Lỗi', 'Green', 'Yellow', 'Red', 'Image'
       ]
 
       mapper = Mappers::QcExportMapper.new locale: @locale
