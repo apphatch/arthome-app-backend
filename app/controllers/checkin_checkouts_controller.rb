@@ -2,7 +2,11 @@ class CheckinCheckoutsController < ApplicationController
   def index
     @records = CheckinCheckout.user.active
     #TODO: refac this into model, it has no business being here
-    @records = @records.today.filter{|c| c.checkin?} if @current_app.name == 'osa-webportal'
+    if @current_app.name == 'osa-webportal'
+      @records = @records.where("created_at >= ?", DateTime.parse(params[:date_from])) if params[:date_from]
+      @records = @records.where("created_at <= ?", DateTime.parse(params[:date_to])) if params[:date_to]
+      @records = @records.today.filter{|c| c.checkin?} unless (params[:date_from].present? || params[:date_to].present?)
+    end
     render json: @records, each_serializer: CheckinCheckoutSerializer
   end
 
