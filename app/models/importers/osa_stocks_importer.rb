@@ -34,15 +34,12 @@ module Importers
           assocs[:shops] = Shop.active.find_by_importing_id assocs[:shops]
         end
         attributes[:role] = attributes[:role].try(:downcase)
-        attributes[:custom_attributes] = {
-          category: attributes[:category],
-          sub_category: attributes[:sub_category],
-          division: attributes[:division],
-          short_division: attributes[:short_division],
-          group: attributes[:group],
-          brand: attributes[:brand],
-          packaging: attributes[:packaging]
-        }
+
+        attributes[:custom_attributes] = {}
+        [:category, :sub_category, :division, :short_division, :group, :brand, :packaging].each do |attr|
+          attributes[:custom_attributes] = attributes[:custom_attributes].merge attributes[attr]
+          attributes.delete attr #so it doesn't get assigned to object by super
+        end
         [attributes, temp_attributes, assocs]
       end
     end
