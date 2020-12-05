@@ -17,9 +17,9 @@ module Exporters
       ]
 
       mapper = Mappers::QcExportMapper.new locale: @locale
-      set_data mapper.map ChecklistItem.active.includes(:checklist).filter{ |c|
-        c.checklist.checklist_type == 'qc' &&
-          updated_at_filter(c.checklist, @params)
+      set_data mapper.map ChecklistItem.active.where(app_group: 'qc').filter{ |c|
+          c.data != {} &&
+          updated_at_filter(c, @params)
       }
       set_flatten_level 2
 
