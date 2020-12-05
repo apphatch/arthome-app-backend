@@ -21,7 +21,7 @@ module Mappers
         stock.try(:name),
         stock.try(:sku),
       ]
-      return [common + ['']*6] if checklist_item.data.empty?
+      return [common + ['']*7] if checklist_item.data.empty?
       return checklist_item.data["records"].collect do |entry|
         common + [
           entry["HSD"].present? ? entry["HSD"] : entry["NSX"],
