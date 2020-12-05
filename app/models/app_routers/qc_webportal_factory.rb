@@ -8,7 +8,6 @@ module AppRouters
       use Importers::QcStocksImporter, as: :stock_importer
       use Importers::QcShopsImporter, as: :shop_importer
       use Importers::QcChecklistsImporter, as: :checklist_importer
-      use Importers::ChecklistItemsImporter, as: :checklist_item_importer
 
       use Exporters::QcExporter, as: :qc_exporter
 
