@@ -37,7 +37,7 @@ module Importers
 
         attributes[:custom_attributes] = {}
         [:category, :sub_category, :division, :short_division, :group, :brand, :packaging].each do |attr|
-          attributes[:custom_attributes] = attributes[:custom_attributes].merge attributes[attr]
+          attributes[:custom_attributes] = attributes[:custom_attributes].merge({attr => attributes[attr]})
           attributes.delete attr #so it doesn't get assigned to object by super
         end
         [attributes, temp_attributes, assocs]
