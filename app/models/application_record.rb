@@ -3,6 +3,7 @@ class ApplicationRecord < ActiveRecord::Base
 
   validates :app_group, presence: true
   scope :active, -> { where(deleted: false) }
+  scope :inactive, -> { where(deleted: true) }
 
   def self.current_time
     #default to VN time for now (only used here atm)
