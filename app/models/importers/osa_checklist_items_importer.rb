@@ -37,10 +37,10 @@ module Importers
           date,
         ].join()
 
-        assocs[:checklist] = Checklist.find_by_reference checklist_ref
+        assocs[:checklist] = Checklist.active.find_by_reference checklist_ref
         stock_importing_id = assocs[:stock]
         stock_importing_id += temp_attributes[:stock_sub_cat] if temp_attributes[:checklist_type].downcase == 'sos'
-        assocs[:stock] = Stock.find_by_importing_id stock_importing_id
+        assocs[:stock] = Stock.active.find_by_importing_id stock_importing_id
         #assocs.delete :checklist_type #prevent no method error
 
         [attributes, temp_attributes, assocs]
