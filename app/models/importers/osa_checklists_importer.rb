@@ -10,11 +10,12 @@ module Importers
       is_uid :reference
       auto_gen_uid_with_attributes [:all]
 
+      # order of indexing is important for checklist item import
+      index_temp :shop, ['Outlet', 'Outlet Name'], as: :string
+      index_temp :user, ['OSA Code'], as: :string
       index :checklist_type, ['Type']
       index :yearweek, ['YearWeek'], as: :string
       index :date, ['Date'], as: :string
-      index_temp :shop, ['Outlet', 'Outlet Name'], as: :string
-      index_temp :user, ['OSA Code'], as: :string
       associate :user, ['OSA Code'], as: :string
       associate :shop, ['Outlet', 'Outlet Name'], as: :string
 
