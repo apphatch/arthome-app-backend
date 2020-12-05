@@ -19,12 +19,13 @@ module Importers
       index :photo_ref, ['Photo ID']
       associate :stock, ['ULV code', 'Rental ID', 'Category'], as: :string
 
-      index_temp :stock_sub_cat, ['Sub Category'], as: :string
       index_temp :checklist_type, ['Type']
       index_temp :yearweek, ['YearWeek'], as: :string
       index_temp :date, ['Date'], as: :string
-      index_temp :shop, ['Outlet', 'Outlet Name'], as: :string
       index_temp :user, ['OSA Code'], as: :string
+      index_temp :shop, ['Outlet', 'Outlet Name'], as: :string
+      index_temp :stock, ['ULV code', 'Rental ID', 'Category'], as: :string
+      index_temp :stock_sub_cat, ['Sub Category'], as: :string
 
       super do |attributes, temp_attributes, assocs, row|
         date = DateTime.parse temp_attributes[:date] if temp_attributes[:date].present?
