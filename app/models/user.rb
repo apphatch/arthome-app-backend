@@ -114,7 +114,7 @@ class User < ApplicationRecord
   end
 
   def last_checkin_checkout
-    return [] if self.checkin_checkouts.active.empty?
+    return nil if self.checkin_checkouts.active.empty?
     return self.checkin_checkouts.active.order(:created_at).last
   end
 

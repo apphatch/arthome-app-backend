@@ -17,7 +17,7 @@ class SessionsController < ApplicationController
       render json: {
         result: 'logged in', user_id: user.id,
         last_checkin_checkout: user.last_checkin_checkout,
-        shop: user.last_checkin_checkout.shop
+        shop: user.last_checkin_checkout.try(:shop)
       } and return
     else
       user.update failed_login_attempts: user.failed_login_attempts + 1
