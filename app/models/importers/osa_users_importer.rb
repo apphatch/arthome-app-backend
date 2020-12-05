@@ -12,7 +12,7 @@ module Importers
       is_uid :importing_id
 
       index :importing_id, ['importing_id', 'OSA Code'], as: :string
-      index :username, ['username', 'OSA Code'], allow_dup: true, as: :string
+      index :username, ['username', 'OSA Code'], as: :string
       index :password, ['password'], as: :string
       index :name, ['name', 'OSA Checker Name']
       index :role, ['role']

@@ -11,7 +11,7 @@ module Importers
 
       index :importing_id, ['ID'], as: :string
       index :sku, ['SKU_SKU']
-      index :name, ['SKU_Name'], as: :string, allow_dup: true
+      index :name, ['SKU_Name'], as: :string
       index :barcode, ['SKU_Barcode']
       index :role, ['SKU_RoleShop']
       associate :shops, ['Shop_ID'], as: :string
