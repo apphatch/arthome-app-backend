@@ -20,7 +20,7 @@ class UsersController < ApplicationController
     )
     render json: {error: 'username taken'} and return if user.present?
 
-    user = User.create user_params
+    user = User.create user_params.merge(locale: 'vn')
     render json: user
   end
 
