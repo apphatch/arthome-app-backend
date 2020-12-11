@@ -13,9 +13,8 @@ class ApplicationController < ActionController::Base
   def auth_info
     if request.headers['Authorization'].present?
       return JsonWebToken.decode request.headers['Authorization']
-    else
-      return nil
     end
+    return nil
   end
 
   def current_user
@@ -39,6 +38,7 @@ class ApplicationController < ActionController::Base
     @current_user = nil
 
     head 401 and return unless current_user.present?
+    head 401 and return if auth_info.nil?
 
     if Time.zone.at(auth_info[:exp]) < Time.current
       redirect_to controller: 'sessions', action: 'destroy'
