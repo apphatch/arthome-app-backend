@@ -22,7 +22,7 @@ class ApplicationRecord < ActiveRecord::Base
     else
       projection = self.all.collect{|record| record.attributes.select{|k, v| k.to_sym.in?(attrs)}}
     end
-    projection = projection.slice(0, take) if take.present?
+    return projection.slice(0, take) if take.present?
     return projection
   end
 end
