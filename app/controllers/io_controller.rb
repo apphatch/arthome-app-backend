@@ -7,7 +7,7 @@ class IoController < ApplicationController
     begin
       file_name = "export/" << generate_salted_name([params[:export_endpoint], 'results'], extension: '.xls')
       exporter_name = params[:export_endpoint].to_s + 'er'
-      exporter = @current_app.get(exporter_name.to_sym).new params.merge(output: file_name)
+      exporter = @current_app.get(exporter_name.to_sym).new permitted_params.merge(output: file_name)
       photo_urls = exporter.export #assignment to work for photo exports only at the moment
 
       if params[:export_endpoint] == 'photo_export'
