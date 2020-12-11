@@ -8,8 +8,11 @@ module Exporters
     def initialize params={}
       @params = normalize params
       @output_file = @params[:output]
-      @locale = @params[:locale]
       @max_flatten_level = 1
+
+      now = @params[:locale].try :adjust_for_timezone, DateTime.now.beginning_of_day
+      @params[:date_from] = @params[:date_from].present? ? DateTime.parse(@params[:date_from]) : now
+      @params[:date_to] = @params[:date_to].present? ? DateTime.parse(@params[:date_to]) : now
     end
 
     def set_headers list
