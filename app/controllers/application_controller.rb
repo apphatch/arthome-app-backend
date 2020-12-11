@@ -31,7 +31,7 @@ class ApplicationController < ActionController::Base
 
     params[:app] = @current_app.get(:app)
     params[:app_group] = @current_app.get(:app_group)
-    params[:locale] = Locality::BaseLocality.make @current_user.locale
+    params[:locale] = Locality::BaseLocality.make @current_user.locale if @current_user.present?
   end
 
   def check_user_is_logged_in

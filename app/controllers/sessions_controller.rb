@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :set_default_params, only: [:create, :destroy]
+  skip_before_action :set_default_params, only: [:destroy]
   skip_before_action :check_user_is_logged_in, only: [:create, :destroy]
 
   def new
@@ -7,7 +7,8 @@ class SessionsController < ApplicationController
 
   def create
     # LOGIN
-    user = User.active.find_by_username params[:username]
+    app_group = @current_app.get(:app_group)
+    user = User.active.with_app_group(app_group).find_by_username params[:username]
     head 404 unless user.present?
     head 401 unless user.failed_login_attempts < 5
 
