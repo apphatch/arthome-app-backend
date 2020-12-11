@@ -7,19 +7,16 @@ module Exporters
     end
 
     def export
-      @params[:date_from] = DateTime.now.beginning_of_day unless @params[:date_from].present?
-      @params[:date_to] = DateTime.now.end_of_day unless @params[:date_to].present?
-
       set_headers [
         'Updated At', 'Outlet', 'Outlet Name', 'Sub category',
         'Length of Unilever', 'Length of Competitor', 'OSA (Checker) Code'
       ]
 
-      mapper = Mappers::SosExportMapper.new locale: @locale
+      mapper = Mappers::SosExportMapper.new locale: @params[:locale]
       set_data mapper.map(ChecklistItem.active.includes(:checklist).filter{ |c|
         c.checklist.checklist_type == 'sos' &&
-          date_filter(c.checklist, @params) &&
-          yearweek_filter(c.checklist, @params) &&
+          date_filter(c.checklist, @params.slice(:date_from, :date_to)) &&
+          yearweek_filter(c.checklist, @params.slice(:yearweek)) &&
           c.data[:error].nil?
       }).compact
 
