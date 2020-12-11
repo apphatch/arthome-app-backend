@@ -4,7 +4,7 @@ module HashNormalizable
   included do
     def normalize hash
       hash.each do |k, v|
-        hash[k] = nil if v.in?(['undefined', 'null'])
+        hash[k] = nil if v.in?(['undefined', 'null', ''])
       end
 
       return hash
