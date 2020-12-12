@@ -16,16 +16,16 @@ module Importers
       index :full_address, ['Store Address']
       index :city, ['City']
       index :district, ['Quận']
-      index :distributor, ['NPP']
-      index :shop_type_2, ['Store Type (MT/DT/CVS)']
+      index_temp :distributor, ['NPP']
+      index_temp :shop_type_2, ['Store Type (MT/DT/CVS)']
       associate :users, ['US_ID'], as: :string
 
       super do |attributes, temp_attributes, assocs, row|
         assocs[:users] = User.active.find_by_importing_id assocs[:users]
 
         attributes[:custom_attributes] = {
-          distributor: attributes[:distributor],
-          shop_type_2: attributes[:shop_type_2]
+          distributor: temp_attributes[:distributor],
+          shop_type_2: temp_attributes[:shop_type_2]
         }
         [attributes, temp_attributes, assocs]
       end
