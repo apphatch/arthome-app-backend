@@ -28,6 +28,8 @@ class ApplicationController < ActionController::Base
   def set_app_info
     head 404 and return unless request.headers['App'].present?
     @current_app = AppRouters::BaseFactory.make request.headers['App'].downcase
+    @current_locale = Locality::BaseLocality.make(@current_user.locale) if @current_user.present?
+    Time.zone = @current_locale.get(:timezone) if @current_locale.present?
   end
 
   def check_user_is_logged_in
@@ -56,10 +58,8 @@ class ApplicationController < ActionController::Base
     p = p.to_h.merge(
       app: @current_app.get(:app),
       app_group: @current_app.get(:app_group),
+      locale: @current_locale
     )
-    p = p.merge(
-      locale: Locality::BaseLocality.make(@current_user.locale)
-    ) if @current_user.present?
     return p.deep_symbolize_keys
   end
 end
