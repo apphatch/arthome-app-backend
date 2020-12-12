@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
 
   before_action :check_user_is_logged_in
-  before_action :set_app
+  before_action :set_app_info
 
   def auth_info
     if request.headers['Authorization'].present?
@@ -25,7 +25,7 @@ class ApplicationController < ActionController::Base
     return @current_user
   end
 
-  def set_app
+  def set_app_info
     head 404 and return unless request.headers['App'].present?
     @current_app = AppRouters::BaseFactory.make request.headers['App'].downcase
   end

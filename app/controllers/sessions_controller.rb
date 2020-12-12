@@ -1,5 +1,5 @@
 class SessionsController < ApplicationController
-  skip_before_action :set_app, only: [:destroy]
+  skip_before_action :set_app_info, only: [:destroy]
   skip_before_action :check_user_is_logged_in, only: [:create, :destroy]
 
   def new
