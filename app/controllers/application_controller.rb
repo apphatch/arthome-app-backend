@@ -52,8 +52,8 @@ class ApplicationController < ActionController::Base
   end
 
   def permitted_params p
-    return {} unless p.present? && p.instance_of?(Hash)
-    p = p.merge(
+    return {} unless p.present? && p.instance_of?(ActiveSupport::Parameters)
+    p = p.to_h.merge(
       app: @current_app.get(:app),
       app_group: @current_app.get(:app_group),
     )
