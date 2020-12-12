@@ -60,6 +60,6 @@ class ApplicationController < ActionController::Base
     p = p.merge(
       locale: Locality::BaseLocality.make(@current_user.locale)
     ) if @current_user.present?
-    return p
+    return p.deep_symbolize_keys
   end
 end
