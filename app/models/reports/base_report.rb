@@ -7,12 +7,8 @@ module Reports
       @headers = []
       @data = []
 
-      locale = @params[:locale]
-      beginning_of_day = locale.try :adjust_for_timezone, DateTime.now.beginning_of_day
-      end_of_day = locale.try :adjust_for_timezone, DateTime.now.end_of_day
-
-      @params[:date_from] = @params[:date_from].present? ? DateTime.parse(@params[:date_from]) : beginning_of_day
-      @params[:date_to] = @params[:date_to].present? ? DateTime.parse(@params[:date_to]) : end_of_day
+      @params[:date_from] = @params[:date_from].present? ? Time.parse(@params[:date_from]) : Time.current.beginning_of_day
+      @params[:date_to] = @params[:date_to].present? ? Time.parse(@params[:date_to]) : Time.current.end_of_day
     end
 
     def set_headers headers
