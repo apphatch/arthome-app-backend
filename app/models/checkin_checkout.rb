@@ -11,13 +11,13 @@ class CheckinCheckout < ApplicationRecord
   serialize :coords, Hash
 
   scope :today, -> { where(
-    created_at: current_time.beginning_of_day..current_time.end_of_day
+    created_at: Time.current.beginning_of_day..Time.current.end_of_day
   )}
   scope :this_week, -> { where(
-    created_at: current_time.beginning_of_week..current_time.end_of_week
+    created_at: Time.current.beginning_of_week..Time.current.end_of_week
   )}
   scope :month_to_date, -> { where(
-    created_at: (current_time-1.month)..current_time
+    created_at: (Time.current.last_month)..Time.current
   )}
   scope :user, -> { where.not(user: nil) }
   scope :shop, -> { where(user: nil) }
