@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   #protect_from_forgery with: :exception
 
   before_action :check_user_is_logged_in
-  before_action :set_default_params
+  before_action :set_app
 
   def auth_info
     if request.headers['Authorization'].present?
@@ -25,13 +25,9 @@ class ApplicationController < ActionController::Base
     return @current_user
   end
 
-  def set_default_params
+  def set_app
     head 404 and return unless request.headers['App'].present?
     @current_app = AppRouters::BaseFactory.make request.headers['App'].downcase
-
-    params[:app] = @current_app.get(:app)
-    params[:app_group] = @current_app.get(:app_group)
-    params[:locale] = Locality::BaseLocality.make @current_user.locale if @current_user.present?
   end
 
   def check_user_is_logged_in
@@ -53,5 +49,17 @@ class ApplicationController < ActionController::Base
     user.update jwt: token
     response.headers['Authorization'] = token
     return token
+  end
+
+  def permitted_params p
+    return {} unless p.present? && p.instance_of?(Hash)
+    p = p.merge(
+      app: @current_app.get(:app),
+      app_group: @current_app.get(:app_group),
+    )
+    p = p.merge(
+      locale: Locality::BaseLocality.make(@current_user.locale)
+    ) if @current_user.present?
+    return p
   end
 end

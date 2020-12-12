@@ -70,6 +70,6 @@ class IoController < ApplicationController
   end
 
   def permitted_params
-    return params.permit(:yearweek, :date_from, :date_to)
+    super params.permit(:yearweek, :date_from, :date_to)
   end
 end
