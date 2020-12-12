@@ -50,7 +50,8 @@ class ChecklistItemsController < ApplicationController
     ].all?
       render json: {error: 'missing checklist_id or stock_id'} and return
     end
-    return params
+    params.permit!
+    super params
   end
 
   def find_record

@@ -53,11 +53,11 @@ class UsersController < ApplicationController
   end
 
   def permitted_params
-    return params.permit(:username, :name, :password, :importing_id, :app, :app_group)
+    super params.permit(:username, :name, :password, :importing_id, :app, :app_group)
   end
 
   def user_params
-    return params.permit(:username, :name, :password, :importing_id, :app_group)
+    super params.permit(:username, :name, :password, :importing_id, :app_group)
   end
 
   def find_record

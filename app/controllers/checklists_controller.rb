@@ -55,7 +55,7 @@ class ChecklistsController < ApplicationController
 
   def update
     find_record do |checklist|
-      checklist.update params
+      checklist.update permitted_params
       render json: checklist
     end
   end
@@ -89,7 +89,8 @@ class ChecklistsController < ApplicationController
     ].all?
       render json: {error: 'missing user_id or shop_id'} and return
     end
-    return params
+    params.permit!
+    super params
   end
 
   def find_record

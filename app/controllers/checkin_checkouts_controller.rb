@@ -42,7 +42,8 @@ class CheckinCheckoutsController < ApplicationController
   end
 
   def permitted_params
-    return params
+    params.permit!
+    super params
   end
 
   def find_record
