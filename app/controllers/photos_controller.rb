@@ -4,7 +4,7 @@ class PhotosController < ApplicationController
       image: params[:photo],
       time: params[:time],
       name: params[:name],
-      app_group: params[:app_group]
+      app_group: @current_app.get(:app_group)
     )
     render json: photo.image_path
   end
