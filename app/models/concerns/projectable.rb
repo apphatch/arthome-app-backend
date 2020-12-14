@@ -1,12 +1,12 @@
 module Projectable
   # extends active records only
   def project *attrs, take: nil, compact: true, columnize: false
-    message = ["--> projection of #{attrs}"]
     if attrs.length == 1
       projection = self.all.collect{|record| record.send(attrs.first)}
     else
       projection = self.all.collect{|record| record.attributes.select{|k, v| k.to_sym.in?(attrs)}}
     end
+    message = ["--> projection of #{attrs} for #{projection.length} records"]
 
     if take.present? && take > 0
       message << "take #{take}"
@@ -25,7 +25,7 @@ module Projectable
         element.each do |k, v|
           word = "#{k}: \e[1m#{v}\e[0m"
           # +2 invisible characters for bold font
-          line << word + " "*(20 - (word.length+2) % 10)
+          line << word + " "*(15 - (word.length+2) % 10)
         end
         puts line
       end
