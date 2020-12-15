@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_155545) do
     t.string "app_group"
     t.json "coords"
     t.boolean "exclude_from_search", default: false
+    t.index ["exclude_from_search"], name: "index_checkin_checkouts_on_exclude_from_search"
     t.index ["shop_id"], name: "index_checkin_checkouts_on_shop_id"
     t.index ["user_id"], name: "index_checkin_checkouts_on_user_id"
   end
@@ -67,6 +68,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_155545) do
     t.string "app_group"
     t.boolean "exclude_from_search", default: false
     t.index ["checklist_id"], name: "index_checklist_items_on_checklist_id"
+    t.index ["exclude_from_search"], name: "index_checklist_items_on_exclude_from_search"
     t.index ["stock_id"], name: "index_checklist_items_on_stock_id"
   end
 
@@ -85,6 +87,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_155545) do
     t.datetime "end_date"
     t.boolean "exclude_from_search", default: false
     t.index ["date"], name: "index_checklists_on_date"
+    t.index ["exclude_from_search"], name: "index_checklists_on_exclude_from_search"
     t.index ["shop_id"], name: "index_checklists_on_shop_id"
     t.index ["user_id"], name: "index_checklists_on_user_id"
   end
@@ -132,6 +135,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_155545) do
     t.json "custom_attributes"
     t.string "app_group"
     t.boolean "exclude_from_search", default: false
+    t.index ["exclude_from_search"], name: "index_shops_on_exclude_from_search"
   end
 
   create_table "shops_stocks", id: false, force: :cascade do |t|
@@ -160,6 +164,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_155545) do
     t.string "role", default: "stock"
     t.string "app_group"
     t.boolean "exclude_from_search", default: false
+    t.index ["exclude_from_search"], name: "index_stocks_on_exclude_from_search"
   end
 
   create_table "users", force: :cascade do |t|
@@ -177,6 +182,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_155545) do
     t.string "app_group"
     t.string "locale"
     t.boolean "exclude_from_search", default: false
+    t.index ["exclude_from_search"], name: "index_users_on_exclude_from_search"
   end
 
   create_table "worker_requests", force: :cascade do |t|
