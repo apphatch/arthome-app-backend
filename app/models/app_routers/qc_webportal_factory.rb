@@ -10,6 +10,7 @@ module AppRouters
       use Importers::QcChecklistsImporter, as: :checklist_importer
 
       use Exporters::QcExporter, as: :qc_exporter
+      use Exporters::QcOverviewExporter, as: :qc_overview_exporter
 
       use Reports::QcOverviewReport, as: :summary_report
       use Reports::QcDetailReport, as: :detail_report
