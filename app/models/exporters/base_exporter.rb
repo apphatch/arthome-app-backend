@@ -7,6 +7,7 @@ module Exporters
 
     def initialize params={}
       @params = normalize params
+      @date_given = @params[:date_from].present?
       @output_file = @params[:output]
       @max_flatten_level = 1
 

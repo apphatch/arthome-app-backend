@@ -11,10 +11,7 @@ module Exporters
         'SKU Name', 'SKU', 'NSX or HSD', 'Số lô', 'Lỗi', 'Green', 'Yellow', 'Red', 'Image'
       ]
 
-      criteria = {}
-      if @params[:date_from]
-        criteria = criteria.merge(updated_at: @params[:date_from]..@params[:date_to])
-      end
+      criteria = {updated_at: @params[:date_from]..@params[:date_to]}
 
       mapper = Mappers::QcExportMapper.new locale: @params[:locale]
       set_data mapper.map(

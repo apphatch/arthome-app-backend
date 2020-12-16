@@ -10,10 +10,17 @@ module Exporters
         'HPC thực', 'IC thực', 'Xanh', 'Vàng', 'Đỏ'
       ]
 
-      checklists = Checklist.active.where(checklist_type: 'qc')
+      criteria = {date: @params[:date_from]..@params[:date_to]}
+      unless @date_given
+        criteria = criteria.merge(date: Time.current.beginning_of_month..Time.current.end_of_month)
+      end
 
       mapper = Mappers::QcOverviewReportMapper.new locale: @params[:locale]
-      set_data mapper.map(checklists).compact
+      set_data mapper.map(
+        Checklist.active.with_app_group('qc').where(
+          criteria.merge(exclude_from_search: false)
+        )
+      ).compact
 
       super
     end
