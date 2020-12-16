@@ -6,6 +6,7 @@ class ApplicationRecord < ActiveRecord::Base
   scope :with_app_group, -> (app_group) { where(app_group: app_group) }
   scope :active, -> { where(deleted: false) }
   scope :inactive, -> { where(deleted: true) }
+  scope :searchable, -> { where(exclude_from_search: false)}
 
   def deleted!
     self.deleted = true

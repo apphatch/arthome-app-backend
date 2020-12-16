@@ -87,7 +87,7 @@ class User < ApplicationRecord
 
         checklists.each do |c|
           c.checklist_items.each do |ci|
-            ci.update data: {error: "cửa hàng đóng cửa"}
+            ci.update data: {error: "cửa hàng đóng cửa"}, exclude_from_search: true
           end
           c.completed!
         end
