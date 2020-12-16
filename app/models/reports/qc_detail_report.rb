@@ -1,7 +1,5 @@
 module Reports
   class QcDetailReport < BaseReport
-    include Filterable::ByDate
-
     def initialize params={}
       super params
     end
@@ -11,14 +9,17 @@ module Reports
         'Ngày', 'Nhân viên', 'Cửa hàng', 'Địa chỉ', 'SKU' ,'Mức cảnh báo', 'Lỗi', 'Hình ảnh'
       ]
 
-      checklist_items = ChecklistItem.active.where(app_group: 'qc').collect{|c| c if (
-          c.data != {} &&
-          updated_at_filter(c, @params.slice(:date_to, :date_to))
-        )
-      }.compact
+      criteria = {}
+      if @params[:date_from].present?
+        criteria = criteria.merge(updated_at: @params[:date_from]..@params[:date_to])
+      end
 
       mapper = Mappers::QcDetailReportMapper.new locale: @params[:locale]
-      set_data mapper.map checklist_items
+      set_data mapper.map(
+        ChecklistItem.active.includes(:checklist).with_app_group('qc').where(
+          criteria.merge(exclude_from_search: false)
+        ).where.not(data: {})
+      ).compact
 
       data = []
       @data.each do |entry|
