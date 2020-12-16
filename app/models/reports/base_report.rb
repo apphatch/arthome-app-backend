@@ -6,6 +6,7 @@ module Reports
       @params = normalize params
       @headers = []
       @data = []
+      @date_given = @params[:date_from].present?
 
       @params[:date_from] = @params[:date_from].present? ? Time.parse(@params[:date_from]) : Time.current.beginning_of_day
       @params[:date_to] = @params[:date_to].present? ? Time.parse(@params[:date_to]) : Time.current.end_of_day

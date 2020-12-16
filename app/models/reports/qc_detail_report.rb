@@ -9,10 +9,7 @@ module Reports
         'Ngày', 'Nhân viên', 'Cửa hàng', 'Địa chỉ', 'SKU' ,'Mức cảnh báo', 'Lỗi', 'Hình ảnh'
       ]
 
-      criteria = {}
-      if @params[:date_from].present?
-        criteria = criteria.merge(updated_at: @params[:date_from]..@params[:date_to])
-      end
+      criteria = {updated_at: @params[:date_from]..@params[:date_to]}
 
       mapper = Mappers::QcDetailReportMapper.new locale: @params[:locale]
       set_data mapper.map(
