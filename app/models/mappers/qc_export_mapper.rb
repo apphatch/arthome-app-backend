@@ -6,7 +6,7 @@ module Mappers
       stock = checklist_item.stock
       common = [
         @locale.adjust_for_timezone(
-          checklist_item.created_at,
+          checklist_item.updated_at,
         ),
         shop.try(:store_type),
         shop.try(:city),
