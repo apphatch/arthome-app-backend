@@ -18,7 +18,7 @@ module Exporters
 
       mapper = Mappers::QcExportMapper.new locale: @params[:locale]
       set_data mapper.map(
-        ChecklistItem.active.includes(:checklist).where(
+        ChecklistItem.active.with_app_group('qc').includes(:checklist).where(
           checklists: criteria, exclude_from_search: false
         ).where.not(data: {})
       ).compact
