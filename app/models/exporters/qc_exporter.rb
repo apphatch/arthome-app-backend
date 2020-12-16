@@ -13,11 +13,17 @@ module Exporters
         'SKU Name', 'SKU', 'NSX or HSD', 'Số lô', 'Lỗi', 'Green', 'Yellow', 'Red', 'Image'
       ]
 
+      criteria = {}
+      if @params[:date_from]
+        criteria = criteria.merge(updated_at: @params[:date_from]..@params[:date_to])
+      end
+
       mapper = Mappers::QcExportMapper.new locale: @params[:locale]
-      set_data mapper.map ChecklistItem.active.where(app_group: 'qc').filter{ |c|
-          c.data != {} &&
-          updated_at_filter(c, @params.slice(:date_from, :date_to))
-      }
+      set_data mapper.map(
+        ChecklistItem.active.includes(:checklist).where(
+          checklists: criteria, exclude_from_search: false
+        ).where.not(data: {})
+      ).compact
       set_flatten_level 2
 
       super

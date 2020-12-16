@@ -1,7 +1,5 @@
 module Exporters
   class RentalExporter < BaseExporter
-    include Filterable::ByDate
-
     def initialize params={}
       super params
     end
@@ -13,13 +11,18 @@ module Exporters
         'Available', 'Inline', 'Png', 'OSA (Checker) Code'
       ]
 
+      criteria = {checklist_type: 'rental'}
+      if @params[:date_from]
+        criteria = criteria.merge(date: @params[:date_from]..@params[:date_to])
+      end
+      criteria = criteria.merge(yearweek: @params[:yearweek]) if @params[:yearweek].present?
+
       mapper = Mappers::RentalExportMapper.new locale: @params[:locale]
-      set_data mapper.map(ChecklistItem.active.includes(:checklist).filter{ |c|
-        c.checklist.checklist_type == 'rental' &&
-          date_filter(c.checklist, @params.slice(:date_from, :date_to)) &&
-          yearweek_filter(c.checklist, @params.slice(:yearweek)) &&
-          c.data[:error].nil?
-      }).compact
+      set_data mapper.map(
+        ChecklistItem.active.includes(:checklist).where(
+          checklists: criteria, exclude_from_search: false
+        )
+      ).compact
 
       super
     end

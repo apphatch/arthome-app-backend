@@ -1,7 +1,5 @@
 module Exporters
   class OosExporter < BaseExporter
-    include Filterable::ByDate
-
     def initialize params={}
       super params
     end

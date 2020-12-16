@@ -1,7 +1,5 @@
 module Exporters
   class OsaCheckinCheckoutExporter < BaseExporter
-    include Filterable::ByDate
-
     def initialize params={}
       super params
     end
@@ -12,11 +10,17 @@ module Exporters
         'Note', 'Date', 'Long', 'Lat', 'Checkin/checkout'
       ]
 
+      criteria = {}
+      if @params[:date_from]
+        criteria = criteria.merge(created_at: @params[:date_from]..@params[:date_to])
+      end
+
       mapper = Mappers::OsaCheckinCheckoutExportMapper.new locale: @params[:locale]
-      set_data mapper.map(CheckinCheckout.active.user.filter{ |c|
-        c.app_group == 'osa' &&
-          created_at_filter(c, @params.slice(:date_from, :date_to))
-      }).compact
+      set_data mapper.map(
+        CheckinCheckout.active.user.with_app_group('osa').where(
+          criteria.merge(exclude_from_search: false)
+        )
+      ).compact
 
       super
     end
