@@ -1,7 +1,6 @@
 module Exporters
   class OsaPhotoExporter < BaseExporter
     #TODO: refine this
-    include Filterable::ByDate
 
     def initialize params={}
       super params
