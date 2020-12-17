@@ -34,8 +34,9 @@ module Locality
       return @definition
     end
 
-    def self.make code='vn', params={}
-      locality = self.localities[code.downcase.to_sym] || self.localities[:vn]
+    def self.make code=nil, params={}
+      return nil if code.nil?
+      locality = self.localities[code.downcase.to_sym]
       return locality.new params
     end
 
