@@ -28,8 +28,10 @@ class ApplicationController < ActionController::Base
   def set_app_info
     head 404 and return unless request.headers['App'].present?
     @current_app = AppRouters::BaseFactory.make request.headers['App'].downcase
+
     @current_locale = Locality::BaseLocality.make(@current_user.locale) if @current_user.present?
-    Time.zone = @current_locale.get(:timezone) if @current_locale.present?
+    @current_locale ||= @current_app.get(:default_locale)
+    Time.zone = @current_locale.get(:timezone)
   end
 
   def check_user_is_logged_in
