@@ -3,6 +3,8 @@ module AppRouters
     def declare
       use 'osa-webportal', as: :app
       use 'osa', as: :app_group
+      use Locality::BaseLocality.make('vn'), as: :default_locale
+
       use Importers::OsaUsersImporter, as: :user_importer
       use Importers::OsaStocksImporter, as: :stock_importer
       use Importers::OsaShopsImporter, as: :shop_importer

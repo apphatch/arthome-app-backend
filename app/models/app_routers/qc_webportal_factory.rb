@@ -3,6 +3,7 @@ module AppRouters
     def declare
       use 'qc-webportal', as: :app
       use 'qc', as: :app_group
+      use Locality::BaseLocality.make('vn'), as: :default_locale
 
       use Importers::QcUsersImporter, as: :user_importer
       use Importers::QcStocksImporter, as: :stock_importer
