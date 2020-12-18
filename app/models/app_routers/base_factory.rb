@@ -6,13 +6,7 @@ module AppRouters
       @object_mappings = {
         app: nil,
         app_group: nil,
-        locale: Locality::BaseLocality,
-        user_importer: Importers::BaseImporter,
-        shop_importer: Importers::BaseImporter,
-        stock_importer: Importers::BaseImporter,
-        checklist_importer: Importers::BaseImporter,
-        checklist_item_importer: Importers::BaseImporter,
-        master_importer: Importers::BaseImporter,
+        default_locale: nil
       }
       @name = nil
     end
