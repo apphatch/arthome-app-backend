@@ -17,7 +17,9 @@ module Projectable
       projection = projection.uniq
     end
     message << "columnized" if columnize
+    projection = projection.collect{|element| element.nil? ? "---" : element}
 
+    #display
     puts "\e[1m#{ message.join(", ") }\e[0m"
     if columnize
       projection.each do |element|
