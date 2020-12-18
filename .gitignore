@@ -54,3 +54,6 @@ ops/config.yml
 # Ignore excel files
 *.xlsx
 *.xls
+
+# Ignore local environment variables
+.env.development.local
