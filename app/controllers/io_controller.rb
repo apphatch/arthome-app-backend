@@ -29,19 +29,17 @@ class IoController < ApplicationController
       importer_name = params[:import_endpoint].to_s + 'er'
       importer_klass = @current_app.get importer_name.to_sym
 
-      params[:files].each do |f|
-        #TODO: resque still doesn't work correctly
-        #req = WorkerRequest.create(
-        #  worker_class: importer_klass.to_s,
-        #  file: f
-        #)
-        #Resque.enqueue(ImportJob, req.id)
-        importer = importer_klass.new(
-          file: f,
+      params[:files].each do |file|
+        path_to_file = save_file_to_storage(file)
+
+        req = WorkerRequest.create(
+          worker_class: importer_klass.to_s,
+          file_path: path_to_file,
           app: @current_app.get(:app),
           app_group: @current_app.get(:app_group)
         )
-        importer.import
+
+        Resque.enqueue(ImportJob, req.id)
       end
       head 201
     rescue => e
@@ -67,6 +65,16 @@ class IoController < ApplicationController
       Rails.logger.warn e
       head 500
     end
+  end
+
+  private
+
+  def save_file_to_storage(file)
+    file_name = "import/#{generate_salted_name([params[:import_endpoint], 'results'], extension: '.xls')}"
+    path_to_file = "#{ENV['IMPORT_STORAGE']}#{file_name}"
+    FileUtils.mv(File.open(file.tempfile, 'r'), path_to_file)
+
+    path_to_file
   end
 
   def permitted_params
