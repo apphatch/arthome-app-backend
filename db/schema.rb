@@ -192,6 +192,7 @@ ActiveRecord::Schema.define(version: 2020_12_19_201509) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "app_group"
     t.string "app"
+    t.string "file_path"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
