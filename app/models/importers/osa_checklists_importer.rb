@@ -19,8 +19,6 @@ module Importers
       associate :user, ['OSA Code'], as: :string
       associate :shop, ['Outlet', 'Outlet Name'], as: :string
 
-      skip_if_record_exists
-
       super do |attributes, temp_attributes, assocs, row|
         attributes[:checklist_type] = attributes[:checklist_type].downcase
         attributes[:date] = DateTime.parse attributes[:date] if attributes[:date].present?

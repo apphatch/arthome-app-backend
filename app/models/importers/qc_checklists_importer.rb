@@ -15,8 +15,6 @@ module Importers
       index :date, ['Date'], as: :string
       associate :user, ['US_ID'], as: :string
 
-      skip_if_record_exists
-
       super do |attributes, temp_attributes, assocs, row|
         attributes[:checklist_type] = 'qc'
         if attributes[:date].present?

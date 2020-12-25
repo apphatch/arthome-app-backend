@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_12_15_155545) do
+ActiveRecord::Schema.define(version: 2020_12_23_092426) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -87,6 +87,7 @@ ActiveRecord::Schema.define(version: 2020_12_15_155545) do
     t.datetime "end_date"
     t.boolean "exclude_from_search", default: false
     t.index ["date"], name: "index_checklists_on_date"
+    t.index ["end_date"], name: "index_checklists_on_end_date"
     t.index ["exclude_from_search"], name: "index_checklists_on_exclude_from_search"
     t.index ["shop_id"], name: "index_checklists_on_shop_id"
     t.index ["user_id"], name: "index_checklists_on_user_id"

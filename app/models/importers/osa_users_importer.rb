@@ -17,8 +17,6 @@ module Importers
       index :name, ['name', 'OSA Checker Name']
       index :role, ['role']
 
-      skip_if_record_exists
-
       super
     end
 
