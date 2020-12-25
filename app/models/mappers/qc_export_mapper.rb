@@ -14,7 +14,7 @@ module Mappers
         shop.try(:name),
         shop.try(:full_address),
         user.try(:name),
-        'Unilever',
+        stock.custom_attributes[:uc],
         stock.custom_attributes[:packaging],
         stock.try(:category),
         stock.custom_attributes[:group],
