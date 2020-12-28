@@ -1,5 +1,57 @@
 module Mappers
   class QcExportMapper < BaseMapper
+    def initialize params={}
+      @dictionary = {
+        "Không lỗi" => "No Error",
+        "Mã vạch" => "Bar Code-Readability/Missing/Position",
+        "Dơ, bẩn" => "Clean-Soil/Dirt/Grease",
+        "Móp/nhăn" => "Damage-Crush / Dent / Crease / Tear",
+        "Thủng" => "Daiamge-Puncture",
+        "Màu in" => "Print-Colour",
+        "Chữ in" => "Print-Text",
+        "In tràn đường cắt" => "Print-Wrapper or Label or Sachet Film Cut/Orientation",
+        "Thiếu bộ phận" => "Assembly-Missing",
+        "Sai bộ phận" => "Assembly-Wrong",
+        "Bụi" => "Clean-Dust",
+        "Trầy xước" => "Damage-Scratches / Scuffing",
+        "Lệch trọng lượng" => "Deviation-Weight",
+        "Vị trí nhãn" => "Label / Sleeve /Wrapper -Position",
+        "Mã sản xuất bị thiếu/không đọc được/vị trí" => "Production Code-missing / illegible / position",
+        "Mở nắp" => "Opening Device - Loose Fit",
+        "Cảm quan" => "Product Appearance",
+        "Màu sắc/tách/lắng đọng sản phẩm" => "Product Colour / separation / sedimentation",
+        "Vật lạ" => "Foreign Bodies",
+        "Hư seal" => "Seal - Damage",
+        "Vật sắc" => "Sharp Edges",
+        "Nứt" => "Damage-Cracking",
+        "Tách lớp" => "Delamination",
+        "Chiều cao sản phẩm bên trong" => "Fill Height Variation",
+        "Độ dính nhãn" => "Label / Sleeve-Adhesion",
+        "Hư nắp" => "Opening Device - Pour Damaged",
+        "Rách bộ phận mở hình chữ V" => "Opening Device - Tear Notch",
+        "Thiết bị mở bị rách" => "Opening Device - Tear Strip",
+        "Bám đá" => "Pack wet / Ice",
+        "Thủng" => "Saceht String - Perforation",
+        "Vị trí seal" => "Seal - Align",
+        "Dư" => "Seal - Join",
+        "Bung gói" => "Wrapper-Overwrapper-Integrity",
+        "Keo dính" => "Adhesion-Glue",
+        "Bong bóng khí" => "Air Pocket / Bubble",
+        "Phồng" => "Blown / inflated Pack",
+        "Hở seal" => "Crimp Seal / lid position",
+        "Lệch seal" => "Flaps/Wrap-Skewing",
+        "Rò rỉ" => "Internal Leakage",
+        "Hư nhãn" => "Label / Sleeve-Damage",
+        "Bám nắp" => "Lid Smearing",
+        "Bung" => "Sleeve - Open",
+        "Hư chốt" => "Tamper Proof",
+        "Khoá" => "Trigger - Locking Device",
+        "Lệch vòi" => "Trigger / Pump / Actuator - Alignment",
+      }
+
+      super
+    end
+
     def apply_each checklist_item
       shop = checklist_item.checklist.try(:shop)
       user = checklist_item.checklist.try(:user)
@@ -26,7 +78,7 @@ module Mappers
         common + [
           entry["HSD"].present? ? entry["HSD"] : entry["NSX"],
           entry["Số lô"],
-          entry["Lỗi"],
+          @dictionary[entry["Lỗi"]] || entry["Lỗi"],
           entry["Mức cảnh báo"] == "Xanh" ? 1 : 0,
           entry["Mức cảnh báo"] == "Vàng" ? 1 : 0,
           entry["Mức cảnh báo"] == "Đỏ" ? 1 : 0,
