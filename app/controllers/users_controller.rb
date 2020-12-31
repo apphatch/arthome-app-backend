@@ -3,7 +3,10 @@ require 'base64'
 class UsersController < ApplicationController
   def index
     allow :admin; return if performed?
-    render json: User.where(deleted: false).order(:created_at)
+    render json: User.where(
+      deleted: false,
+      app_group: @current_app.get(:app_group)
+    ).order(:created_at)
   end
 
   def show
