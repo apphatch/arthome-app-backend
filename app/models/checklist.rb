@@ -15,10 +15,6 @@ class Checklist < ApplicationRecord
   scope :today, -> { where(
     date: Time.current.beginning_of_day..Time.current.end_of_day
   )}
-  scope :this_week, -> { where(
-    date: Time.current.beginning_of_week..Time.current.end_of_week,
-    end_date: Time.current.beginning_of_week..Time.current.end_of_week
-  )}
   scope :this_month, -> { where(
     date: Time.current.beginning_of_month..Time.current.end_of_month,
     end_date: Time.current.beginning_of_month..Time.current.end_of_month
@@ -38,7 +34,15 @@ class Checklist < ApplicationRecord
     raise Exception.new 'must provide app header' if app.nil?
 
     checklists = self.with_app_group('osa').not_date_ranged.today if app.name == 'osa-mobile'
-    checklists = self.with_app_group('qc').date_ranged.this_month.incompleted if app.name == 'qc-mobile'
+    if app.name == 'qc-mobile'
+      end_time = Time.current.beginning_of_month + 26.days
+      start_time = end_time - 1.month + 1.day
+      if Time.current.day > 26
+        start_time += 1.month
+        end_time += 1.month
+      end
+      checklists = self.with_app_group('qc').where(date: start_time..end_time).incompleted
+    end
     return checklists
   end
 

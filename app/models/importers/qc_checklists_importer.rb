@@ -19,9 +19,8 @@ module Importers
         attributes[:checklist_type] = 'qc'
         if attributes[:date].present?
           begin
-            date = DateTime.parse attributes[:date]
-            attributes[:date] = date.beginning_of_month
-            attributes[:end_date] = date.end_of_month
+            attributes[:date] = Time.parse attributes[:date]
+            attributes[:end_date] = attributes[:date]+ 1.month
           rescue => e
             Rails.logger.warn "Something wrong with date parse"
             Rails.logger.warn e
