@@ -13,9 +13,6 @@ class CheckinCheckout < ApplicationRecord
   scope :today, -> { where(
     created_at: Time.current.beginning_of_day..Time.current.end_of_day
   )}
-  scope :this_week, -> { where(
-    created_at: Time.current.beginning_of_week..Time.current.end_of_week
-  )}
   scope :month_to_date, -> { where(
     created_at: (Time.current.last_month)..Time.current
   )}
