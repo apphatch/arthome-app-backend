@@ -35,8 +35,8 @@ class Checklist < ApplicationRecord
 
     checklists = self.with_app_group('osa').not_date_ranged.today if app.name == 'osa-mobile'
     if app.name == 'qc-mobile'
-      end_time = Time.current.beginning_of_month + 26.days
-      start_time = end_time - 1.month + 1.day
+      end_time = Time.current.beginning_of_month + 24.days
+      start_time = end_time - 1.month
       if Time.current.day > 26
         start_time += 1.month
         end_time += 1.month
