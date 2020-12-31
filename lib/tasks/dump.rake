@@ -1,12 +1,14 @@
 desc "data dump scripts"
 namespace :dump do
-  task :osa_photos_to_disk, [:start_time]=> [:environment] do |t, args|
+  task :osa_photos_to_disk, [:end_time]=> [:environment] do |t, args|
     Time.zone = 'Bangkok'
     begin
-      start_time = Time.zone.parse args[:start_time]
+      end_time = Time.current
+      end_time = Time.zone.parse args[:end_time] if args[:end_time].present?
+      start_time = end_time - 7.days
       Utils::OsaPhotoDumper.dump_to_disk Photo.active.where(
         app_group: 'osa',
-        date: start_time..(start_time + 7.days)
+        date: start_time..end_time
       )
     rescue => e
       puts e
