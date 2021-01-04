@@ -62,7 +62,7 @@ class Shop < ApplicationRecord
         start_time += 1.month
         end_time += 1.month
       end
-      checklists = self.with_app_group('qc').where(date: start_time..end_time).incompleted
+      checklists = self.checklists.active.where(app_group: 'qc', user: current_user, date: start_time..end_time).incompleted
     end
 
     #@status.data[:incompleted_checklists_count] = checklists.count{ |c|
