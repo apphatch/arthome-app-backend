@@ -1,5 +1,5 @@
 class ChecklistItemSerializer < ApplicationSerializer
-  attributes :id, :data, :stock_name,
+  attributes :id, :data, :stock_name, :importing_id,
     :category, :sub_category, :mechanic, :quantity, :barcode,
     :rental_type, :photo, :role
 
