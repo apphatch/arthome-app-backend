@@ -3,6 +3,10 @@ class ChecklistItemSerializer < ApplicationSerializer
     :category, :sub_category, :mechanic, :quantity, :barcode,
     :rental_type, :photo, :role
 
+  def importing_id
+    object.stock.try(:importing_id)
+  end
+
   def stock_name
     #TODO: refac this
     return object.stock.try(:sub_category) if object.checklist_type == 'sos'
