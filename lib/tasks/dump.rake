@@ -8,7 +8,7 @@ namespace :dump do
       start_time = end_time - 7.days
       Utils::OsaPhotoDumper.dump_to_disk Photo.active.where(
         app_group: 'osa',
-        date: start_time..end_time
+        created_at: start_time..end_time
       )
     rescue => e
       puts e
