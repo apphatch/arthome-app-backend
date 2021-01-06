@@ -5,7 +5,7 @@ module Mappers
         "Không lỗi" => "No Error",
         "Mã vạch" => "Bar Code-Readability/Missing/Position",
         "Dơ, bẩn" => "Clean-Soil/Dirt/Grease",
-        "Móp/nhăn" => "Damage-Crush / Dent / Crease / Tear",
+        "Móp/nhăn, Hỏng bao bì" => "Damage-Crush / Dent / Crease / Tear",
         "Thủng" => "Daiamge-Puncture",
         "Màu in" => "Print-Colour",
         "Chữ in" => "Print-Text",
