@@ -4,6 +4,11 @@
         "values": ["Y","N"],
         "required": true
     },
+    "Void": {
+        "type": "radio",
+        "values": ["Y","N"],
+        "required": true
+    },
     "Inline": {
         "type": "radio",
         "values": ["Y","N"],

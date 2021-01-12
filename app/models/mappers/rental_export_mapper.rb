@@ -15,6 +15,7 @@ module Mappers
         stock.try(:sub_category),
         stock.try(:rental_type),
         checklist_item.data["Available"],
+        checklist_item.data["Void"],
         checklist_item.data["Inline"],
         checklist_item.data["Png"],
         user.try(:importing_id)
