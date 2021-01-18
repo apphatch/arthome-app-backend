@@ -8,7 +8,8 @@ module Exporters
       set_headers [
         'Updated At', 'Outlet', 'Outlet Name',
         'Rental ID', 'Sub category', 'Rental Type',
-        'Available', 'Inline', 'Png', 'OSA (Checker) Code'
+        'Available', 'Inline', 'Png', 'Void',
+        'OSA (Checker) Code'
       ]
 
       criteria = {checklist_type: 'rental'}
