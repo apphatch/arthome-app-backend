@@ -31,4 +31,8 @@ class SessionsController < ApplicationController
     current_user.update jwt: nil if current_user.present?
     head 200
   end
+
+  def server_time
+    return Time.current
+  end
 end
