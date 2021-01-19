@@ -33,6 +33,6 @@ class SessionsController < ApplicationController
   end
 
   def server_time
-    return Time.current
+    render json: {server_time: Time.current}
   end
 end
