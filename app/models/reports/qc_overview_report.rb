@@ -19,7 +19,7 @@ module Reports
       set_data mapper.map(
         Checklist.active.with_app_group('qc').includes(:checklist_items).where(
             exclude_from_search: false,
-            checklists_items: criteria
+            checklist_items: criteria
         )
       ).compact
 
