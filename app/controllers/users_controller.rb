@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   end
 
   def find_record
-    user = User.active.find_by_id params[:id]
+    user = User.find_by_id params[:id]
     if user.present?
       yield user
     else
