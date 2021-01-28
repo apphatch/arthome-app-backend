@@ -23,7 +23,7 @@ class UsersController < ApplicationController
     )
     render json: {error: 'username taken'} and return if user.present?
 
-    user = User.create user_params.merge(locale: 'vn')
+    user = User.create user_params
     render json: user
   end
 
@@ -60,7 +60,9 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    super params.permit(:username, :name, :password, :importing_id, :app_group)
+    p = permitted_params
+    p.delete :app
+    return p
   end
 
   def find_record
