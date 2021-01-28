@@ -61,6 +61,7 @@ class UsersController < ApplicationController
 
   def user_params
     p = permitted_params
+    p[:locale] = p[:locale].get(:code).try(:downcase)
     p.delete :app
     return p
   end
