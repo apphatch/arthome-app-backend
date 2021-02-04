@@ -27,13 +27,13 @@ module Importers
           assocs[:shops] = Shop.active.find_by_importing_id assocs[:shops]
         end
         attributes[:role] = attributes[:role].try(:downcase)
-        attributes[:custom_attributes] = {
-          category: attributes[:category],
-          group: attributes[:group],
-          packaging: attributes[:packaging],
-          uom: attributes[:uom],
-          uc: attributes[:uc]
-        }
+        attributes[:custom_attributes] = {}
+        [:category, :group, :packaging, :uom, :uc].each do |attr|
+          attributes[:custom_attributes] = attributes[:custom_attributes].merge(
+            attr => attributes[attr]
+          )
+          attributes.delete attr
+        end
         [attributes, temp_attributes, assocs]
       end
     end
