@@ -6,9 +6,7 @@ module Mappers
       shop = checklist_item.checklist.try(:shop)
       stock = checklist_item.stock
       return [
-        @locale.adjust_for_timezone(
-          checklist_item.updated_at
-        ).strftime('%d%m%Y'),
+        @locale.adjust_for_timezone(checklist_item.updated_at),
         shop.try(:importing_id),
         shop.try(:name),
         checklist_item.stock.try(:category),
